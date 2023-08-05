@@ -1,0 +1,25 @@
+.wrapper {
+    display: flex;
+    position: relative;
+    align-items: center;
+
+    .input {
+        background-color: #fff;
+        color: #000;
+        font-size: 1.2rem;
+        padding: 1rem;
+        min-width: 75vw;
+        border-radius: 5px;
+        border: solid 1px #000;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .spinner {
+        position: absolute;
+        right: -0.5rem;
+        transform: translateX(100%);
+    }
+}
