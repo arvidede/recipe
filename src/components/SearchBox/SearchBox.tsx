@@ -18,10 +18,8 @@ function SearchBox({ onLoadRecipe }: Props) {
             setLoading(true)
 
             try {
-                const response = await fetch("/api/search", {
-                    method: "POST",
-                    body: e.target.value,
-                })
+                const url = `/api/search`
+                const response = await fetch(url)
 
                 if (response.ok) {
                     const recipe: Recipe = await response.json()

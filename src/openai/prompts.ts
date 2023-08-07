@@ -24,6 +24,13 @@ export async function summariseRecipe(recipe: string) {
             { role: "user", content: recipe },
         ],
     })
+    const message = chatCompletion.data.choices[0].message?.content
 
-    return chatCompletion.data.choices[0].message?.content
+    if (!message) {
+        throw new Error(
+            `GPT: No message in response. Received status ${chatCompletion.status} : ${chatCompletion.statusText}`
+        )
+    }
+
+    return message
 }

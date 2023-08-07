@@ -1,12 +1,14 @@
 import DB from "@/db"
 import { summariseRecipe } from "@/openai/prompts"
-import { isValidUrl } from "@/utils/isValidUrl"
 import { parsePage } from "@/utils/parsePage"
+import { getLogger } from "@/utils/log"
+import { isValidUrl } from "@/utils/isValidUrl"
 import { stripTrailingSlash } from "@/utils/stripTrailingSlash"
+import { ENV } from "@/utils/env"
+
+const logger = getLogger("api:search")
 
 const cache = new DB()
-
-const CACHE = true
 
 async function fetchRecipe(url: URL) {
     const page = await fetch(url)
@@ -14,40 +16,39 @@ async function fetchRecipe(url: URL) {
     return parsePage(html, url)
 }
 
-export async function POST(req: Request) {
-    const query = await req.text()
+function validateRequest(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const query = searchParams.get("url")
 
     if (!query || !isValidUrl(query)) {
-        return new Response(undefined, { status: 400 })
+        logger.error(`Invalid param 'url' in request, received ${query}`)
+        throw new Response(undefined, { status: 400 })
     }
 
-    const url = new URL(stripTrailingSlash(query))
+    return new URL(stripTrailingSlash(query))
+}
 
-    if (CACHE && cache.has(url.href)) {
-        console.log(`GET ${url} (cache: HIT)`)
-        return new Response(cache.get(url.href))
-    } else {
-        console.log(`GET ${url} (cache: MISS)`)
-    }
-
-    const recipe = await fetchRecipe(url)
-
-    console.log("\n\nPAGE RESPONSE\n", recipe, "\n")
-
+export async function GET(request: Request) {
     try {
-        const summary = await summariseRecipe(recipe)
-        console.log("\n\nGPT RESPONSE\n", summary, "\n")
+        const url = validateRequest(request)
 
-        if (summary) {
+        if (ENV.CACHE && cache.has(url.href)) {
+            return new Response(cache.get(url.href))
+        }
+
+        const recipe = await fetchRecipe(url)
+        const summary = await summariseRecipe(recipe)
+
+        if (ENV.CACHE) {
             cache.set(url.href, summary)
         }
 
-        return new Response(summary || "", {
-            status: 200,
-        })
+        return new Response(summary, { status: 200 })
     } catch (e: any) {
-        console.log(e.response.status)
-        console.log(e.response.data)
-        return new Response()
+        if (e instanceof Response) {
+            return e
+        }
+        logger.error(e.message)
+        return new Response(`Error: ${e.message}`, { status: 500 })
     }
 }
