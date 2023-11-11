@@ -1,0 +1,133 @@
+@import "./colors";
+@import "./media";
+
+/* Colors */
+// TODO: Start using for actual body background as well after MUI is completely removed
+$color_primary: #457b9d;
+$color_secondary: #f1faee;
+$color_primary_light: #a8dadc;
+$color_primary_dark: #1d3557;
+$body-background-color: #faf9f6;
+$modal-background-color: $color_white;
+$modal-overlay: rgba(88, 88, 88, 0.75);
+$error-background-color: rgba(241, 89, 89, 0.06);
+$error: #e63946;
+$warning: $color_yellow_regular;
+$success: $color_green_regular;
+$text_light: #384241;
+$text_regular: #384241;
+$text_dark: #384241;
+
+/* Shadows */
+$shadow_float-default: 0px 3px 17px rgba(0, 0, 0, 0.17);
+$shadow_float-high: 0px 6px 32px rgba(0, 0, 0, 0.14);
+$shadow_float-low: 0px 3px 8px rgba(0, 0, 0, 0.14);
+$shadow_float-sticky: 0px 1px 3px rgba(0, 0, 0, 0.28);
+$shadow_inset-default: inset 0px 1px 3px rgba(0, 0, 0, 0.22);
+$shadow_inset-lowered: inset 0px 0px 3px rgba(0, 0, 0, 0.8);
+
+/* Border */
+$border-radius_large: 1.5rem;
+$border-radius_default: 1rem;
+$border-radius_small: 0.5rem;
+$border-radius_xs: 0.25rem;
+$border-radius_xxs: 0.125rem;
+$border-light: solid 1px $color_warm-gray_light;
+$border-regular: solid 1px $color_warm-gray_regular;
+$border-dark: solid 1px $color_gray_extra_dark;
+$border-no-border: solid 1px transparent;
+
+/* Spacing */
+$spacing-xs: 0.25rem;
+$spacing-s: 0.5rem;
+$spacing-s-m: 0.75rem;
+$spacing-m: 1rem;
+$spacing-l: 1.5rem;
+$spacing-xl: 2rem;
+
+/* Typography */
+$font-weight-regular: 400;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 700;
+
+%h0 {
+  font-size: var(--font-size-heading-0);
+  line-height: 1.125;
+  font-weight: $font-weight-bold;
+}
+
+%h1 {
+  font-size: var(--font-size-heading-1);
+  line-height: 1.1;
+  font-weight: $font-weight-semi-bold;
+}
+
+%h2 {
+  font-size: var(--font-size-heading-2);
+  line-height: 1.1;
+  font-weight: $font-weight-bold;
+}
+
+%h3 {
+  font-size: var(--font-size-heading-3);
+  line-height: 1.25;
+  font-weight: $font-weight-semi-bold;
+}
+
+%h4 {
+  font-size: var(--font-size-heading-4);
+  line-height: 1.25;
+  font-weight: $font-weight-semi-bold;
+}
+
+%h5 {
+  font-size: var(--font-size-heading-5);
+  line-height: 1.2;
+  font-weight: $font-weight-bold;
+}
+
+%text-title {
+  font-size: var(--font-size-text-xl);
+  font-weight: $font-weight-regular;
+  line-height: 1.15;
+}
+
+%text-preamble {
+  font-size: var(--font-size-text-l);
+  font-weight: $font-weight-regular;
+}
+
+%text-base {
+  font-size: var(--font-size-text-base);
+  font-weight: $font-weight-regular;
+}
+
+%text-base-semi-bold {
+  font-size: var(--font-size-text-base);
+  font-weight: $font-weight-semi-bold;
+}
+
+%text-base-bold {
+  font-size: var(--font-size-text-base);
+  font-weight: $font-weight-bold;
+}
+
+%text-m {
+  font-size: var(--font-size-text-m);
+  font-weight: $font-weight-regular;
+}
+
+%text-s {
+  font-size: var(--font-size-text-s);
+  font-weight: $font-weight-semi-bold;
+}
+
+/* Transitions */
+$transition-duration-default: 0.2s;
+$transition-timing-function-default: ease;
+$transition-default: $transition-timing-function-default
+  $transition-duration-default;
+
+@media (prefers-color-scheme: dark) {
+  // TODO: Dark mode
+}

@@ -1,5 +1,19 @@
 {
-    "semi": false,
-    "tabWidth": 4,
-    "useTabs": false
+  "semi": false,
+  "tabWidth": 4,
+  "useTabs": false,
+  "overrides": [
+    {
+      "files": ["*.json"],
+      "options": {
+        "tabWidth": 2
+      }
+    },
+    {
+      "files": ["*.css", "*.scss"],
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
 }

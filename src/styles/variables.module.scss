@@ -1,0 +1,18 @@
+@import "./main";
+
+// Anything that should be available in js should be put here
+:export {
+    orangeLight: $color_orange_light;
+    orangeDark: $color_orange_dark;
+    orangeAccent: $color_orange_accent;
+    grayLight: $color_gray_light;
+    warmGrayRegular: $color_warm-gray_regular;
+    warmGrayLight: $color_warm-gray_light;
+    warmGrayExtraLight: $color_warm-gray_extra-light;
+    purpleRegular: $color_purple_regular;
+    black: $color_black;
+    error: $error;
+    warning: $warning;
+    success: $success;
+    selectOffset: $select-wide-offset;
+}

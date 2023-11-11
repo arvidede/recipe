@@ -1,0 +1,69 @@
+@import "./media";
+@import "./theme";
+
+:root {
+  --font-size-text-xl: 24px;
+  --font-size-text-l: 22px;
+  --font-size-text-m: 18px;
+  --font-size-text-base: 14px;
+  --font-size-text-s: 12px;
+  --font-size-heading-0: 44px;
+  --font-size-heading-1: 36px;
+  --font-size-heading-2: 28px;
+  --font-size-heading-3: 22px;
+  --font-size-heading-4: 17px;
+  --font-size-heading-5: 14px;
+
+  @include media(">=laptop-s") {
+    --font-size-text-xl: 32px;
+    --font-size-text-l: 22px;
+    --font-size-text-m: 18px;
+    --font-size-text-base: 14px;
+    --font-size-text-s: 12px;
+    --font-size-heading-0: 64px;
+    --font-size-heading-1: 44px;
+    --font-size-heading-2: 36px;
+    --font-size-heading-3: 28px;
+    --font-size-heading-4: 22px;
+    --font-size-heading-5: 15px;
+  }
+
+  @include media(">=monitor-s") {
+    --font-size-text-xl: 38px;
+    --font-size-text-l: 24px;
+    --font-size-text-m: 20px;
+    --font-size-text-base: 18px;
+    --font-size-text-s: 14px;
+    --font-size-heading-0: 80px;
+    --font-size-heading-1: 64px;
+    --font-size-heading-2: 44px;
+    --font-size-heading-3: 36px;
+    --font-size-heading-4: 28px;
+    --font-size-heading-5: 17px;
+  }
+}
+
+h1 {
+  @extend %h1;
+}
+
+h2 {
+  @extend %h2;
+}
+
+h3 {
+  @extend %h3;
+}
+
+h4 {
+  @extend %h4;
+}
+
+h5 {
+  @extend %h5;
+}
+
+html,
+body {
+  @extend %text-base;
+}

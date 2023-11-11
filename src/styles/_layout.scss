@@ -1,0 +1,27 @@
+@import './media';
+@import './theme';
+
+/* Table */
+
+/* Spacing */
+$page-margin: $spacing-xl;
+
+/* Component specific */
+$select-wide-offset: 0.3;
+
+@include media('<=laptop-l') {
+  $page-margin: $spacing-l;
+}
+
+%table-row {
+  grid-template-columns: 30px 4fr 2.25fr 1fr 1fr 2fr 2fr 1.25fr 1.5fr 1fr 1fr;
+  display: grid;
+  grid-template-rows: auto;
+  align-items: center;
+  width: 100%;
+  column-gap: $spacing-s;
+
+  @include media('>laptop-l') {
+    column-gap: $spacing-m;
+  }
+}

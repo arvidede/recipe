@@ -1,25 +1,85 @@
-.wrapper {
-    display: flex;
+@import "@/styles/main";
+
+.container {
+  border-radius: $border-radius_default;
+  width: 100%;
+  position: relative;
+  padding: 1px;
+  border: solid 1px transparent;
+  overflow: hidden;
+  border: none;
+  transition: border $transition-default, padding $transition-default;
+
+  .input {
     position: relative;
+    z-index: 2;
+    display: flex;
     align-items: center;
+    background-color: $color_white;
+    border-radius: calc($border-radius_default * 0.94);
+    padding: $spacing-s $spacing-s $spacing-s $spacing-m;
+    column-gap: $spacing-xs;
 
-    .input {
-        background-color: #fff;
-        color: #000;
-        font-size: 1.2rem;
-        padding: 1rem;
-        min-width: 75vw;
-        border-radius: 5px;
-        border: solid 1px #000;
-
-        &:focus {
-            outline: none;
-        }
+    .button {
+      svg {
+        height: 1.5rem;
+        width: 1.5rem;
+      }
     }
 
-    .spinner {
-        position: absolute;
-        right: -0.5rem;
-        transform: translateX(100%);
+    input {
+      background-color: $color_white;
+      padding: 0;
+      border: none;
+      overflow: hidden;
+      width: 100%;
+      color: $text_regular;
+      word-wrap: none;
+      text-overflow: ellipsis;
+
+      &:focus {
+        outline: none;
+      }
+
+      @include media("<laptop-s") {
+        // Crapple
+        font-size: 16px;
+      }
     }
+  }
+
+  &::after {
+    position: absolute;
+    z-index: 1;
+    content: "";
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: $border-radius_default;
+    background: $color_primary;
+  }
+
+  &.loading {
+    padding: 2px;
+    border: solid 0px transparent;
+
+    &::after {
+      background: linear-gradient(60deg, #ff4b1f, #1fddff);
+      animation: gradient 2s ease alternate infinite;
+      background-size: 300% 300%;
+    }
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

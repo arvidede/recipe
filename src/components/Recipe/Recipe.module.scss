@@ -1,26 +1,39 @@
-.wrapper {
-    padding: 1rem;
+@import "@/styles/main";
+
+.container {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows $transition-default;
+
+  &.expanded {
+    grid-template-rows: 1fr;
+  }
+
+  .recipe {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-
-    h1 {
-        font-size: 1.2rem;
+    > article {
+      display: flex;
+      flex-direction: column;
+      padding: $spacing-l;
+      row-gap: $spacing-l;
+      h3 {
+        text-wrap: balance;
+      }
     }
+  }
 
-    h3 {
-        font-size: 1rem;
-    }
+  ol,
+  ul {
+    padding: 0 1rem;
+    margin: 0 1rem;
+  }
 
-    ol,
-    ul {
-        padding: 0 1rem;
-        margin: 0 1rem;
-    }
-
-    .tags {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-    }
+  .tags {
+    display: flex;
+    gap: $spacing-xs;
+    flex-wrap: wrap;
+  }
 }

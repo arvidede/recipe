@@ -17,7 +17,7 @@ export default class DB {
     }
 
     public set(key: string, payload: string) {
-        logger.info(`SET ${key}`)
+        logger.info("SET", key)
         if (!this.db) {
             this.load()
         }
@@ -30,7 +30,7 @@ export default class DB {
     }
 
     private load() {
-        logger.info(`LOAD`)
+        logger.info("LOAD")
         this.db = new Map<string, string>(
             Object.entries(
                 JSON.parse(fs.readFileSync(REQUEST_CACHE_FILE_PATH, "utf-8"))
@@ -39,12 +39,12 @@ export default class DB {
     }
 
     public get(key: string) {
-        logger.info(`GET ${key}`)
+        logger.info("GET", key)
         return this.db.get(key)
     }
 
     public has(key: string) {
-        logger.info(`HAS ${key}`)
+        logger.info("HAS", key)
         return this.db.has(key)
     }
 

@@ -1,6 +1,8 @@
+@import "@/styles/main";
+
 .tag {
-    background-color: #999;
-    padding: 0.5rem;
-    border-radius: 20px;
-    width: fit-content;
+  background-color: $color_primary;
+  color: $color_white;
+  padding: $spacing-s;
+  border-radius: $border-radius_large;
 }

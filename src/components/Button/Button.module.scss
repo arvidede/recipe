@@ -1,0 +1,16 @@
+@import "@/styles/main";
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  padding: $spacing-s;
+  margin: 0;
+  border: $border-dark;
+  border-radius: $border-radius_default;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

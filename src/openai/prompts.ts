@@ -1,4 +1,4 @@
-import { ChatCompletionRequestMessage } from "openai"
+import { ChatCompletionMessageParam } from "openai/resources/chat/completions"
 import openai from "./client"
 
 const RECIPE_SUMMARY_PROMPT = `
@@ -11,26 +11,40 @@ Replace all imperial units with metric units.
 All output should be in English
 `
 
-const RECIPE_SUMMARY_PROMPT_MESSAGE: ChatCompletionRequestMessage = {
+const RECIPE_SUMMARY_PROMPT_MESSAGE: ChatCompletionMessageParam = {
     role: "system",
     content: RECIPE_SUMMARY_PROMPT,
 }
 
 export async function summariseRecipe(recipe: string) {
-    const chatCompletion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [
-            RECIPE_SUMMARY_PROMPT_MESSAGE,
-            { role: "user", content: recipe },
-        ],
-    })
-    const message = chatCompletion.data.choices[0].message?.content
+    try {
+        const chatCompletion = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo-1106",
+            messages: [
+                RECIPE_SUMMARY_PROMPT_MESSAGE,
+                { role: "user", content: recipe },
+            ],
+        })
 
-    if (!message) {
+        const message = chatCompletion.choices[0].message?.content
+
+        if (!message) {
+            throw new Error(
+                `GPT: No message in response. Received response ${JSON.stringify(
+                    chatCompletion,
+                    null,
+                    2
+                )}`
+            )
+        }
+        return message
+    } catch (error: any) {
         throw new Error(
-            `GPT: No message in response. Received status ${chatCompletion.status} : ${chatCompletion.statusText}`
+            `GPT: No message in response. Received response ${JSON.stringify(
+                error,
+                null,
+                2
+            )}`
         )
     }
-
-    return message
 }

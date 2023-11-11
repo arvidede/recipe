@@ -12,16 +12,19 @@ function log(prefix: string, ...args: LogParams) {
 
 function info(prefix: string, ...args: LogParams) {
     if (ENV.VERBOSE) {
-        logger(chalk.white(prefix), ...args)
+        const start = args.shift()
+        logger(chalk.blue(prefix), chalk.yellowBright(start), ...args)
     }
 }
 
 function warn(prefix: string, ...args: LogParams) {
-    logger(chalk.yellow(prefix), ...args)
+    const start = args.shift()
+    logger(chalk.yellow(prefix), chalk.yellowBright(start), ...args)
 }
 
 function error(prefix: string, ...args: LogParams) {
-    logger(chalk.red(prefix), ...args)
+    const start = args.shift()
+    logger(chalk.red(prefix), chalk.yellowBright(start), ...args)
 }
 
 export function getLogger(prefix?: string) {
