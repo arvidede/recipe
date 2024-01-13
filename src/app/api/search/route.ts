@@ -2,7 +2,7 @@ import DB from "@/db"
 import { summariseRecipe } from "@/openai/prompts"
 import { parsePage } from "@/utils/parsePage"
 import { getLogger } from "@/utils/log"
-import { isValidUrl } from "@/utils/isValidUrl"
+import { isValidURL } from "@/utils/isValidUrl"
 import { stripTrailingSlash } from "@/utils/stripTrailingSlash"
 import { ENV } from "@/utils/env"
 
@@ -20,7 +20,7 @@ function validateRequest(request: Request) {
     const { searchParams } = new URL(request.url)
     const query = searchParams.get("url")
 
-    if (!query || !isValidUrl(query)) {
+    if (!query || !isValidURL(query)) {
         logger.error(`Invalid param 'url' in request, received ${query}`)
         throw new Response(undefined, { status: 400 })
     }

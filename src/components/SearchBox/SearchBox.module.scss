@@ -8,7 +8,9 @@
   border: solid 1px transparent;
   overflow: hidden;
   border: none;
-  transition: border $transition-default, padding $transition-default;
+  transition:
+    border $transition-default,
+    padding $transition-default;
 
   .input {
     position: relative;
@@ -52,34 +54,42 @@
     position: absolute;
     z-index: 1;
     content: "";
-    top: 0;
-    left: 0;
     height: 100%;
     width: 100%;
+    left: 0;
+    top: 0;
     border-radius: $border-radius_default;
     background: $color_primary;
+    transform: rotateY(180deg);
   }
 
   &.loading {
-    padding: 2px;
+    padding: 1px;
     border: solid 0px transparent;
 
     &::after {
-      background: linear-gradient(60deg, #ff4b1f, #1fddff);
-      animation: gradient 2s ease alternate infinite;
-      background-size: 300% 300%;
+      background: conic-gradient(
+        from var(--rotation),
+        $color_primary 0%,
+        $color_primary_light 30%
+      );
+      animation: spin 2s linear infinite reverse;
     }
   }
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
+@property --rotation {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 20deg;
+}
+
+@keyframes spin {
+  from {
+    --rotation: 20deg;
   }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+
+  to {
+    --rotation: 380deg;
   }
 }

@@ -1,25 +1,13 @@
 "use client"
-import { ChangeEvent, useState } from "react"
-import styles from "./SearchBox.module.scss"
+import { isValidURL } from "@/utils/isValidUrl"
+import sleep from "@/utils/sleep"
 import clsx from "clsx"
+import { ChangeEvent } from "react"
 import Button from "../Button"
 import Paste from "../icons/Paste"
 import Search from "../icons/Search"
-
-interface Props {
-    onLoadRecipe: (recipe: Recipe | null) => void
-}
-
-const sleep = (ms = 2000) => new Promise((resolve) => setTimeout(resolve, ms))
-
-function isValidURL(url: string) {
-    try {
-        new URL(url)
-        return true
-    } catch {
-        return false
-    }
-}
+import styles from "./SearchBox.module.scss"
+import useSearchReducer, { ActionType } from "./searchReducer"
 
 async function getURLFromClipboard(): Promise<string> {
     try {
@@ -33,68 +21,77 @@ async function getURLFromClipboard(): Promise<string> {
     }
 }
 
+async function getRecipe(url: string): Promise<Recipe | null> {
+    const [response] = await Promise.all([
+        fetch(`/api/search?url=${url}`),
+        sleep(),
+    ])
+
+    if (response.ok) {
+        return response.json()
+    }
+
+    return null
+}
+
+interface Props {
+    onLoadRecipe: (recipe: Recipe | null) => void
+}
+
 function SearchBox({ onLoadRecipe }: Props) {
-    const [input, setInput] = useState("")
-    const [loading, setLoading] = useState(false)
+    const [state, dispatch] = useSearchReducer()
 
-    const handleSearchRecipe = async (url: string) => {
-        setLoading(true)
+    const handleSearchRecipe = async () => {
+        if (isValidURL(state.input)) {
+            dispatch({ type: ActionType.Loading })
 
-        try {
-            const [response] = await Promise.all([
-                fetch(`/api/search?url=${url}`),
-                sleep(),
-            ])
-
-            if (response.ok) {
-                const recipe: Recipe = await response.json()
-                onLoadRecipe(recipe)
+            try {
+                const recipe = await getRecipe(state.input)
+                if (recipe) {
+                    onLoadRecipe(recipe)
+                }
+            } catch (e: any) {
+                console.error(e)
+            } finally {
+                dispatch({ type: ActionType.Loading })
             }
-        } catch (e: any) {
-            console.error(e)
-        } finally {
-            setLoading(false)
         }
     }
 
     const handlePaste = async () => {
         const url = await getURLFromClipboard()
         if (url) {
-            setInput(url)
-            handleSearchRecipe(url)
+            dispatch({ type: ActionType.Input, payload: url })
+            handleSearchRecipe()
         }
     }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setInput(e.target.value)
+        dispatch({ type: ActionType.Input, payload: e.target.value })
 
-        if (isValidURL(e.target.value)) {
-            handleSearchRecipe(e.target.value)
-        } else {
+        if (!e.target.value.length) {
             onLoadRecipe(null)
         }
     }
-
-    const handleSearch = () => {}
 
     return (
         <div
             className={clsx({
                 [styles.container]: true,
-                [styles.loading]: loading,
+                [styles.loading]: state.loading,
             })}
         >
             <div className={styles.input}>
                 <input
                     type="text"
-                    value={input}
+                    value={state.input}
                     onChange={handleChange}
                     placeholder="Ge mig ett recept"
                 />
                 <Button className={styles.button} onClick={handlePaste}>
                     <Paste />
                 </Button>
-                <Button className={styles.button} onClick={handleSearch}>
+                <Button className={styles.button} onClick={handleSearchRecipe}>
                     <Search />
                 </Button>
             </div>
