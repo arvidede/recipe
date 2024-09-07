@@ -1,14 +1,16 @@
 import DB from "@/db"
 import { summariseRecipe } from "@/openai/prompts"
-import { parsePage } from "@/utils/parsePage"
-import { getLogger } from "@/utils/log"
-import { isValidURL } from "@/utils/isValidUrl"
-import { stripTrailingSlash } from "@/utils/stripTrailingSlash"
 import { ENV } from "@/utils/env"
+import { isValidURL } from "@/utils/isValidUrl"
+import { getLogger } from "@/utils/log"
+import { parsePage } from "@/utils/parsePage"
+import { stripTrailingSlash } from "@/utils/stripTrailingSlash"
 
 const logger = getLogger("api:search")
 
 const cache = new DB()
+
+export const maxDuration = 60
 
 async function fetchRecipe(url: URL) {
     const page = await fetch(url)
