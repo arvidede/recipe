@@ -2,7 +2,7 @@
 import { isValidURL } from "@/utils/isValidUrl"
 import sleep from "@/utils/sleep"
 import clsx from "clsx"
-import { ChangeEvent } from "react"
+import { ChangeEvent, useEffect } from "react"
 import Button from "../Button"
 import Paste from "../icons/Paste"
 import Search from "../icons/Search"
@@ -24,7 +24,7 @@ async function getURLFromClipboard(): Promise<string> {
 async function getRecipe(url: string): Promise<Recipe | null> {
     const [response] = await Promise.all([
         fetch(`/api/search?url=${url}`),
-        sleep(),
+        sleep(1000),
     ])
 
     if (response.ok) {
@@ -74,6 +74,12 @@ function SearchBox({ onLoadRecipe }: Props) {
         }
     }
 
+    useEffect(() => {
+        handlePaste()
+        // This should only run on page load
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <div
             className={clsx({
@@ -83,6 +89,7 @@ function SearchBox({ onLoadRecipe }: Props) {
         >
             <div className={styles.input}>
                 <input
+                    autoFocus
                     type="text"
                     value={state.input}
                     onChange={handleChange}
