@@ -19,7 +19,7 @@ const RECIPE_SUMMARY_PROMPT_MESSAGE: ChatCompletionMessageParam = {
 export async function summariseRecipe(recipe: string) {
     try {
         const chatCompletion = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo-1106",
+            model: "gpt-4o-mini",
             messages: [
                 RECIPE_SUMMARY_PROMPT_MESSAGE,
                 { role: "user", content: recipe },
@@ -33,8 +33,8 @@ export async function summariseRecipe(recipe: string) {
                 `GPT: No message in response. Received response ${JSON.stringify(
                     chatCompletion,
                     null,
-                    2
-                )}`
+                    2,
+                )}`,
             )
         }
         return message
@@ -43,8 +43,8 @@ export async function summariseRecipe(recipe: string) {
             `GPT: No message in response. Received response ${JSON.stringify(
                 error,
                 null,
-                2
-            )}`
+                2,
+            )}`,
         )
     }
 }
