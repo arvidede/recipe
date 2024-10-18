@@ -1,7 +1,7 @@
 import "@/styles/globals.scss"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import { Viewport } from "next"
+import { Inter } from "next/font/google"
 
 export const viewport: Viewport = {
     themeColor: "black",
@@ -16,7 +16,6 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
     title: "Recipe",
     description: "Recipe Summariser",
-    viewport,
 }
 
 export default function RootLayout({

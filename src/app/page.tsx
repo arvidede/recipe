@@ -1,11 +1,11 @@
 "use client"
 
+import Card from "@/components/Card/Card"
 import Recipe from "@/components/Recipe/Recipe"
 import SearchBox from "@/components/SearchBox"
-import Card from "@/components/Card/Card"
-import styles from "./page.module.scss"
-import { useState } from "react"
 import clsx from "clsx"
+import { useState } from "react"
+import styles from "./page.module.scss"
 
 export default function Home() {
     const [recipe, setRecipe] = useState<Recipe | null>(null)

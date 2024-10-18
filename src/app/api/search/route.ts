@@ -5,6 +5,7 @@ import { isValidURL } from "@/utils/isValidUrl"
 import { getLogger } from "@/utils/log"
 import { parsePage } from "@/utils/parsePage"
 import { stripTrailingSlash } from "@/utils/stripTrailingSlash"
+import { NextResponse } from "next/server"
 
 const logger = getLogger("api:search")
 
@@ -42,10 +43,10 @@ export async function GET(request: Request) {
         const summary = await summariseRecipe(recipe)
 
         if (ENV.CACHE) {
-            cache.set(url.href, summary)
+            cache.set(url.href, JSON.stringify(summary))
         }
 
-        return new Response(summary, { status: 200 })
+        return NextResponse.json(summary, { status: 200 })
     } catch (e: any) {
         if (e instanceof Response) {
             return e
