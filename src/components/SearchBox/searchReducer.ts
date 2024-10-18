@@ -1,14 +1,15 @@
 import { useReducer } from "react"
 
 export enum ActionType {
-    Input,
-    Loading,
+    Input = "input",
+    Loading = "loading",
 }
 
 type Action = InputAction | LoadingAction
 
 interface LoadingAction {
     type: ActionType.Loading
+    payload: boolean
 }
 
 interface InputAction {
@@ -29,15 +30,11 @@ const INITIAL_STATE = {
 
 function searchReducer(prevState: State, action: Action): State {
     switch (action.type) {
+        case ActionType.Loading:
         case ActionType.Input:
             return {
                 ...prevState,
-                input: action.payload,
-            }
-        case ActionType.Loading:
-            return {
-                ...prevState,
-                loading: !prevState.loading,
+                [action.type]: action.payload,
             }
     }
 }

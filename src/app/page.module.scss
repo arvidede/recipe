@@ -9,7 +9,10 @@
   justify-content: center;
   height: 100%;
 
-  .search {
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-l;
     width: 100%;
     max-width: map-get($map: $breakpoints, $key: "laptop-s");
     transform: translateY(-25vh);
@@ -17,6 +20,7 @@
 
     &.hasContent {
       transform: translateY(0);
+      row-gap: $spacing-l;
     }
   }
 }

@@ -2,9 +2,8 @@
 import { isValidURL } from "@/utils/isValidUrl"
 import sleep from "@/utils/sleep"
 import clsx from "clsx"
-import { ChangeEvent, useEffect } from "react"
+import { ChangeEvent, useEffect, useRef } from "react"
 import Button from "../Button"
-import Paste from "../icons/Paste"
 import Search from "../icons/Search"
 import styles from "./SearchBox.module.scss"
 import useSearchReducer, { ActionType } from "./searchReducer"
@@ -40,20 +39,21 @@ interface Props {
 
 function SearchBox({ onLoadRecipe }: Props) {
     const [state, dispatch] = useSearchReducer()
+    const inputRef = useRef<HTMLInputElement>(null)
 
-    const handleSearchRecipe = async () => {
-        if (isValidURL(state.input)) {
-            dispatch({ type: ActionType.Loading })
+    const handleSearchRecipe = async (url = state.input) => {
+        if (isValidURL(url)) {
+            dispatch({ type: ActionType.Loading, payload: true })
 
             try {
-                const recipe = await getRecipe(state.input)
+                const recipe = await getRecipe(url)
                 if (recipe) {
                     onLoadRecipe(recipe)
                 }
             } catch (e: any) {
                 console.error(e)
             } finally {
-                dispatch({ type: ActionType.Loading })
+                dispatch({ type: ActionType.Loading, payload: false })
             }
         }
     }
@@ -62,7 +62,7 @@ function SearchBox({ onLoadRecipe }: Props) {
         const url = await getURLFromClipboard()
         if (url) {
             dispatch({ type: ActionType.Input, payload: url })
-            handleSearchRecipe()
+            handleSearchRecipe(url)
         }
     }
 
@@ -76,6 +76,15 @@ function SearchBox({ onLoadRecipe }: Props) {
 
     useEffect(() => {
         handlePaste()
+
+        const input = inputRef.current
+        if (input) {
+            input.addEventListener("paste", handlePaste)
+            return () => {
+                input.removeEventListener("paste", handlePaste)
+            }
+        }
+
         // This should only run on page load
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -89,16 +98,20 @@ function SearchBox({ onLoadRecipe }: Props) {
         >
             <div className={styles.input}>
                 <input
+                    ref={inputRef}
                     autoFocus
                     type="text"
                     value={state.input}
                     onChange={handleChange}
                     placeholder="Ge mig ett recept"
                 />
-                <Button className={styles.button} onClick={handlePaste}>
+                {/* <Button className={styles.button} onClick={handlePaste}>
                     <Paste />
-                </Button>
-                <Button className={styles.button} onClick={handleSearchRecipe}>
+                </Button> */}
+                <Button
+                    className={styles.button}
+                    onClick={() => handleSearchRecipe()}
+                >
                     <Search />
                 </Button>
             </div>

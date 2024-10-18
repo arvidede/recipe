@@ -14,7 +14,7 @@ export default function Home() {
         <main className={styles.main}>
             <Card
                 className={clsx({
-                    [styles.search]: true,
+                    [styles.card]: true,
                     [styles.hasContent]: !!recipe,
                 })}
             >
