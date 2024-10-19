@@ -4,7 +4,7 @@ import { Viewport } from "next"
 import { Inter } from "next/font/google"
 
 export const viewport: Viewport = {
-    themeColor: "black",
+    themeColor: "var(--background-color)",
     width: "device-width",
     initialScale: 1.0,
     maximumScale: 1.0,
@@ -14,8 +14,9 @@ export const viewport: Viewport = {
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-    title: "Recipe",
-    description: "Recipe Summariser",
+    title: "Recipe Summary",
+    description: "Recipe Summary",
+    appleWebApp: {},
 }
 
 export default function RootLayout({

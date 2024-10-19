@@ -1,95 +1,104 @@
 @import "@/styles/main";
 
 .container {
-  border-radius: $border-radius_default;
   width: 100%;
-  position: relative;
-  padding: 1px;
-  border: solid 1px transparent;
-  overflow: hidden;
-  border: none;
-  transition:
-    border $transition-default,
-    padding $transition-default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color_gray_extra-light;
+  border-radius: 26px;
+  padding: $spacing-s $spacing-s $spacing-s $spacing-m;
+  column-gap: $spacing-xs;
 
-  .input {
-    position: relative;
-    z-index: 2;
+  input {
+    background-color: inherit;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+    width: 100%;
+    color: $text_regular;
+    word-wrap: none;
+    text-overflow: ellipsis;
+
+    &:focus {
+      outline: none;
+    }
+
+    @include media("<laptop-s") {
+      // Crapple
+      font-size: 16px;
+    }
+  }
+
+  .end {
     display: flex;
+    justify-content: center;
     align-items: center;
-    background-color: $color_white;
-    border-radius: calc($border-radius_default * 0.94);
-    padding: $spacing-s $spacing-s $spacing-s $spacing-m;
-    column-gap: $spacing-xs;
+    height: 2.5rem;
+    width: 2.5rem;
+    position: relative;
+
+    .spinner,
+    .button {
+      position: absolute;
+    }
+
+    .spinner {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
 
     .button {
+      border: none;
+      background-color: $color_primary;
+      border-radius: 50%;
+
       svg {
         height: 1.5rem;
         width: 1.5rem;
+        stroke: $color_secondary;
+        fill: $color_secondary;
       }
     }
 
-    input {
-      background-color: $color_white;
-      padding: 0;
-      border: none;
-      overflow: hidden;
-      width: 100%;
-      color: $text_regular;
-      word-wrap: none;
-      text-overflow: ellipsis;
-
-      &:focus {
-        outline: none;
+    &.mounted {
+      .spinner {
+        animation: leave 0.1s ease-in forwards;
       }
 
-      @include media("<laptop-s") {
-        // Crapple
-        font-size: 16px;
+      .button {
+        animation: enter 0.1s ease-in forwards;
       }
     }
-  }
 
-  &::after {
-    position: absolute;
-    z-index: 1;
-    content: "";
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    border-radius: $border-radius_default;
-    background: $color_primary;
-    transform: rotateY(180deg);
-  }
+    &.loading {
+      .spinner {
+        animation: enter 0.1s ease-in forwards;
+      }
 
-  &.loading {
-    padding: 1px;
-    border: solid 0px transparent;
-
-    &::after {
-      background: conic-gradient(
-        from var(--rotation),
-        $color_primary 0%,
-        $color_primary_light 30%
-      );
-      animation: spin 2s linear infinite reverse;
+      .button {
+        animation: leave 0.1s ease-in forwards;
+      }
     }
   }
 }
 
-@property --rotation {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 20deg;
-}
-
-@keyframes spin {
+@keyframes enter {
   from {
-    --rotation: 20deg;
+    opacity: 0;
   }
 
   to {
-    --rotation: 380deg;
+    opacity: 1;
+  }
+}
+
+@keyframes leave {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }

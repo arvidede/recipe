@@ -1,9 +1,11 @@
 "use client"
+import useIsMounted from "@/utils/hooks/useIsMounted"
 import { isValidURL } from "@/utils/isValidUrl"
 import sleep from "@/utils/sleep"
 import clsx from "clsx"
 import { ChangeEvent, useEffect, useRef } from "react"
 import Button from "../Button"
+import Spinner from "../Spinner"
 import Search from "../icons/Search"
 import styles from "./SearchBox.module.scss"
 import useSearchReducer, { ActionType } from "./searchReducer"
@@ -40,6 +42,7 @@ interface Props {
 function SearchBox({ onLoadRecipe }: Props) {
     const [state, dispatch] = useSearchReducer()
     const inputRef = useRef<HTMLInputElement>(null)
+    const isMounted = useIsMounted()
 
     const handleSearchRecipe = async (url = state.input) => {
         if (isValidURL(url)) {
@@ -74,6 +77,10 @@ function SearchBox({ onLoadRecipe }: Props) {
         }
     }
 
+    const handleFocus = () => {
+        inputRef.current?.setSelectionRange(0, state.input.length)
+    }
+
     useEffect(() => {
         handlePaste()
 
@@ -90,26 +97,27 @@ function SearchBox({ onLoadRecipe }: Props) {
     }, [])
 
     return (
-        <div
-            className={clsx({
-                [styles.container]: true,
-                [styles.loading]: state.loading,
-            })}
-        >
-            <div className={styles.input}>
-                <input
-                    ref={inputRef}
-                    autoFocus
-                    type="text"
-                    value={state.input}
-                    onChange={handleChange}
-                    placeholder="Ge mig ett recept"
-                />
-                {/* <Button className={styles.button} onClick={handlePaste}>
-                    <Paste />
-                </Button> */}
+        <div className={styles.container}>
+            <input
+                ref={inputRef}
+                onFocus={handleFocus}
+                autoFocus
+                type="text"
+                value={state.input}
+                onChange={handleChange}
+                placeholder="Ge mig ett recept"
+            />
+            <div
+                className={clsx({
+                    [styles.end]: true,
+                    [styles.mounted]: isMounted(),
+                    [styles.loading]: state.loading,
+                })}
+            >
+                <Spinner className={styles.spinner} />
                 <Button
                     className={styles.button}
+                    disabled={state.loading}
                     onClick={() => handleSearchRecipe()}
                 >
                     <Search />

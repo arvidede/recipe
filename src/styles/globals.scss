@@ -2,6 +2,7 @@
 @import "./typography-global";
 
 :root {
+  --background-color: $color_secondary;
 }
 
 * {
@@ -28,7 +29,7 @@ body {
   font-size: var(--font-size-text-base);
   font-weight: 400;
   line-height: 1.43;
-  background-color: #f1faee;
+  background-color: $color_secondary;
   max-width: 100vw;
   overflow-x: hidden;
   color: $text_regular;

@@ -9,6 +9,7 @@
   margin: 0;
   border: $border-dark;
   border-radius: $border-radius_default;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     cursor: pointer;
