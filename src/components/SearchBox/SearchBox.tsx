@@ -6,7 +6,7 @@ import clsx from "clsx"
 import { ChangeEvent, useEffect, useRef } from "react"
 import Button from "../Button"
 import Spinner from "../Spinner"
-import Search from "../icons/Search"
+import Cutlery from "../icons/Cutlery"
 import styles from "./SearchBox.module.scss"
 import useSearchReducer, { ActionType } from "./searchReducer"
 
@@ -123,7 +123,7 @@ function SearchBox({ onLoadRecipe }: Props) {
                     disabled={state.loading}
                     onClick={() => handleSearchRecipe()}
                 >
-                    <Search />
+                    <Cutlery />
                 </Button>
             </div>
         </div>
