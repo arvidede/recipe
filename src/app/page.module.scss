@@ -12,11 +12,10 @@
   .card {
     display: flex;
     flex-direction: column;
-    padding: $spacing-l;
     width: 100%;
     max-width: map-get($map: $breakpoints, $key: "laptop-s");
-    transform: translateY(-25vh);
-    transition: transform $transition-default;
+    transform: translateY(-5vh);
+    transition: transform $transition-timing-function-default 0.4s;
 
     &.hasContent {
       transform: translateY(0);
