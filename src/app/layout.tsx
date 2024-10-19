@@ -16,7 +16,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
     title: "Recipe Summary",
     description: "Recipe Summary",
-    appleWebApp: {},
+    appleWebApp: { statusBarStyle: "black-translucent" },
 }
 
 export default function RootLayout({
