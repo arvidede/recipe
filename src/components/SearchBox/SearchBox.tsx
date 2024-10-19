@@ -79,6 +79,9 @@ function SearchBox({ onLoadRecipe }: Props) {
 
     const handleFocus = () => {
         inputRef.current?.setSelectionRange(0, state.input.length)
+        if (!state.input.length) {
+            handlePaste()
+        }
     }
 
     useEffect(() => {
