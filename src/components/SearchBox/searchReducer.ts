@@ -1,3 +1,4 @@
+import { useSearchParams } from "next/navigation"
 import { useReducer } from "react"
 
 export enum ActionType {
@@ -28,10 +29,29 @@ const INITIAL_STATE = {
     recipe: null,
 }
 
+function updateQueryParam(url: string) {
+    if (url) {
+        try {
+            const param = `?url=${encodeURI(url)}`
+            window.history.replaceState(null, "", param)
+        } catch {}
+    } else {
+        const url = new URL(location.href)
+        url.searchParams.delete("url")
+        window.history.replaceState(null, "", url.toString())
+    }
+}
+
 function searchReducer(prevState: State, action: Action): State {
     switch (action.type) {
         case ActionType.Loading:
+            return {
+                ...prevState,
+                [action.type]: action.payload,
+            }
         case ActionType.Input:
+            updateQueryParam(action.payload)
+
             return {
                 ...prevState,
                 [action.type]: action.payload,
@@ -40,5 +60,8 @@ function searchReducer(prevState: State, action: Action): State {
 }
 
 export default function useSearchReducer() {
-    return useReducer(searchReducer, INITIAL_STATE)
+    const params = useSearchParams()
+    const url = params.get("url")
+    const initialState = { ...INITIAL_STATE, input: url ?? "" }
+    return useReducer(searchReducer, initialState)
 }

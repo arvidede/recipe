@@ -86,6 +86,7 @@ function SearchBox({ onLoadRecipe }: Props) {
 
     useEffect(() => {
         handlePaste()
+        handleSearchRecipe()
 
         const input = inputRef.current
         if (input) {
