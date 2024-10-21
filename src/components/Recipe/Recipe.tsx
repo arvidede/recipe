@@ -44,7 +44,7 @@ const Recipe = ({ recipe }: Props) => {
             <div className={styles.recipe}>
                 {recipe && (
                     <article>
-                        <div className={styles.title}>
+                        <section className={styles.details}>
                             {recipe.img && (
                                 <Image
                                     src={recipe.img}
@@ -53,20 +53,25 @@ const Recipe = ({ recipe }: Props) => {
                                     height={300}
                                 />
                             )}
-                            <div>
-                                <h2>{recipe.title}</h2>
-                                <p>{recipe.url}</p>
+                            <h2>{recipe.title}</h2>
+                            <div className={styles.actions}>
+                                <a href={recipe.url}>
+                                    <Button>{"📖"}</Button>
+                                </a>
+                                <Button>{"❤️"}</Button>
+                                <Button>{"⬆️"}</Button>
+                                <Button>{"✏️"}</Button>
                             </div>
-                        </div>
-                        <div className={styles.ingredients}>
-                            <h4>Ingredients</h4>
-                            <div>
-                                <Button>-</Button>4 servings
-                                <Button>+</Button>
+                        </section>
+                        <section className={styles.list}>
+                            <div className={styles.ingredients}>
+                                <h3>Ingredients</h3>
+                                <div>
+                                    <Button>-</Button>4 servings
+                                    <Button>+</Button>
+                                </div>
                             </div>
-                        </div>
-                        <Card>
-                            <section className={styles.list}>
+                            <Card>
                                 <ul>
                                     {recipe.ingredients.map(
                                         (ingredient, index) => (
@@ -76,11 +81,11 @@ const Recipe = ({ recipe }: Props) => {
                                         ),
                                     )}
                                 </ul>
-                            </section>
-                        </Card>
-                        <h3>Steps</h3>
-                        <Card>
-                            <section className={styles.list}>
+                            </Card>
+                        </section>
+                        <section className={styles.list}>
+                            <h3>Steps</h3>
+                            <Card>
                                 <ol>
                                     {recipe.instructions.map(
                                         (instruction, index) => (
@@ -88,8 +93,8 @@ const Recipe = ({ recipe }: Props) => {
                                         ),
                                     )}
                                 </ol>
-                            </section>
-                        </Card>
+                            </Card>
+                        </section>
                         <section className={styles.tags}>
                             {recipe.tags.map((tag) => (
                                 <Tag key={tag.key} tag={tag} />

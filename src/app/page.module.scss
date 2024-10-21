@@ -3,17 +3,18 @@
 .main {
   display: flex;
   flex-direction: column;
-  align-items: center;
   min-height: 100dvh;
   padding: $spacing-l;
   justify-content: center;
+  align-items: center;
   height: 100%;
 
   .card {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    max-width: map-get($map: $breakpoints, $key: "laptop-s");
     transform: translateY(-5vh);
     transition: transform $transition-timing-function-default 0.4s;
 
