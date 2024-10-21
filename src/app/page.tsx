@@ -1,6 +1,5 @@
 "use client"
 
-import Card from "@/components/Card/Card"
 import Recipe from "@/components/Recipe/Recipe"
 import SearchBox from "@/components/SearchBox"
 import clsx from "clsx"
@@ -12,7 +11,7 @@ export default function Home() {
 
     return (
         <main className={styles.main}>
-            <Card
+            <div
                 className={clsx({
                     [styles.card]: true,
                     [styles.hasContent]: !!recipe,
@@ -20,7 +19,7 @@ export default function Home() {
             >
                 <SearchBox onLoadRecipe={setRecipe} />
                 <Recipe recipe={recipe} />
-            </Card>
+            </div>
         </main>
     )
 }

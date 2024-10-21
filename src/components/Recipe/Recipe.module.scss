@@ -13,34 +13,46 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
+    row-gap: $spacing-m;
+
+    // Prevent box-shadow clipping
+    padding: $spacing-m;
+    margin: -$spacing-m;
 
     > article {
       display: flex;
       flex-direction: column;
       row-gap: $spacing-l;
 
-      h3 {
+      h2 {
         text-wrap: balance;
       }
 
-      > section {
-        h4 {
-          margin-bottom: $spacing-s;
+      ol,
+      ul {
+        padding: 0 $spacing-l;
+
+        li {
+          margin: 0;
+          padding: 0;
+
+          &:not(:last-of-type) {
+            margin-bottom: $spacing-s;
+          }
         }
       }
+
+      .list {
+        row-gap: $spacing-m;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .tags {
+        display: flex;
+        gap: $spacing-xs;
+        flex-wrap: wrap;
+      }
     }
-  }
-
-  ol,
-  ul {
-    padding: 0 1rem;
-    margin: 0 1rem;
-  }
-
-  .tags {
-    display: flex;
-    gap: $spacing-xs;
-    flex-wrap: wrap;
   }
 }
