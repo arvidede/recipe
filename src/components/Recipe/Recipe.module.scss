@@ -22,7 +22,7 @@
       flex-direction: column;
       gap: $spacing-l;
 
-      @include media(">tablet") {
+      @include media(">laptop-s") {
         display: grid;
         grid-template-columns: 1fr 2fr;
 
@@ -37,10 +37,18 @@
       }
 
       .details {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
         column-gap: $spacing-m;
 
+        > div {
+          display: flex;
+          flex-direction: column;
+          row-gap: $spacing-m;
+        }
+
         img {
+          width: 100%;
           object-fit: cover;
           border-radius: $border-radius_xs;
         }
@@ -54,8 +62,8 @@
           column-gap: $spacing-s;
         }
 
-        @include media("<tablet") {
-          flex-direction: column;
+        @include media("<laptop-s") {
+          grid-template-columns: 1fr;
           row-gap: $spacing-m;
 
           h2 {

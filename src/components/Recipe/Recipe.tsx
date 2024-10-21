@@ -53,14 +53,16 @@ const Recipe = ({ recipe }: Props) => {
                                     height={300}
                                 />
                             )}
-                            <h2>{recipe.title}</h2>
-                            <div className={styles.actions}>
-                                <a href={recipe.url}>
-                                    <Button>{"📖"}</Button>
-                                </a>
-                                <Button>{"❤️"}</Button>
-                                <Button>{"⬆️"}</Button>
-                                <Button>{"✏️"}</Button>
+                            <div>
+                                <h2>{recipe.title}</h2>
+                                <div className={styles.actions}>
+                                    <a href={recipe.url}>
+                                        <Button>{"📖"}</Button>
+                                    </a>
+                                    <Button>{"❤️"}</Button>
+                                    <Button>{"⬆️"}</Button>
+                                    <Button>{"✏️"}</Button>
+                                </div>
                             </div>
                         </section>
                         <section className={styles.list}>
