@@ -10,20 +10,21 @@ const Tag = z.object({
 
 const Recipe = z.object({
     title: z.string(),
+    originalTitle: z.string(),
     ingredients: z.array(z.string()),
     instructions: z.array(z.string()),
     tags: z.array(Tag),
-    imgSrc: z.string(),
 })
 
 const RECIPE_SUMMARY_PROMPT = `
 You are a recipe summarizer.
-You receive excerpts from recipe web pages that you summarize and format into a JSON format according to {title: string, ingredients: string[], instructions: string[], tags: Tag[], imgSrc: string}.
-Tags should contain broader ingredient categories. Similar ingredients should be grouped together under a single category.
-Tags should also include general recipe category tags such as breakfast, dinner, easy, vegetarian, meat.
+You receive excerpts from recipe web pages that you summarize and format into a JSON format according to {title: string, originalTitle: string, ingredients: string[], instructions: string[], tags: Tag[]}.
+The originalTitle is the original recipe title.
+Tags should contain each ingredient. Similar ingredients should be grouped together under a single category.
+Tags should also include the recipe category such as breakfast, lunch, dinner, snack, dessert, vegetarian.
 A Tag is an object with the keys name and key, where name is human-readable, e.g., 'Creme Fraiche', and key is a database indexable slugified string without spaces, e.g., 'creme-fraiche'.
 Replace all imperial units with metric units.
-All output should be in English
+All output should be in English, except the original title, which should be in the original language.
 `
 
 const RECIPE_SUMMARY_PROMPT_MESSAGE: ChatCompletionMessageParam = {
