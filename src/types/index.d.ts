@@ -3,10 +3,18 @@ interface Tag {
     key: string
 }
 
+interface Ingredient {
+    name: string
+    quantity: number
+    unit: string
+}
+
 interface Recipe {
+    url: string
+    img: string | null
     title: string
     originalTitle?: string
-    ingredients: string[]
+    ingredients: Ingredient[]
     instructions: string[]
     tags: Tag[]
 }

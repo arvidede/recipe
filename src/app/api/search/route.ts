@@ -16,7 +16,16 @@ export const maxDuration = 60
 async function fetchRecipe(url: URL) {
     const page = await fetch(url)
     const html = await page.text()
-    return parsePage(html, url)
+
+    const { img, text } = await parsePage(html, url)
+    const summary = await summariseRecipe(text)
+
+    const recipe: Recipe = {
+        img,
+        url: url.href,
+        ...summary,
+    }
+    return recipe
 }
 
 function validateRequest(request: Request) {
@@ -40,13 +49,12 @@ export async function GET(request: Request) {
         }
 
         const recipe = await fetchRecipe(url)
-        const summary = await summariseRecipe(recipe)
 
         if (ENV.CACHE) {
-            cache.set(url.href, JSON.stringify(summary))
+            cache.set(url.href, JSON.stringify(recipe))
         }
 
-        return NextResponse.json(summary, { status: 200 })
+        return NextResponse.json(recipe, { status: 200 })
     } catch (e: any) {
         if (e instanceof Response) {
             return e

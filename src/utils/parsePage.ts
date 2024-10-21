@@ -11,15 +11,6 @@ const DEFAULT_SELECTORS: SelectorDefinition[] = [
     },
 ]
 
-function parseIcaPage(html: string) {
-    return convert(html, {
-        baseElements: {
-            selectors: ["#ingredients", "#steps"],
-        },
-        selectors: DEFAULT_SELECTORS,
-    })
-}
-
 function parseSeriousEatsPage(html: string) {
     return convert(html, {
         baseElements: {
@@ -66,6 +57,16 @@ function removeUrlsAndEmails(content: string) {
         .replace(/\S+@\S+\.\S+/g, "") // Remove email addresses
 }
 
+const OG_IMAGE_REGEX = new RegExp(
+    `<meta\\s+(?:property|name)=["']og:image["']\\s+content=["']([^"']+)["']`,
+    "i",
+)
+
+function parseOGImage(html: string) {
+    const match = html.match(OG_IMAGE_REGEX)
+    return match ? match[1] : null
+}
+
 function preprocessText(textContent: string) {
     textContent = removeUrlsAndEmails(textContent)
 
@@ -100,7 +101,7 @@ export function parsePage(html: string, url: URL) {
     let parsed: string
 
     if (/ica.se/.test(url.host)) {
-        parsed = parseIcaPage(html)
+        parsed = parseDefaultPage(html)
     } else if (/seriouseats.com/.test(url.host)) {
         parsed = parseSeriousEatsPage(html)
     } else if (/simplyrecipes.com/.test(url.host)) {
@@ -109,5 +110,8 @@ export function parsePage(html: string, url: URL) {
         parsed = parseDefaultPage(html)
     }
 
-    return preprocessText(parsed)
+    return {
+        text: preprocessText(parsed),
+        img: parseOGImage(html),
+    }
 }

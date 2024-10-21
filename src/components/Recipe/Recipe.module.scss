@@ -19,13 +19,40 @@
     padding: $spacing-m;
     margin: -$spacing-m;
 
-    > article {
+    article {
       display: flex;
       flex-direction: column;
       row-gap: $spacing-l;
 
-      h2 {
-        text-wrap: balance;
+      .title {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-template-rows: auto;
+        column-gap: $spacing-m;
+
+        img {
+          object-fit: cover;
+        }
+
+        h2 {
+          text-wrap: balance;
+        }
+      }
+
+      .ingredients {
+        display: flex;
+        justify-content: space-between;
+
+        > div {
+          display: flex;
+          align-items: center;
+          column-gap: $spacing-s;
+          > button {
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
+          }
+        }
       }
 
       ol,
