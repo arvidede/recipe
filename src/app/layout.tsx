@@ -1,7 +1,7 @@
 import "@/styles/globals.scss"
 import type { Metadata } from "next"
 import { Viewport } from "next"
-import { Inter } from "next/font/google"
+import { PT_Serif } from "next/font/google"
 
 export const viewport: Viewport = {
     themeColor: "var(--background-color)",
@@ -11,7 +11,7 @@ export const viewport: Viewport = {
     userScalable: false,
 }
 
-const inter = Inter({ subsets: ["latin"] })
+const font = PT_Serif({ subsets: ["latin"], weight: "400" })
 
 export const metadata: Metadata = {
     title: "Recipe Summary",
@@ -26,7 +26,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={inter.className}>{children}</body>
+            <body className={font.className}>{children}</body>
         </html>
     )
 }
