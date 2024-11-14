@@ -4,15 +4,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: fit-content;
-  background: none;
-  padding: $spacing-s;
   margin: 0;
-  border: $border-dark;
-  border-radius: $border-radius_default;
+  height: fit-content;
+  width: fit-content;
   -webkit-tap-highlight-color: transparent;
+  background-color: $color_primary;
+  border: none;
+  transition: transform $transition-default;
+  padding: $spacing-s;
+
+  &:active {
+    transform: scale(0.95);
+  }
 
   &:hover {
     cursor: pointer;
+  }
+
+  &.text {
+    border-radius: $border-radius_xs;
+  }
+
+  &.icon {
+    border-radius: 50%;
   }
 }

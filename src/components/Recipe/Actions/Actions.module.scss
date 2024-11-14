@@ -1,0 +1,9 @@
+@import "@/styles/main";
+.actions {
+  display: flex;
+  column-gap: $spacing-s;
+
+  @include media("<laptop-s") {
+    justify-content: center;
+  }
+}

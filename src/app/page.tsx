@@ -6,7 +6,11 @@ import clsx from "clsx"
 import { useState } from "react"
 import styles from "./page.module.scss"
 
-export default function Home() {
+interface Props {
+    searchParams: { url?: string }
+}
+
+export default function Home({ searchParams }: Props) {
     const [recipe, setRecipe] = useState<Recipe | null>(null)
 
     return (
@@ -17,7 +21,7 @@ export default function Home() {
                     [styles.hasContent]: !!recipe,
                 })}
             >
-                <SearchBox onLoadRecipe={setRecipe} />
+                <SearchBox onLoadRecipe={setRecipe} url={searchParams.url} />
                 <Recipe recipe={recipe} />
             </div>
         </main>

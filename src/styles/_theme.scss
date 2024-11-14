@@ -122,7 +122,7 @@ $font-weight-bold: 700;
 }
 
 /* Transitions */
-$transition-duration-default: 0.2s;
+$transition-duration-default: 150ms;
 $transition-timing-function-default: ease;
 $transition-default: $transition-timing-function-default
   $transition-duration-default;

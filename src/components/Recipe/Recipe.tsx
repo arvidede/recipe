@@ -2,7 +2,9 @@ import clsx from "clsx"
 import Image from "next/image"
 import Button from "../Button"
 import Card from "../Card"
+import Icon from "../Icon"
 import Tag from "../Tag/Tag"
+import { Actions } from "./Actions"
 import styles from "./Recipe.module.scss"
 
 interface Props {
@@ -55,22 +57,20 @@ const Recipe = ({ recipe }: Props) => {
                             )}
                             <div>
                                 <h2>{recipe.title}</h2>
-                                <div className={styles.actions}>
-                                    <a href={recipe.url}>
-                                        <Button>{"📖"}</Button>
-                                    </a>
-                                    <Button>{"❤️"}</Button>
-                                    <Button>{"⬆️"}</Button>
-                                    <Button>{"✏️"}</Button>
-                                </div>
+                                <Actions recipe={recipe} />
                             </div>
                         </section>
                         <section className={styles.list}>
                             <div className={styles.ingredients}>
                                 <h3>Ingredients</h3>
                                 <div>
-                                    <Button>-</Button>4 servings
-                                    <Button>+</Button>
+                                    <Button variant="icon">
+                                        <Icon variant="minus" size="s" />
+                                    </Button>
+                                    4 servings
+                                    <Button variant="icon">
+                                        <Icon variant="plus" size="s" />
+                                    </Button>
                                 </div>
                             </div>
                             <Card>

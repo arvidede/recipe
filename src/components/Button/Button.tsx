@@ -7,6 +7,7 @@ interface Props {
     disabled?: boolean
     className?: string
     children?: ReactNode
+    variant?: "text" | "icon"
 }
 
 export default function Button({
@@ -14,11 +15,12 @@ export default function Button({
     className,
     disabled,
     children,
+    variant = "text",
 }: Props) {
     return (
         <button
             onClick={onClick}
-            className={clsx(styles.container, className)}
+            className={clsx(styles.container, styles[variant], className)}
             disabled={disabled}
         >
             {children}

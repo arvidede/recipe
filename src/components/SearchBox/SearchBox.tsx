@@ -5,8 +5,8 @@ import sleep from "@/utils/sleep"
 import clsx from "clsx"
 import { ChangeEvent, useEffect, useRef } from "react"
 import Button from "../Button"
+import Icon from "../Icon"
 import Spinner from "../Spinner"
-import Cutlery from "../icons/Cutlery"
 import styles from "./SearchBox.module.scss"
 import useSearchReducer, { ActionType } from "./searchReducer"
 
@@ -37,10 +37,11 @@ async function getRecipe(url: string): Promise<Recipe | null> {
 
 interface Props {
     onLoadRecipe: (recipe: Recipe | null) => void
+    url?: string
 }
 
-function SearchBox({ onLoadRecipe }: Props) {
-    const [state, dispatch] = useSearchReducer()
+function SearchBox({ onLoadRecipe, url }: Props) {
+    const [state, dispatch] = useSearchReducer(url)
     const inputRef = useRef<HTMLInputElement>(null)
     const isMounted = useIsMounted()
 
@@ -90,6 +91,10 @@ function SearchBox({ onLoadRecipe }: Props) {
 
         const input = inputRef.current
         if (input) {
+            if (!input.value.length) {
+                input.focus()
+            }
+
             input.addEventListener("paste", handlePaste)
             return () => {
                 input.removeEventListener("paste", handlePaste)
@@ -105,7 +110,6 @@ function SearchBox({ onLoadRecipe }: Props) {
             <input
                 ref={inputRef}
                 onFocus={handleFocus}
-                autoFocus
                 type="text"
                 value={state.input}
                 onChange={handleChange}
@@ -122,9 +126,10 @@ function SearchBox({ onLoadRecipe }: Props) {
                 <Button
                     className={styles.button}
                     disabled={state.loading}
+                    variant="icon"
                     onClick={() => handleSearchRecipe()}
                 >
-                    <Cutlery />
+                    <Icon variant="cutlery" />
                 </Button>
             </div>
         </div>

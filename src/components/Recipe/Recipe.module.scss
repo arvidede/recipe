@@ -73,10 +73,6 @@
           img {
             width: 100%;
           }
-
-          .actions {
-            justify-content: center;
-          }
         }
       }
 
@@ -88,12 +84,6 @@
           display: flex;
           align-items: center;
           column-gap: $spacing-s;
-
-          > button {
-            border-radius: 50%;
-            height: 30px;
-            width: 30px;
-          }
         }
       }
 

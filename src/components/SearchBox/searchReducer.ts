@@ -1,4 +1,3 @@
-import { useSearchParams } from "next/navigation"
 import { useReducer } from "react"
 
 export enum ActionType {
@@ -59,9 +58,10 @@ function searchReducer(prevState: State, action: Action): State {
     }
 }
 
-export default function useSearchReducer() {
-    const params = useSearchParams()
-    const url = params.get("url")
-    const initialState = { ...INITIAL_STATE, input: url ?? "" }
-    return useReducer(searchReducer, initialState)
+function getInitialState(url?: string) {
+    return { ...INITIAL_STATE, input: url ?? "" }
+}
+
+export default function useSearchReducer(url?: string) {
+    return useReducer(searchReducer, null, () => getInitialState(url))
 }

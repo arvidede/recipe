@@ -51,22 +51,6 @@
       width: 1.5rem;
     }
 
-    .button {
-      height: 100%;
-      width: 100%;
-      border: none;
-      background-color: $color_primary;
-      border-radius: 50%;
-      padding: $spacing-s;
-
-      svg {
-        height: 100%;
-        width: 100%;
-        stroke: $color_secondary;
-        fill: $color_secondary;
-      }
-    }
-
     &.mounted {
       .spinner {
         animation: leave 0.1s ease-in forwards;
