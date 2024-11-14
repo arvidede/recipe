@@ -18,7 +18,7 @@
     "eslint": "8.46.0",
     "eslint-config-next": "14.0.2",
     "html-to-text": "^9.0.5",
-    "next": "14.0.2",
+    "next": "^14.2.18",
     "openai": "^4.68.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
