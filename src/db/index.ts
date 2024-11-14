@@ -106,7 +106,6 @@ class DevDB implements DB {
                 JSON.parse(fs.readFileSync(REQUEST_CACHE_FILE_PATH, "utf-8")),
             ),
         )
-        this.listen()
     }
 
     public set(key: string, payload: string) {
@@ -136,13 +135,6 @@ class DevDB implements DB {
             JSON.stringify(Object.fromEntries(this.db)),
             "utf-8",
         )
-    }
-
-    private listen() {
-        fs.watchFile(REQUEST_CACHE_FILE_PATH, () => {
-            logger.info(`DETECTED FILE CHANGE ${REQUEST_CACHE_FILE_PATH}`)
-            this.init()
-        })
     }
 }
 

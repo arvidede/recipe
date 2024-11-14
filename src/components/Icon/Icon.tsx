@@ -38,12 +38,20 @@ const ICON_MAP: Record<IconVariant, FunctionComponent> = {
 interface Props {
     variant: IconVariant
     size?: IconSize
+    className?: string
 }
 
-export default function Icon({ variant, size = "m" }: Props) {
+export default function Icon({ variant, className, size = "m" }: Props) {
     const ICON = ICON_MAP[variant]
     return (
-        <div className={clsx(styles.icon, styles[variant], styles[size])}>
+        <div
+            className={clsx(
+                styles.icon,
+                styles[variant],
+                styles[size],
+                className,
+            )}
+        >
             <ICON />
         </div>
     )

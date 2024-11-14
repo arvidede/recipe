@@ -111,23 +111,22 @@ function SearchBox({ onLoadRecipe, url }: Props) {
                 onChange={handleChange}
                 placeholder="Ge mig ett recept"
             />
-            <div
+
+            <Button
                 className={clsx({
-                    [styles.end]: true,
                     [styles.mounted]: isMounted(),
                     [styles.loading]: state.loading,
                 })}
+                disabled={state.loading}
+                variant="icon"
+                onClick={() => handleSearchRecipe()}
             >
-                <Spinner className={styles.spinner} />
-                <Button
-                    className={styles.button}
-                    disabled={state.loading}
-                    variant="icon"
-                    onClick={() => handleSearchRecipe()}
-                >
-                    <Icon variant="cutlery" />
-                </Button>
-            </div>
+                {state.loading ? (
+                    <Spinner className={styles.spinner} />
+                ) : (
+                    <Icon className={styles.icon} variant="cutlery" />
+                )}
+            </Button>
         </div>
     )
 }

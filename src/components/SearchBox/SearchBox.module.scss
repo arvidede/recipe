@@ -2,11 +2,10 @@
 
 .container {
   width: 100%;
-  max-width: map-get($map: $breakpoints, $key: "laptop-s");
+  max-width: map-get($map: $breakpoints, $key: "tablet");
   display: flex;
   align-items: center;
   justify-content: center;
-  // background-color: $color_gray_extra-light;
   background-color: $color_white;
   border-radius: 26px;
   padding: $spacing-s $spacing-s $spacing-s $spacing-m;
@@ -32,43 +31,28 @@
     }
   }
 
-  .end {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 2.5rem;
-    width: 2.5rem;
-    min-width: 2.5rem;
-    position: relative;
+  .spinner {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 
-    .spinner,
-    .button {
-      position: absolute;
-    }
-
+  .mounted {
     .spinner {
-      height: 1.5rem;
-      width: 1.5rem;
+      animation: leave 0.1s ease-in forwards;
     }
 
-    &.mounted {
-      .spinner {
-        animation: leave 0.1s ease-in forwards;
-      }
+    .icon {
+      animation: enter 0.1s ease-in forwards;
+    }
+  }
 
-      .button {
-        animation: enter 0.1s ease-in forwards;
-      }
+  .loading {
+    .spinner {
+      animation: enter 0.1s ease-in forwards;
     }
 
-    &.loading {
-      .spinner {
-        animation: enter 0.1s ease-in forwards;
-      }
-
-      .button {
-        animation: leave 0.1s ease-in forwards;
-      }
+    .icon {
+      animation: leave 0.1s ease-in forwards;
     }
   }
 }
