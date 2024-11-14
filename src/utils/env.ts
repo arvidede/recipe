@@ -10,7 +10,10 @@ function parseEnv<T = undefined>(env: string | undefined, fallback?: T) {
     }
 }
 
+const IS_DEV = process.env.NODE_ENV === "development"
+
 export const ENV = {
-    VERBOSE: parseEnv(process.env.VERBOSE),
+    VERBOSE: parseEnv(process.env.VERBOSE, IS_DEV),
     CACHE: parseEnv(process.env.CACHE, true),
+    IS_DEV,
 }

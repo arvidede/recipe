@@ -1,7 +1,6 @@
 "use client"
 import useIsMounted from "@/utils/hooks/useIsMounted"
 import { isValidURL } from "@/utils/isValidUrl"
-import sleep from "@/utils/sleep"
 import clsx from "clsx"
 import { ChangeEvent, useEffect, useRef } from "react"
 import Button from "../Button"
@@ -23,10 +22,7 @@ async function getURLFromClipboard(): Promise<string> {
 }
 
 async function getRecipe(url: string): Promise<Recipe | null> {
-    const [response] = await Promise.all([
-        fetch(`/api/search?url=${url}`),
-        sleep(1000),
-    ])
+    const response = await fetch(`/api/search?url=${url}`)
 
     if (response.ok) {
         return response.json()

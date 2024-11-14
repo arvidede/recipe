@@ -1,5 +1,7 @@
 import chalk from "chalk"
+import { inspect } from "util"
 import { ENV } from "./env"
+
 type LogParams = Parameters<typeof console.log>
 
 const PREFIX = "recipe"
@@ -36,3 +38,5 @@ export function getLogger(prefix?: string) {
         error: error.bind(undefined, fullPrefix),
     }
 }
+
+getLogger("env").info(inspect(ENV, { colors: true }))
