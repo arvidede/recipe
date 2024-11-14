@@ -109,7 +109,7 @@ function SearchBox({ onLoadRecipe, url }: Props) {
                 type="text"
                 value={state.input}
                 onChange={handleChange}
-                placeholder="Ge mig ett recept"
+                placeholder="https://recipe.com"
             />
 
             <Button
