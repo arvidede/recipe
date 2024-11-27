@@ -1,4 +1,4 @@
-import DB from "@/db"
+import DB from "@/db/db"
 import { summariseRecipe } from "@/openai/prompts"
 import { ENV } from "@/utils/env"
 import { isValidURL } from "@/utils/isValidUrl"
@@ -9,7 +9,7 @@ import { NextResponse } from "next/server"
 
 const logger = getLogger("api:search")
 
-const cache = new DB()
+const db = new DB()
 
 export const maxDuration = 60
 
@@ -25,6 +25,7 @@ async function fetchRecipe(url: URL) {
         url: url.href,
         ...summary,
     }
+
     return recipe
 }
 
@@ -33,8 +34,10 @@ function validateRequest(request: Request) {
     const query = searchParams.get("url")
 
     if (!query || !isValidURL(query)) {
-        logger.error(`Invalid param 'url' in request, received ${query}`)
-        throw new Response(undefined, { status: 400 })
+        throw new Response(
+            `Error: Invalid param 'url' in request, received ${query}`,
+            { status: 400 },
+        )
     }
 
     return new URL(stripTrailingSlash(query))
@@ -44,21 +47,23 @@ export async function GET(request: Request) {
     try {
         const url = validateRequest(request)
 
-        if (ENV.CACHE && cache.has(url.href)) {
-            return new Response(cache.get(url.href))
+        if (ENV.CACHE && db.has(url.href)) {
+            return new Response(JSON.stringify(db.get(url.href)))
         }
 
         const recipe = await fetchRecipe(url)
 
         if (ENV.CACHE) {
-            cache.set(url.href, JSON.stringify(recipe))
+            db.set(url.href, recipe)
         }
 
         return NextResponse.json(recipe, { status: 200 })
     } catch (e: any) {
         if (e instanceof Response) {
+            logger.error(e.statusText)
             return e
         }
+
         logger.error(e.message)
         return new Response(`Error: ${e.message}`, { status: 500 })
     }

@@ -1,4 +1,5 @@
 export type Json =
+    | Recipe
     | string
     | number
     | boolean
@@ -34,17 +35,38 @@ export type Database = {
     }
     public: {
         Tables: {
-            recipes: {
+            queries: {
                 Row: {
                     key: string
-                    value: string
+                    value: Json
                 }
                 Insert: {
                     key: string
-                    value: string
+                    value: Json
                 }
                 Update: {
                     key?: string
+                    value?: Json
+                }
+                Relationships: []
+            }
+            recipes: {
+                Row: {
+                    id: string
+                    url: string
+                    user: string | null
+                    value: string
+                }
+                Insert: {
+                    id?: string
+                    url: string
+                    user?: string | null
+                    value: string
+                }
+                Update: {
+                    id?: string
+                    url?: string
+                    user?: string | null
                     value?: string
                 }
                 Relationships: []

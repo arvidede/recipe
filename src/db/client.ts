@@ -1,16 +1,22 @@
-import type { Database } from "@/types/db"
-import { createClient } from "@supabase/supabase-js"
+import { Database } from "@/types/db"
+import { createBrowserClient } from "@supabase/ssr"
 
-export default function getClient() {
-    return createClient<Database>(
-        process.env.SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        {
-            auth: {
-                persistSession: false,
-                autoRefreshToken: false,
-                detectSessionInUrl: false,
-            },
-        },
-    )
+let client: ReturnType<typeof createBrowserClient<Database>>
+
+export default function getBrowserClient() {
+    if (!client) {
+        client = createBrowserClient<Database>(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        )
+    }
+    return client
+}
+
+export async function getSession() {
+    const supabase = getBrowserClient()
+    const {
+        data: { session },
+    } = await supabase.auth.getSession()
+    return session
 }

@@ -18,3 +18,8 @@ interface Recipe {
     instructions: string[]
     tags: Tag[]
 }
+
+interface Query {
+    key: string
+    value: Recipe
+}
