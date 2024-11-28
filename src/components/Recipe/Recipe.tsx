@@ -51,12 +51,12 @@ const Recipe = ({ recipe }: Props) => {
                                 <Image
                                     src={recipe.img}
                                     alt={recipe.title}
-                                    width={300}
-                                    height={300}
+                                    width={200}
+                                    height={200}
                                 />
                             )}
                             <div>
-                                <h2>{recipe.title}</h2>
+                                <h1>{recipe.title}</h1>
                                 <Actions recipe={recipe} />
                             </div>
                         </section>
