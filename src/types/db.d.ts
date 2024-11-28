@@ -77,7 +77,7 @@ export type Database = {
                     tags: Json[]
                     title?: string
                     url: string
-                    user: string
+                    user?: string
                 }
                 Update: {
                     createdAt?: string

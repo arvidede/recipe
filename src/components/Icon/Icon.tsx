@@ -2,7 +2,7 @@ import clsx from "clsx"
 import { FunctionComponent } from "react"
 import Cutlery from "./Cutlery"
 import Edit from "./Edit"
-import Heart from "./Heart"
+import Heart, { HeartFilled } from "./Heart"
 import styles from "./Icon.module.scss"
 import Link from "./Link"
 import Minus from "./Minus"
@@ -18,6 +18,7 @@ type IconVariant =
     | "search"
     | "link"
     | "heart"
+    | "heart-filled"
     | "share"
     | "plus"
     | "minus"
@@ -29,6 +30,7 @@ const ICON_MAP: Record<IconVariant, FunctionComponent> = {
     paste: Paste,
     search: Search,
     heart: Heart,
+    "heart-filled": HeartFilled,
     link: Link,
     share: Share,
     plus: Plus,

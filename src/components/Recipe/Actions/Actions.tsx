@@ -1,4 +1,5 @@
 "use client"
+import saveRecipe from "@/actions/saveRecipe"
 import Button from "@/components/Button"
 import Icon from "@/components/Icon"
 import styles from "./Actions.module.scss"
@@ -8,6 +9,24 @@ export interface Props {
 }
 
 const Actions: React.FC<Props> = ({ recipe }) => {
+    async function handleSaveRecipe() {
+        await saveRecipe(recipe)
+    }
+
+    async function handleShareRecipe() {
+        const shareData = {
+            url: location.href,
+            text: recipe.title,
+            title: recipe.title,
+        }
+
+        if (navigator.share && navigator.canShare(shareData)) {
+            navigator.share(shareData)
+        } else {
+            window.navigator.clipboard.writeText(shareData.url)
+        }
+    }
+
     return (
         <div className={styles.actions}>
             <a href={recipe.url}>
@@ -15,10 +34,10 @@ const Actions: React.FC<Props> = ({ recipe }) => {
                     <Icon variant="link" />
                 </Button>
             </a>
-            <Button variant="icon">
+            <Button variant="icon" onClick={handleSaveRecipe}>
                 <Icon variant="heart" />
             </Button>
-            <Button variant="icon">
+            <Button variant="icon" onClick={handleShareRecipe}>
                 <Icon variant="share" />
             </Button>
             <Button variant="icon">
