@@ -14,7 +14,7 @@ const REQUEST_CACHE_FILE_PATH = join(__dirname, REQUEST_CACHE_FILE)
 const logger = getLogger("db")
 
 interface DB {
-    get(key: string): Recipe | undefined
+    get(key: string): Recipe | null
     set(key: string, payload: Recipe): void
     has(key: string): boolean
 }
@@ -65,7 +65,7 @@ class ProdDB implements DB {
 
     public get(key: string) {
         logger.info("GET", key)
-        return this.db.get(key)
+        return this.db.get(key) ?? null
     }
 
     public has(key: string) {
@@ -112,7 +112,7 @@ class DevDB implements DB {
 
     public get(key: string) {
         logger.info("GET", key)
-        return this.db.get(key)
+        return this.db.get(key) ?? null
     }
 
     public has(key: string) {
@@ -129,4 +129,13 @@ class DevDB implements DB {
     }
 }
 
-export default ENV.IS_DEV ? DevDB : ProdDB
+let db: DB
+
+function getDB() {
+    if (!db) {
+        db = new (ENV.IS_DEV ? DevDB : ProdDB)()
+    }
+    return db
+}
+
+export default getDB

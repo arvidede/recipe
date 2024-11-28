@@ -1,4 +1,4 @@
-import DB from "@/db/db"
+import getDB from "@/db"
 import { summariseRecipe } from "@/openai/prompts"
 import { ENV } from "@/utils/env"
 import { isValidURL } from "@/utils/isValidUrl"
@@ -9,7 +9,7 @@ import { NextResponse } from "next/server"
 
 const logger = getLogger("api:search")
 
-const db = new DB()
+const db = getDB()
 
 export const maxDuration = 60
 

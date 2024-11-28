@@ -1,29 +1,15 @@
-"use client"
-
-import Recipe from "@/components/Recipe/Recipe"
-import SearchBox from "@/components/SearchBox"
-import clsx from "clsx"
-import { useState } from "react"
-import styles from "./page.module.scss"
+import { SearchPage } from "@/components/SearchPage"
+import getDB from "@/db"
+import { stripTrailingSlash } from "@/utils/stripTrailingSlash"
 
 interface Props {
     searchParams: { url?: string }
 }
 
-export default function Home({ searchParams }: Props) {
-    const [recipe, setRecipe] = useState<Recipe | null>(null)
+export default async function Home({ searchParams }: Props) {
+    const recipe = searchParams.url
+        ? getDB().get(stripTrailingSlash(searchParams.url))
+        : null
 
-    return (
-        <main className={styles.main}>
-            <div
-                className={clsx({
-                    [styles.card]: true,
-                    [styles.hasContent]: !!recipe,
-                })}
-            >
-                <SearchBox onLoadRecipe={setRecipe} url={searchParams.url} />
-                <Recipe recipe={recipe} />
-            </div>
-        </main>
-    )
+    return <SearchPage searchParams={searchParams} recipe={recipe} />
 }
