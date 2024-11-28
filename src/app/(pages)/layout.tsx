@@ -1,9 +1,11 @@
 import { Header } from "@/components/Header"
 import { getUser } from "@/db/user"
 import "@/styles/globals.scss"
+import clsx from "clsx"
 import type { Metadata } from "next"
 import { Viewport } from "next"
 import { PT_Serif } from "next/font/google"
+import styles from "./layout.module.scss"
 
 export const viewport: Viewport = {
     themeColor: "var(--background-color)",
@@ -30,10 +32,7 @@ export default async function RootLayout({
 
     return (
         <html lang="en">
-            <body
-                className={font.className}
-                style={{ minHeight: "100dvh", alignContent: "center" }}
-            >
+            <body className={clsx(font.className, styles.body)}>
                 <Header user={user} />
                 {children}
             </body>
