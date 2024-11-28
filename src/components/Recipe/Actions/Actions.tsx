@@ -1,5 +1,5 @@
 "use client"
-import saveRecipe from "@/actions/saveRecipe"
+import saveRecipe from "@/actions/recipe/saveRecipe"
 import Button from "@/components/Button"
 import Icon from "@/components/Icon"
 import styles from "./Actions.module.scss"

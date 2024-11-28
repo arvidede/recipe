@@ -7,7 +7,7 @@ interface Props {
     disabled?: boolean
     className?: string
     children?: ReactNode
-    variant?: "text" | "icon"
+    variant?: "text" | "icon" | "outlined"
 }
 
 export default function Button({

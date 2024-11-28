@@ -1,0 +1,17 @@
+@import "@/styles/main";
+
+.header {
+  top: 0;
+  right: 0;
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  padding: $spacing-m;
+  column-gap: $spacing-m;
+  z-index: 1;
+
+  @include media("<laptop-m") {
+    width: 100dvw;
+    background-color: inherit;
+  }
+}

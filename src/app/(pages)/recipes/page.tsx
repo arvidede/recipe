@@ -1,5 +1,5 @@
 import { RecipeCard } from "@/components/RecipeCard"
-import getAllRecipes from "@/db/actions/getAllRecipes"
+import getAllRecipes from "@/db/queries/getAllRecipes"
 import styles from "./page.module.scss"
 
 interface Props {}

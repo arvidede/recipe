@@ -13,10 +13,17 @@ export default function getBrowserClient() {
     return client
 }
 
-export async function getSession() {
-    const supabase = getBrowserClient()
+type BrowserClient = Awaited<ReturnType<typeof getBrowserClient>>
+
+export async function getSession(client?: BrowserClient) {
+    const supabase = client || getBrowserClient()
     const {
         data: { session },
     } = await supabase.auth.getSession()
     return session
+}
+
+export async function getUser(client?: BrowserClient) {
+    const supabase = client || getBrowserClient()
+    return supabase.auth.getUser()
 }

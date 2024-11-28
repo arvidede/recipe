@@ -9,7 +9,7 @@
   width: fit-content;
   -webkit-tap-highlight-color: transparent;
   background-color: $color_primary;
-  border: none;
+  border: solid 2px $color_primary;
   transition: transform $transition-default;
   padding: $spacing-s;
 
@@ -23,6 +23,15 @@
 
   &.text {
     border-radius: $border-radius_xs;
+    border: solid 2px $color_primary;
+    color: $color_secondary;
+  }
+
+  &.outlined {
+    border-radius: $border-radius_xs;
+    border: solid 2px $color_primary;
+    background-color: transparent;
+    color: $color_primary;
   }
 
   &.icon {

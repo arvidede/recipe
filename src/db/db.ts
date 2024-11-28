@@ -3,9 +3,9 @@ import { getLogger } from "@/utils/log"
 import fs from "fs"
 import { dirname, join } from "path"
 import { fileURLToPath } from "url"
-import getAllQueries from "./actions/getAllQueries"
-import setQuery from "./actions/setQuery"
 import getClient from "./admin"
+import getAllQueries from "./queries/getAllQueries"
+import setQuery from "./queries/setQuery"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const REQUEST_CACHE_FILE = "cache.json"

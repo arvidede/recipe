@@ -3,11 +3,13 @@
 .main {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
   padding: $spacing-l;
   justify-content: center;
   align-items: center;
-  height: 100%;
+
+  @include media("<laptop-m") {
+    margin-top: 50px;
+  }
 
   .card {
     display: flex;

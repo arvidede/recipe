@@ -1,3 +1,5 @@
+import { Header } from "@/components/Header"
+import { getUser } from "@/db/user"
 import "@/styles/globals.scss"
 import type { Metadata } from "next"
 import { Viewport } from "next"
@@ -19,14 +21,22 @@ export const metadata: Metadata = {
     appleWebApp: { statusBarStyle: "black-translucent" },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
+    const user = await getUser()
+
     return (
         <html lang="en">
-            <body className={font.className}>{children}</body>
+            <body
+                className={font.className}
+                style={{ minHeight: "100dvh", alignContent: "center" }}
+            >
+                <Header user={user} />
+                {children}
+            </body>
         </html>
     )
 }
