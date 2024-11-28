@@ -1,5 +1,7 @@
 export type Json =
     | Recipe
+    | Ingredient
+    | Tag
     | string
     | number
     | boolean
@@ -52,22 +54,43 @@ export type Database = {
             }
             recipes: {
                 Row: {
+                    createdAt: string
                     id: string
+                    img: string | null
+                    ingredients: Json[]
+                    instructions: string[]
+                    lastModified: string
+                    originalTitle: string | null
+                    tags: Json[]
+                    title: string
                     url: string
-                    user: string | null
-                    value: string
+                    user: string
                 }
                 Insert: {
+                    createdAt?: string
                     id?: string
+                    img?: string | null
+                    ingredients: Json[]
+                    instructions: string[]
+                    lastModified?: string
+                    originalTitle?: string | null
+                    tags: Json[]
+                    title?: string
                     url: string
-                    user?: string | null
-                    value: string
+                    user: string
                 }
                 Update: {
+                    createdAt?: string
                     id?: string
+                    img?: string | null
+                    ingredients?: Json[]
+                    instructions?: string[]
+                    lastModified?: string
+                    originalTitle?: string | null
+                    tags?: Json[]
+                    title?: string
                     url?: string
-                    user?: string | null
-                    value?: string
+                    user?: string
                 }
                 Relationships: []
             }

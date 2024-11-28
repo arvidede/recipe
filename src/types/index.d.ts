@@ -13,10 +13,15 @@ interface Recipe {
     url: string
     img: string | null
     title: string
-    originalTitle?: string
+    originalTitle: string | null
     ingredients: Ingredient[]
     instructions: string[]
     tags: Tag[]
+}
+
+interface UserRecipe extends Recipe {
+    id: string
+    user: string
 }
 
 interface Query {
