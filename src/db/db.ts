@@ -14,7 +14,7 @@ const REQUEST_CACHE_FILE_PATH = join(__dirname, REQUEST_CACHE_FILE)
 const logger = getLogger("db")
 
 interface DB {
-    get(key: string): Recipe | null
+    get(key: string): Promise<Recipe | null>
     set(key: string, payload: Recipe): void
     has(key: string): boolean
 }
@@ -22,13 +22,19 @@ interface DB {
 class ProdDB implements DB {
     db!: Map<string, Recipe>
     client!: ReturnType<typeof getClient>
+    ready!: Promise<boolean>
 
     constructor() {
-        this.init()
+        this.ready = new Promise((resolve) => {
+            this.init(resolve)
+        })
     }
 
-    private async init(retries = 3): Promise<void> {
-        logger.info("Initialising DB...")
+    private async init(
+        resolve: (value: boolean | PromiseLike<boolean>) => void,
+        retries = 3,
+    ): Promise<void> {
+        logger.info("Initialising DB")
 
         this.client = getClient()
 
@@ -36,19 +42,20 @@ class ProdDB implements DB {
 
         if (error) {
             if (retries > 0) {
-                return this.init(retries - 1)
+                return this.init(resolve, retries - 1)
             }
 
             logger.error(
-                "Failed to initialise db from supabase",
+                "Failed to initialise DB",
                 JSON.stringify(error, null, 2),
             )
             this.db = new Map()
-            return
+            return resolve(true)
         }
 
         this.db = new Map(data.map(({ key, value }) => [key, value]))
-        logger.info("DB initialised.")
+        logger.info("DB initialised")
+        return resolve(true)
     }
 
     public set(key: string, payload: Recipe) {
@@ -63,9 +70,16 @@ class ProdDB implements DB {
         setQuery({ key, value: payload })
     }
 
-    public get(key: string) {
+    public async get(key: string) {
+        await this.ready
+
         logger.info("GET", key)
-        return this.db.get(key) ?? null
+
+        if (!this.db) {
+            logger.error("SET", "DB not initialised")
+        }
+
+        return this.db?.get(key) ?? null
     }
 
     public has(key: string) {
@@ -110,7 +124,7 @@ class DevDB implements DB {
         this.persist()
     }
 
-    public get(key: string) {
+    public async get(key: string) {
         logger.info("GET", key)
         return this.db.get(key) ?? null
     }

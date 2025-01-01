@@ -48,7 +48,7 @@ export async function GET(request: Request) {
         const url = validateRequest(request)
 
         if (ENV.CACHE && db.has(url.href)) {
-            return new Response(JSON.stringify(db.get(url.href)))
+            return new Response(JSON.stringify(await db.get(url.href)))
         }
 
         const recipe = await fetchRecipe(url)

@@ -8,7 +8,7 @@ interface Props {
 
 export default async function Home({ searchParams }: Props) {
     const recipe = searchParams.url
-        ? getDB().get(stripTrailingSlash(searchParams.url))
+        ? await getDB().get(stripTrailingSlash(searchParams.url))
         : null
 
     return <SearchPage searchParams={searchParams} recipe={recipe} />
