@@ -18,16 +18,14 @@ export default function SearchPage({
     const [recipe, setRecipe] = useState(initialRecipe)
 
     return (
-        <main className={styles.main}>
-            <div
-                className={clsx({
-                    [styles.card]: true,
-                    [styles.hasContent]: !!recipe,
-                })}
-            >
-                <SearchBox onLoadRecipe={setRecipe} url={searchParams.url} />
-                <Recipe recipe={recipe} />
-            </div>
+        <main
+            className={clsx({
+                [styles.container]: true,
+                [styles.hasContent]: !!recipe,
+            })}
+        >
+            <SearchBox onLoadRecipe={setRecipe} url={searchParams.url} />
+            <Recipe recipe={recipe} />
         </main>
     )
 }

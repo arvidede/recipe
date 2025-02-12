@@ -14,7 +14,7 @@
     height: 300px;
 
     @include media("<laptop-s") {
-      height: 20dvh;
+      height: 20vh;
     }
 
     img {

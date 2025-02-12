@@ -1,5 +1,9 @@
+@import "@/styles/main";
+
 .body {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+  padding: $spacing-m;
+  row-gap: $spacing-m;
 }

@@ -1,23 +1,18 @@
 @import "@/styles/main";
 
-.main {
-  align-content: center;
-  padding: 0 $spacing-l $spacing-l $spacing-l;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   height: auto;
+  width: 100%;
   margin: auto 0;
+  align-items: center;
+  transform: translateY(-5vh);
+  transition: transform $transition-timing-function-default 0.4s;
 
-  .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    transform: translateY(-5vh);
-    transition: transform $transition-timing-function-default 0.4s;
-
-    &.hasContent {
-      transform: translateY(0);
-      row-gap: $spacing-l;
-    }
+  &.hasContent {
+    transform: translateY(0);
+    row-gap: $spacing-l;
   }
 }

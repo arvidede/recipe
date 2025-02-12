@@ -2,7 +2,7 @@
 
 .container {
   background-color: $color_white;
-  box-shadow: $shadow_float-low;
+  box-shadow: $shadow_float-sticky;
   padding: $spacing-m;
-  border-radius: $border-radius_default;
+  border-radius: $border-radius_xs;
 }
