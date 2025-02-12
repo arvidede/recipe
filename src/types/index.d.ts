@@ -3,11 +3,15 @@ interface Tag {
     key: string
 }
 
-interface Ingredient {
-    name: string
-    quantity: number
-    unit: string
-}
+type Ingredient =
+    | {
+          name: string
+      }
+    | {
+          name: string
+          quantity: number
+          unit: string
+      }
 
 interface Recipe {
     url: string

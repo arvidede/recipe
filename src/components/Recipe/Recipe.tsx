@@ -28,7 +28,7 @@ function renderUnit(unitName: string) {
 }
 
 function renderIngredient(ingredient: Ingredient) {
-    if (ingredient.quantity) {
+    if ("quantity" in ingredient) {
         return `${ingredient.quantity} ${renderUnit(ingredient.unit)} ${ingredient.name.toLocaleLowerCase()}`
     }
 
