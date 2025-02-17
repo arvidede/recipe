@@ -1,5 +1,6 @@
+import PageWrapper from "@/components/PageWrapper"
 import Recipe from "@/components/Recipe"
-import getRecipe from "@/db/recipes/getRecipe"
+import getRecipe from "@/db/queries/getRecipe"
 import { redirect } from "next/navigation"
 import styles from "./page.module.scss"
 
@@ -17,8 +18,8 @@ export default async function RecipePage({ params: { id } }: Props) {
     }
 
     return (
-        <main className={styles.main}>
+        <PageWrapper className={styles.main}>
             <Recipe recipe={recipe} />
-        </main>
+        </PageWrapper>
     )
 }

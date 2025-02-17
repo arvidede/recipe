@@ -1,7 +1,9 @@
 "use client"
+import { Routes } from "@/utils/constants"
 import useIsMounted from "@/utils/hooks/useIsMounted"
 import { isValidURL } from "@/utils/isValidUrl"
 import clsx from "clsx"
+import { useRouter } from "next/navigation"
 import { ChangeEvent, useEffect, useRef } from "react"
 import Button from "../Button"
 import Icon from "../Icon"
@@ -32,7 +34,7 @@ async function getRecipe(url: string): Promise<Recipe | null> {
 }
 
 interface Props {
-    onLoadRecipe: (recipe: Recipe | null) => void
+    onLoadRecipe?: (recipe: Recipe | null) => void
     url?: string
 }
 
@@ -40,6 +42,16 @@ function SearchBox({ onLoadRecipe, url }: Props) {
     const [state, dispatch] = useSearchReducer(url)
     const inputRef = useRef<HTMLInputElement>(null)
     const isMounted = useIsMounted()
+    const router = useRouter()
+
+    function navigate(recipe: Recipe | null) {
+        if (recipe) {
+            const url = `${Routes.Search}?url=${recipe.url}`
+            router.push(url)
+        }
+    }
+
+    const onLoad = onLoadRecipe || navigate
 
     const handleSearchRecipe = async (url = state.input) => {
         if (isValidURL(url)) {
@@ -48,7 +60,7 @@ function SearchBox({ onLoadRecipe, url }: Props) {
             try {
                 const recipe = await getRecipe(url)
                 if (recipe) {
-                    onLoadRecipe(recipe)
+                    onLoad(recipe)
                 }
             } catch (e: any) {
                 console.error(e)
@@ -70,7 +82,7 @@ function SearchBox({ onLoadRecipe, url }: Props) {
         dispatch({ type: ActionType.Input, payload: e.target.value })
 
         if (!e.target.value.length) {
-            onLoadRecipe(null)
+            onLoad(null)
         }
     }
 
@@ -82,12 +94,16 @@ function SearchBox({ onLoadRecipe, url }: Props) {
     }
 
     useEffect(() => {
-        handlePaste()
-        handleSearchRecipe()
+        const autoSearch = window.location.pathname === Routes.Search
+
+        if (autoSearch) {
+            handlePaste()
+            handleSearchRecipe()
+        }
 
         const input = inputRef.current
         if (input) {
-            if (!input.value.length) {
+            if (autoSearch && !input.value.length) {
                 input.focus()
             }
 
@@ -124,7 +140,7 @@ function SearchBox({ onLoadRecipe, url }: Props) {
                 {state.loading ? (
                     <Spinner className={styles.spinner} />
                 ) : (
-                    <Icon className={styles.icon} variant="cutlery" />
+                    <Icon className={styles.icon} type="search" size="m" />
                 )}
             </Button>
         </div>

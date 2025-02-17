@@ -31,17 +31,17 @@ const Actions: React.FC<Props> = ({ recipe }) => {
         <div className={styles.actions}>
             <a href={recipe.url}>
                 <Button variant="icon">
-                    <Icon variant="link" />
+                    <Icon type="link" />
                 </Button>
             </a>
             <Button variant="icon" onClick={handleSaveRecipe}>
-                <Icon variant="heart" />
+                <Icon type="heart" />
             </Button>
             <Button variant="icon" onClick={handleShareRecipe}>
-                <Icon variant="share" />
+                <Icon type="share" />
             </Button>
             <Button variant="icon">
-                <Icon variant="edit" />
+                <Icon type="edit" />
             </Button>
         </div>
     )

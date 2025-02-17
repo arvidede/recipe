@@ -34,6 +34,7 @@ export default async function RootLayout({
         <html lang="en">
             <body className={clsx(font.className, styles.body)}>
                 <Header user={user} />
+                {/* <ProgressBar /> */}
                 {children}
             </body>
         </html>

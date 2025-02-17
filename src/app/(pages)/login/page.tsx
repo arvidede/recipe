@@ -1,9 +1,10 @@
 import LoginForm from "@/components/Login"
+import PageWrapper from "@/components/PageWrapper"
 
 export default function Login() {
     return (
-        <main>
+        <PageWrapper>
             <LoginForm />
-        </main>
+        </PageWrapper>
     )
 }

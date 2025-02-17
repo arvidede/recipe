@@ -1,9 +1,10 @@
 "use client"
 
-import signOut from "@/actions/auth/signOut"
+import { Routes } from "@/utils/constants"
 import { User } from "@supabase/supabase-js"
 import Link from "next/link"
 import Button from "../Button"
+import Icon from "../Icon"
 import styles from "./Header.module.scss"
 
 export interface Props {
@@ -13,17 +14,19 @@ export interface Props {
 function Header({ user }: Props) {
     return (
         <header className={styles.header}>
+            <Link href={Routes.Search}>
+                <Icon variant="transparent" type="search" size="m" />
+            </Link>
             {user ? (
                 <>
-                    <Button variant="outlined">
-                        <Link href="/recipes">My Recpies</Link>
-                    </Button>
-                    <Button onClick={() => signOut()}>Sign Out</Button>
+                    <Link href={Routes.Home}>
+                        <Icon variant="transparent" type="user" size="m" />
+                    </Link>
                 </>
             ) : (
-                <Button>
-                    <Link href="/login">Sign In</Link>
-                </Button>
+                <Link href={Routes.Login}>
+                    <Button>Sign In</Button>
+                </Link>
             )}
         </header>
     )

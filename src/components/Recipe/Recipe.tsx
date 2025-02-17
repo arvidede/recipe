@@ -65,15 +65,15 @@ const Recipe = ({ recipe }: Props) => {
                                 <h3>Ingredients</h3>
                                 <div>
                                     <Button variant="icon">
-                                        <Icon variant="minus" size="s" />
+                                        <Icon type="minus" size="s" />
                                     </Button>
                                     4 servings
                                     <Button variant="icon">
-                                        <Icon variant="plus" size="s" />
+                                        <Icon type="plus" size="s" />
                                     </Button>
                                 </div>
                             </div>
-                            <Card>
+                            <Card padding>
                                 <ul>
                                     {recipe.ingredients.map(
                                         (ingredient, index) => (
@@ -87,7 +87,7 @@ const Recipe = ({ recipe }: Props) => {
                         </section>
                         <section className={styles.list}>
                             <h3>Steps</h3>
-                            <Card>
+                            <Card padding>
                                 <ol>
                                     {recipe.instructions.map(
                                         (instruction, index) => (

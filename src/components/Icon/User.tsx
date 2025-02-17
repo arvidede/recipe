@@ -1,4 +1,4 @@
-export default function Search() {
+export default function User() {
     return (
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g strokeWidth="0"></g>
@@ -6,8 +6,7 @@ export default function Search() {
             <g>
                 <g>
                     <path
-                        id="Vector"
-                        d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z"
+                        d="M19 21C19 17.134 15.866 14 12 14C8.13401 14 5 17.134 5 21M12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7C16 9.20914 14.2091 11 12 11Z"
                         strokeWidth="1.2"
                         strokeLinecap="round"
                         strokeLinejoin="round"

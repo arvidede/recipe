@@ -6,14 +6,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: none;
-  background-color: $color_primary;
-  border-radius: 50%;
 
   svg {
     height: 100%;
     width: 100%;
-    stroke: #fdffe6;
     stroke-width: 1;
   }
 
@@ -30,5 +26,38 @@
   &.l {
     height: 3rem;
     width: 3rem;
+  }
+
+  &.solid {
+    background-color: $color_primary;
+
+    svg {
+      stroke: #fdffe6;
+    }
+  }
+
+  &.transparent {
+    background-color: transparent;
+  }
+
+  &.outlined {
+    border: solid 1px $color_primary;
+  }
+
+  &.solid,
+  &.transparent {
+    border: none;
+  }
+
+  &.outlined,
+  &.solid {
+    border-radius: 50%;
+  }
+
+  &.outlined,
+  &.transparent {
+    svg {
+      stroke: $color_primary;
+    }
   }
 }

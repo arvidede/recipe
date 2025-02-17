@@ -3,6 +3,9 @@
 .container {
   background-color: $color_white;
   box-shadow: $shadow_float-sticky;
-  padding: $spacing-m;
   border-radius: $border-radius_xs;
+
+  &.padding {
+    padding: $spacing-m;
+  }
 }

@@ -2,6 +2,7 @@ import clsx from "clsx"
 import { FunctionComponent } from "react"
 import Cutlery from "./Cutlery"
 import Edit from "./Edit"
+import Exit from "./Exit"
 import Heart, { HeartFilled } from "./Heart"
 import styles from "./Icon.module.scss"
 import Link from "./Link"
@@ -10,8 +11,9 @@ import Paste from "./Paste"
 import Plus from "./Plus"
 import Search from "./Search"
 import Share from "./Share"
+import User from "./User"
 
-type IconVariant =
+type IconType =
     | "edit"
     | "paste"
     | "cutlery"
@@ -22,9 +24,14 @@ type IconVariant =
     | "share"
     | "plus"
     | "minus"
+    | "user"
+    | "exit"
+
 type IconSize = "s" | "m" | "l"
 
-const ICON_MAP: Record<IconVariant, FunctionComponent> = {
+type IconVariant = "solid" | "transparent" | "outlined"
+
+const ICON_MAP: Record<IconType, FunctionComponent> = {
     cutlery: Cutlery,
     edit: Edit,
     paste: Paste,
@@ -35,20 +42,29 @@ const ICON_MAP: Record<IconVariant, FunctionComponent> = {
     share: Share,
     plus: Plus,
     minus: Minus,
+    user: User,
+    exit: Exit,
 }
 
 interface Props {
-    variant: IconVariant
+    type: IconType
+    variant?: IconVariant
     size?: IconSize
     className?: string
 }
 
-export default function Icon({ variant, className, size = "m" }: Props) {
-    const ICON = ICON_MAP[variant]
+export default function Icon({
+    type,
+    className,
+    variant = "solid",
+    size = "m",
+}: Props) {
+    const ICON = ICON_MAP[type]
     return (
         <div
             className={clsx(
                 styles.icon,
+                styles[type],
                 styles[variant],
                 styles[size],
                 className,
