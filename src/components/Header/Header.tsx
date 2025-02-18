@@ -14,10 +14,20 @@ function Header({ user }: Props) {
     return (
         <header className={styles.header}>
             <Link href={Routes.Search}>
-                <Icon variant="transparent" type="search" size="m" />
+                <Icon
+                    variant="transparent"
+                    type="search"
+                    size="m"
+                    className={styles.icon}
+                />
             </Link>
             <Link href={user ? Routes.Home : Routes.Login}>
-                <Icon variant="transparent" type="user" size="m" />
+                <Icon
+                    variant="transparent"
+                    type="user"
+                    size="m"
+                    className={styles.icon}
+                />
             </Link>
         </header>
     )

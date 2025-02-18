@@ -12,52 +12,52 @@
     width: 100%;
     stroke-width: 1;
   }
+}
 
-  &.s {
-    height: 1rem;
-    width: 1rem;
+.s {
+  height: 1rem;
+  width: 1rem;
+}
+
+.m {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.l {
+  height: 3rem;
+  width: 3rem;
+}
+
+.solid {
+  background-color: $color_primary;
+
+  svg {
+    stroke: #fdffe6;
   }
+}
 
-  &.m {
-    height: 1.5rem;
-    width: 1.5rem;
-  }
+.transparent {
+  background-color: transparent;
+}
 
-  &.l {
-    height: 3rem;
-    width: 3rem;
-  }
+.outlined {
+  border: solid 1px $color_primary;
+}
 
-  &.solid {
-    background-color: $color_primary;
+.solid,
+.transparent {
+  border: none;
+}
 
-    svg {
-      stroke: #fdffe6;
-    }
-  }
+.outlined,
+.solid {
+  border-radius: 50%;
+}
 
-  &.transparent {
-    background-color: transparent;
-  }
-
-  &.outlined {
-    border: solid 1px $color_primary;
-  }
-
-  &.solid,
-  &.transparent {
-    border: none;
-  }
-
-  &.outlined,
-  &.solid {
-    border-radius: 50%;
-  }
-
-  &.outlined,
-  &.transparent {
-    svg {
-      stroke: $color_primary;
-    }
+.outlined,
+.transparent {
+  svg {
+    stroke: $color_primary;
   }
 }

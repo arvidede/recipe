@@ -5,4 +5,16 @@
   justify-content: flex-end;
   column-gap: $spacing-m;
   width: 100%;
+
+  .icon {
+    transition: $transition-default;
+    border-radius: 50%;
+    padding: $spacing-s;
+    box-sizing: content-box;
+    border: solid 1px transparent;
+
+    &:hover {
+      border: solid 1px $color_primary;
+    }
+  }
 }
