@@ -11,21 +11,14 @@ interface Props {
 function Header({ user }: Props) {
     return (
         <header className={styles.header}>
-            <Link href={Routes.Search}>
-                <Icon
-                    variant="transparent"
-                    type="search"
-                    size="m"
-                    className={styles.icon}
-                />
+            <Link href={Routes.Search} className={styles.link}>
+                <Icon variant="transparent" type="search" size="m" />
             </Link>
-            <Link href={user ? Routes.Home : Routes.Login}>
-                <Icon
-                    variant="transparent"
-                    type="user"
-                    size="m"
-                    className={styles.icon}
-                />
+            <Link
+                href={user ? Routes.Home : Routes.Login}
+                className={styles.link}
+            >
+                <Icon variant="transparent" type="user" size="m" />
             </Link>
         </header>
     )

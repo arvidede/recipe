@@ -7,15 +7,13 @@
   width: 100%;
   margin-bottom: $spacing-l;
 
-  .icon {
+  .link {
     transition: $transition-default;
-    border-radius: 50%;
-    padding: $spacing-s;
-    box-sizing: content-box;
-    border: solid 1px transparent;
+    padding: $spacing-xs;
+    border-bottom: solid 1px transparent;
 
     &:hover {
-      border: solid 1px $color_primary;
+      border-bottom: solid 1px $color_primary;
     }
   }
 }
