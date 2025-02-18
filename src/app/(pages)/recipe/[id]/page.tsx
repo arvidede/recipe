@@ -5,12 +5,13 @@ import { redirect } from "next/navigation"
 import styles from "./page.module.scss"
 
 interface Props {
-    params: {
+    params: Promise<{
         id: string
-    }
+    }>
 }
 
-export default async function RecipePage({ params: { id } }: Props) {
+export default async function RecipePage({ params }: Props) {
+    const { id } = await params
     const recipe = await getRecipe(id)
 
     if (!recipe) {

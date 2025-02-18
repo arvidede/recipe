@@ -35,7 +35,6 @@ export default async function RootLayout({
         <html lang="en">
             <body className={clsx(font.className, styles.body)}>
                 <Header user={user} />
-                {/* <ProgressBar /> */}
                 <Provider user={user}>{children}</Provider>
                 <div id="modal" />
             </body>
