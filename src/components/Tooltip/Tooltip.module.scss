@@ -1,8 +1,9 @@
 @import "@/styles/main";
 
+$offset: 20px;
+
 .tooltip {
   position: absolute;
-  transform: translate(-50%, 10px);
   box-shadow: $shadow_float-sticky;
   background-color: $color_white;
   border-radius: $border-radius_xs;
@@ -10,6 +11,57 @@
   animation-duration: $transition-duration-default;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
+
+  &::before {
+    position: absolute;
+    z-index: 1;
+    box-shadow: $shadow_float-sticky;
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: $color_white;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  &.bottom {
+    &.left {
+      transform: translate(-80%, $offset);
+
+      &::before {
+        top: -5px;
+        left: 80%;
+      }
+    }
+
+    &.right {
+      transform: translate(-20%, $offset);
+
+      &::before {
+        top: -5px;
+        left: 20%;
+      }
+    }
+  }
+
+  &.top {
+    &.left {
+      transform: translate(-80%, calc(-100% - $offset));
+
+      &::before {
+        top: calc(100% - 5px);
+        left: 80%;
+      }
+    }
+
+    &.right {
+      transform: translate(-20%, calc(-100% - $offset));
+
+      &::before {
+        top: calc(100% - 5px);
+        left: 20%;
+      }
+    }
+  }
 
   ul {
     overflow: hidden;
@@ -48,19 +100,6 @@
         background-color: $color_gray_extra-light;
       }
     }
-  }
-
-  &::before {
-    position: absolute;
-    z-index: 1;
-    box-shadow: $shadow_float-sticky;
-    content: "";
-    width: 10px;
-    height: 10px;
-    background-color: $color_white;
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
   }
 }
 

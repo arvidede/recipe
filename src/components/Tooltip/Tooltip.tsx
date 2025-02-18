@@ -1,4 +1,5 @@
 "use client"
+import clsx from "clsx"
 import { MouseEvent, ReactNode, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import styles from "./Tooltip.module.scss"
@@ -16,10 +17,59 @@ interface Props {
     onMouseEnter?: boolean
 }
 
+interface Orientation {
+    vertical: "top" | "bottom"
+    horizontal: "left" | "right"
+}
+
+const PADDING = 100
+
+function getTooltipPosition(anchor: Element) {
+    const rect = anchor.getBoundingClientRect()
+
+    let top = window.scrollY + rect.top + rect.height / 2
+    let left = window.scrollX + rect.left + rect.width / 2
+    let orientation: Orientation = {
+        vertical: "bottom",
+        horizontal: "left",
+    }
+
+    if (rect.bottom + PADDING > window.innerHeight) {
+        orientation.vertical = "top"
+    }
+
+    if (rect.left - PADDING < 0) {
+        orientation.horizontal = "right"
+    }
+
+    if (rect.right + PADDING > window.innerWidth) {
+        orientation.horizontal = "left"
+    }
+
+    return {
+        top,
+        left,
+        orientation,
+    }
+}
+
+interface PositonState {
+    top: number
+    left: number
+    orientation: Orientation
+}
+
 function Tooltip({ items, children, onMouseEnter, onClick }: Props) {
     const anchorRef = useRef<HTMLDivElement>(null)
     const [visible, setVisible] = useState(false)
-    const [position, setPosition] = useState({ top: 0, left: 0 })
+    const [position, setPosition] = useState<PositonState>({
+        top: 0,
+        left: 0,
+        orientation: {
+            vertical: "bottom",
+            horizontal: "left",
+        },
+    })
 
     function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
         if (!onMouseEnter) {
@@ -45,12 +95,13 @@ function Tooltip({ items, children, onMouseEnter, onClick }: Props) {
             }
         }
 
+        function updatePosition(anchor: Element) {
+            const position = getTooltipPosition(anchor)
+            setPosition(position)
+        }
+
         if (visible && anchorRef.current) {
-            const rect = anchorRef.current.getBoundingClientRect()
-            setPosition({
-                top: window.scrollY + rect.top + rect.height / 2,
-                left: rect.left + rect.width / 2,
-            })
+            updatePosition(anchorRef.current)
 
             document.addEventListener("click", handleClickOutside)
 
@@ -59,6 +110,8 @@ function Tooltip({ items, children, onMouseEnter, onClick }: Props) {
             }
         }
     }, [visible])
+
+    console.log(position)
 
     return (
         <>
@@ -73,7 +126,11 @@ function Tooltip({ items, children, onMouseEnter, onClick }: Props) {
             {visible &&
                 createPortal(
                     <div
-                        className={styles.tooltip}
+                        className={clsx(
+                            styles.tooltip,
+                            styles[position.orientation.horizontal],
+                            styles[position.orientation.vertical],
+                        )}
                         style={{
                             top: position.top,
                             left: position.left,
