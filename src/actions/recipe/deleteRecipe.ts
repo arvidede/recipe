@@ -6,10 +6,9 @@ import getServerClient from "@/db/server"
 export default async function deleteRecipe(recipe: UserRecipe) {
     await protect()
 
-    const { error } = await getServerClient()
-        .from("recipes")
-        .delete()
-        .eq("id", recipe.id)
+    const client = await getServerClient()
+
+    const { error } = await client.from("recipes").delete().eq("id", recipe.id)
 
     return !error
 }

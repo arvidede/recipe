@@ -4,7 +4,6 @@ import Recipe from "@/components/Recipe/Recipe"
 import SearchBox from "@/components/SearchBox"
 import clsx from "clsx"
 import { useState } from "react"
-import PageWrapper from "../PageWrapper"
 import styles from "./SearchPage.module.scss"
 
 interface Props {
@@ -19,7 +18,7 @@ export default function SearchPage({
     const [recipe, setRecipe] = useState(initialRecipe)
 
     return (
-        <PageWrapper
+        <main
             className={clsx({
                 [styles.container]: true,
                 [styles.hasContent]: !!recipe,
@@ -27,6 +26,6 @@ export default function SearchPage({
         >
             <SearchBox onLoadRecipe={setRecipe} url={searchParams.url} />
             <Recipe recipe={recipe} />
-        </PageWrapper>
+        </main>
     )
 }

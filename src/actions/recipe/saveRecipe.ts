@@ -6,6 +6,7 @@ import getServerClient from "@/db/server"
 export default async function saveRecipe(recipe: Recipe) {
     await protect()
 
-    const { error } = await getServerClient().from("recipes").upsert(recipe)
+    const client = await getServerClient()
+    const { error } = await client.from("recipes").upsert(recipe)
     return !error
 }

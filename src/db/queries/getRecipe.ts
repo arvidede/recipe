@@ -1,7 +1,9 @@
 import getServerClient from "../server"
 
 export default async function getRecipe(id: string) {
-    const { data } = await getServerClient()
+    const client = await getServerClient()
+
+    const { data } = await client
         .from("recipes")
         .select("*")
         .eq("id", id)

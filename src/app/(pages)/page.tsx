@@ -3,13 +3,14 @@ import getDB from "@/db"
 import { stripTrailingSlash } from "@/utils/stripTrailingSlash"
 
 interface Props {
-    searchParams: { url?: string }
+    searchParams: Promise<{ url?: string }>
 }
 
 export default async function Home({ searchParams }: Props) {
-    const recipe = searchParams.url
-        ? await getDB().get(stripTrailingSlash(searchParams.url))
+    const params = await searchParams
+    const recipe = params.url
+        ? await getDB().get(stripTrailingSlash(params.url))
         : null
 
-    return <SearchPage searchParams={searchParams} recipe={recipe} />
+    return <SearchPage searchParams={params} recipe={recipe} />
 }

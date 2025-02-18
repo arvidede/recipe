@@ -7,7 +7,7 @@ export default async function signIn(formData: FormData) {
     const email = String(formData.get("email"))
     const password = String(formData.get("password"))
 
-    const supabase = getServerClient()
+    const supabase = await getServerClient()
 
     await supabase.auth.signInWithPassword({
         email,

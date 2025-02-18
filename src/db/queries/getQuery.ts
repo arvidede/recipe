@@ -6,7 +6,9 @@ export default async function getQuery(key?: string) {
         return null
     }
 
-    const { data } = await getServerClient()
+    const client = await getServerClient()
+
+    const { data } = await client
         .from("queries")
         .select("*")
         .eq("key", stripTrailingSlash(key))

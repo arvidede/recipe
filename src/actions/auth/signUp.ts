@@ -8,9 +8,9 @@ export default async function signUp(formData: FormData) {
     const password = String(formData.get("password"))
     const name = String(formData.get("name"))
 
-    const supabase = getServerClient()
+    const client = await getServerClient()
 
-    await supabase.auth.signUp({
+    await client.auth.signUp({
         email: email,
         password: password,
         options: {

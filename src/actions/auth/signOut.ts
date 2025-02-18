@@ -3,7 +3,8 @@
 import getServerClient from "@/db/server"
 
 export default async function signOut() {
-    await getServerClient().auth.signOut()
+    const client = await getServerClient()
+    await client.auth.signOut()
 
     // return redirect("/login")
 }

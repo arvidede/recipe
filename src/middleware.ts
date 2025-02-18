@@ -10,9 +10,10 @@ const PROTECTED: Record<string, boolean> = {
 }
 
 async function shouldRedirect(request: NextRequest) {
+    const client = await getServerClient()
     const {
         data: { user },
-    } = await getServerClient().auth.getUser()
+    } = await client.auth.getUser()
 
     return !user && PROTECTED[request.nextUrl.pathname]
 }
