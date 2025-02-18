@@ -8,17 +8,19 @@ interface Props {
     className?: string
     children?: ReactNode
     variant?: "text" | "icon" | "outlined" | "transparent"
-    ref?: ForwardedRef<HTMLButtonElement>
 }
 
-function Button({
-    onClick,
-    className,
-    disabled,
-    children,
-    ref,
-    variant = "text",
-}: Props) {
+function Button(
+    {
+        onClick,
+        className,
+        disabled,
+        children,
+
+        variant = "text",
+    }: Props,
+    ref?: ForwardedRef<HTMLButtonElement>,
+) {
     return (
         <button
             ref={ref}

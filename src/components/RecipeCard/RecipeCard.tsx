@@ -112,7 +112,7 @@ function Image({ recipe }: { recipe: UserRecipe }) {
                     [styles.image]: true,
                     [styles.loading]: loading,
                 })}
-                onLoadingComplete={() => setLoading(false)}
+                onLoad={() => setLoading(false)}
             />
         </div>
     )

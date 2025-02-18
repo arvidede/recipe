@@ -1,4 +1,5 @@
 import { Header } from "@/components/Header"
+import Provider from "@/components/Provider"
 import { getUser } from "@/db/user"
 import "@/styles/globals.scss"
 import clsx from "clsx"
@@ -35,7 +36,7 @@ export default async function RootLayout({
             <body className={clsx(font.className, styles.body)}>
                 <Header user={user} />
                 {/* <ProgressBar /> */}
-                {children}
+                <Provider user={user}>{children}</Provider>
                 <div id="modal" />
             </body>
         </html>
