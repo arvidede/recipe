@@ -6,7 +6,7 @@ import Link from "next/link"
 import Icon from "../Icon"
 import styles from "./Header.module.scss"
 
-export interface Props {
+interface Props {
     user: User | null
 }
 

@@ -9,7 +9,7 @@ export interface TooltipItem {
     onClick?: (id: string | number) => void
 }
 
-export interface Props {
+interface Props {
     items: TooltipItem[] | (() => TooltipItem[])
     children: ReactNode
     onClick?: boolean

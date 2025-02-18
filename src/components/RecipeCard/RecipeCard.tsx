@@ -17,7 +17,7 @@ import styles from "./RecipeCard.module.scss"
 
 const PLACEHOLDER_IMAGE = ""
 
-export interface Props {
+interface Props {
     recipe: UserRecipe
 }
 

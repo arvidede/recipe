@@ -4,7 +4,7 @@ import Button from "@/components/Button"
 import Icon from "@/components/Icon"
 import styles from "./Actions.module.scss"
 
-export interface Props {
+interface Props {
     recipe: Recipe
 }
 

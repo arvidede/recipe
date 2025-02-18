@@ -2,7 +2,7 @@ import clsx from "clsx"
 import { ReactNode } from "react"
 import styles from "./PageWrapper.module.scss"
 
-export interface Props {
+interface Props {
     children: ReactNode
     className?: string
 }
