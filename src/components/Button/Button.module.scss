@@ -10,7 +10,7 @@
   -webkit-tap-highlight-color: transparent;
   background-color: $color_primary;
   border: solid 2px $color_primary;
-  transition: transform $transition-default;
+  transition: $transition-default;
   padding: $spacing-s;
 
   &:active(:not(:disabled)) {
@@ -21,24 +21,34 @@
     cursor: pointer;
   }
 
-  &.text {
-    border-radius: $border-radius_xs;
-    border: solid 2px $color_primary;
-    color: $color_secondary;
-  }
-
-  &.outlined {
-    border-radius: $border-radius_xs;
-    border: solid 2px $color_primary;
-    background-color: transparent;
-    color: $color_primary;
-  }
-
-  &.icon {
-    border-radius: 50%;
-  }
-
   &:disabled {
     cursor: initial;
+  }
+}
+
+.text {
+  border-radius: $border-radius_xs;
+  border: solid 2px $color_primary;
+  color: $color_secondary;
+}
+
+.outlined {
+  border-radius: $border-radius_xs;
+  border: solid 2px $color_primary;
+  background-color: transparent;
+  color: $color_primary;
+}
+
+.icon {
+  border-radius: 50%;
+}
+
+.transparent {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+
+  &:hover {
+    background-color: $color_primary;
   }
 }

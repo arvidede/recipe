@@ -3,14 +3,14 @@ import { MouseEvent, ReactNode, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import styles from "./Tooltip.module.scss"
 
-interface TooltipItem {
+export interface TooltipItem {
     id: string | number
-    value: string
+    value: ReactNode
     onClick?: (id: string | number) => void
 }
 
 export interface Props {
-    items: TooltipItem[]
+    items: TooltipItem[] | (() => TooltipItem[])
     children: ReactNode
     onClick?: boolean
     onMouseEnter?: boolean
@@ -80,9 +80,11 @@ function Tooltip({ items, children, onMouseEnter, onClick }: Props) {
                         }}
                     >
                         <ul>
-                            {items.map((item) => (
-                                <TooltipItem key={item.id} item={item} />
-                            ))}
+                            {(Array.isArray(items) ? items : items()).map(
+                                (item) => (
+                                    <TooltipItem key={item.id} item={item} />
+                                ),
+                            )}
                         </ul>
                     </div>,
                     document.getElementById("modal")!,

@@ -33,6 +33,14 @@
       flex: 1;
       cursor: default;
 
+      &:first-of-type {
+        padding-top: $spacing-s;
+      }
+
+      &:last-of-type {
+        padding-bottom: $spacing-s;
+      }
+
       &:hover {
         background-color: $color_gray_extra-light;
       }

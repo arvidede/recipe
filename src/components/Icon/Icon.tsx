@@ -1,12 +1,14 @@
 import clsx from "clsx"
 import { FunctionComponent } from "react"
 import Cutlery from "./Cutlery"
+import Delete from "./Delete"
 import Edit from "./Edit"
 import Exit from "./Exit"
 import Heart, { HeartFilled } from "./Heart"
 import styles from "./Icon.module.scss"
 import Link from "./Link"
 import Minus from "./Minus"
+import More from "./More"
 import Paste from "./Paste"
 import Plus from "./Plus"
 import Search from "./Search"
@@ -26,6 +28,8 @@ type IconType =
     | "minus"
     | "user"
     | "exit"
+    | "more"
+    | "delete"
 
 type IconSize = "s" | "m" | "l"
 
@@ -44,6 +48,8 @@ const ICON_MAP: Record<IconType, FunctionComponent> = {
     minus: Minus,
     user: User,
     exit: Exit,
+    more: More,
+    delete: Delete,
 }
 
 interface Props {

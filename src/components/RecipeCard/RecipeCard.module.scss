@@ -46,13 +46,33 @@
     }
   }
 
-  h4 {
-    text-overflow: ellipsis;
-    text-wrap: nowrap;
-    word-wrap: none;
-    overflow: hidden;
-    max-width: 100%;
-    padding: $spacing-m;
-    margin: 0;
+  .details {
+    display: flex;
+    align-items: center;
+    padding: $spacing-s;
+    column-gap: $spacing-m;
+
+    h4 {
+      text-overflow: ellipsis;
+      text-wrap: nowrap;
+      word-wrap: none;
+      overflow: hidden;
+      flex: 1;
+      margin: 0;
+    }
+
+    .moreButton {
+      &:hover {
+        svg {
+          stroke: $color_secondary;
+        }
+      }
+    }
   }
+}
+
+.tooltipItem {
+  display: flex;
+  align-items: center;
+  column-gap: $spacing-xs;
 }
