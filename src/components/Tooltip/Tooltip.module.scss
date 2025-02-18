@@ -1,0 +1,64 @@
+@import "@/styles/main";
+
+.tooltip {
+  position: absolute;
+  transform: translate(-50%, 5px);
+  box-shadow: $shadow_float-sticky;
+  background-color: $color_white;
+  border-radius: $border-radius_xs;
+  animation-name: appear;
+  animation-duration: $transition-duration-default;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+
+  ul {
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    border-radius: $border-radius_xs;
+    background-color: $color_white;
+    width: max-content;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: $spacing-xs $spacing-s;
+      max-width: min(200px, 50vw);
+      min-width: min(100px, 25vw);
+      text-overflow: ellipsis;
+      text-wrap: nowrap;
+      word-wrap: none;
+      overflow: hidden;
+      flex: 1;
+      cursor: default;
+
+      &:hover {
+        background-color: $color_gray_extra-light;
+      }
+    }
+  }
+
+  &::before {
+    position: absolute;
+    z-index: 1;
+    box-shadow: $shadow_float-sticky;
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: $color_white;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

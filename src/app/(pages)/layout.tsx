@@ -36,6 +36,7 @@ export default async function RootLayout({
                 <Header user={user} />
                 {/* <ProgressBar /> */}
                 {children}
+                <div id="modal" />
             </body>
         </html>
     )
