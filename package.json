@@ -19,7 +19,7 @@
     "eslint": "8.46.0",
     "eslint-config-next": "14.0.2",
     "html-to-text": "^9.0.5",
-    "next": "^14.2.18",
+    "next": "^14.2.24",
     "openai": "^4.68.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -29,7 +29,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/html-to-text": "^9.0.1",
+    "@types/html-to-text": "^9.0.4",
     "encoding": "^0.1.13",
     "prettier-plugin-organize-imports": "^3.2.4",
     "sass": "^1.69.5"
