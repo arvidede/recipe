@@ -1,25 +1,21 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client"
 import deleteRecipe from "@/actions/recipe/deleteRecipe"
+import duplicateRecipe from "@/actions/recipe/duplicateRecipe"
 import { Routes } from "@/utils/constants"
 import clsx from "clsx"
 import NextImage from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ReactNode, useState } from "react"
+import { useState } from "react"
 import Button from "../Button"
 import Card from "../Card"
 import Icon from "../Icon"
 import Cutlery from "../Icon/Cutlery"
-import { Tooltip } from "../Tooltip"
-import { TooltipItem } from "../Tooltip/Tooltip"
+import Tooltip, { TooltipItem } from "../Tooltip"
 import styles from "./RecipeCard.module.scss"
 
 const PLACEHOLDER_IMAGE = ""
-
-function Item({ children }: { children: ReactNode }) {
-    return <span className={styles.tooltipItem}>{children}</span>
-}
 
 export interface Props {
     recipe: UserRecipe
@@ -31,25 +27,41 @@ function RecipeCard({ recipe }: Props) {
     function getTooltipItems(): TooltipItem[] {
         return [
             {
-                id: 1,
+                id: 0,
                 value: (
-                    <Item>
-                        <Icon type="edit" variant="transparent" />
+                    <>
+                        <Icon type="edit" variant="transparent" size="s" />
                         Edit
-                    </Item>
+                    </>
                 ),
                 onClick: () => router.push(`${Routes.Recipe}/${recipe.id}`),
             },
             {
-                id: 2,
+                id: 1,
                 value: (
-                    <Item>
-                        <Icon type="delete" variant="transparent" />
+                    <>
+                        <Icon type="delete" variant="transparent" size="s" />
                         Delete
-                    </Item>
+                    </>
                 ),
                 onClick: () => {
                     deleteRecipe(recipe).then((success) => {
+                        if (success) {
+                            router.refresh()
+                        }
+                    })
+                },
+            },
+            {
+                id: 2,
+                value: (
+                    <>
+                        <Icon type="copy" variant="transparent" size="s" />
+                        Duplicate
+                    </>
+                ),
+                onClick: () => {
+                    duplicateRecipe(recipe).then((success) => {
                         if (success) {
                             router.refresh()
                         }

@@ -1,5 +1,6 @@
 import clsx from "clsx"
 import { FunctionComponent } from "react"
+import Copy from "./Copy"
 import Cutlery from "./Cutlery"
 import Delete from "./Delete"
 import Edit from "./Edit"
@@ -30,6 +31,7 @@ type IconType =
     | "exit"
     | "more"
     | "delete"
+    | "copy"
 
 type IconSize = "s" | "m" | "l"
 
@@ -50,6 +52,7 @@ const ICON_MAP: Record<IconType, FunctionComponent> = {
     exit: Exit,
     more: More,
     delete: Delete,
+    copy: Copy,
 }
 
 interface Props {

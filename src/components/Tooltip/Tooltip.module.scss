@@ -32,6 +32,9 @@
       overflow: hidden;
       flex: 1;
       cursor: default;
+      display: flex;
+      align-items: center;
+      column-gap: $spacing-xs;
 
       &:first-of-type {
         padding-top: $spacing-s;
