@@ -27,7 +27,11 @@ function Header({ user }: Props) {
             },
             {
                 id: 2,
-                value: <Link href={Routes.LogOut}>Sign out</Link>,
+                value: (
+                    <Link href={Routes.LogOut} prefetch={false}>
+                        Sign out
+                    </Link>
+                ),
             },
         ]
     }
