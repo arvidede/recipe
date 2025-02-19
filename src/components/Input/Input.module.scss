@@ -1,0 +1,12 @@
+@import "@/styles/main";
+
+.input {
+  padding: $spacing-s;
+  background-color: $color_white;
+  border: $border-light;
+  border-radius: $border-radius_xs;
+
+  &:focus {
+    outline: none;
+  }
+}
