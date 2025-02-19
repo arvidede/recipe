@@ -102,18 +102,21 @@ function Tooltip({
             }
         }
 
-        function updatePosition(anchor: Element) {
-            const position = getTooltipPosition(anchor)
+        function updatePosition() {
+            if (!anchorRef.current) return
+            const position = getTooltipPosition(anchorRef.current)
             setPosition(position)
         }
 
         if (visible && anchorRef.current) {
-            updatePosition(anchorRef.current)
+            updatePosition()
 
             document.addEventListener("click", handleClickOutside)
+            window.addEventListener("resize", updatePosition)
 
             return () => {
                 document.removeEventListener("click", handleClickOutside)
+                window.removeEventListener("resize", updatePosition)
             }
         }
     }, [visible])
