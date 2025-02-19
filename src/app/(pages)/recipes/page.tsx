@@ -14,7 +14,7 @@ export default async function Home({}: Props) {
     return (
         <PageWrapper className={styles.main}>
             <SearchBox />
-            <h1>Recipes</h1>
+            <h1>My Recipes</h1>
             <Suspense fallback={<Loading />}>
                 <Recipes />
             </Suspense>

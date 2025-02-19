@@ -4,19 +4,6 @@ import { MouseEvent, ReactNode, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import styles from "./Tooltip.module.scss"
 
-export interface TooltipItem {
-    id: string | number
-    value: ReactNode
-    onClick?: (id: string | number) => void
-}
-
-interface Props {
-    items: TooltipItem[] | (() => TooltipItem[])
-    children: ReactNode
-    onClick?: boolean
-    onMouseEnter?: boolean
-}
-
 interface Orientation {
     vertical: "top" | "bottom"
     horizontal: "left" | "right"
@@ -53,13 +40,33 @@ function getTooltipPosition(anchor: Element) {
     }
 }
 
+export interface TooltipItem {
+    id: string | number
+    value: ReactNode
+    onClick?: (id: string | number) => void
+}
+
+interface Props {
+    items: TooltipItem[] | (() => TooltipItem[])
+    children: ReactNode
+    onClick?: boolean
+    onMouseEnter?: boolean
+    anchorClassName?: string
+}
+
 interface PositonState {
     top: number
     left: number
     orientation: Orientation
 }
 
-function Tooltip({ items, children, onMouseEnter, onClick }: Props) {
+function Tooltip({
+    items,
+    children,
+    onMouseEnter,
+    onClick,
+    anchorClassName,
+}: Props) {
     const anchorRef = useRef<HTMLDivElement>(null)
     const [visible, setVisible] = useState(false)
     const [position, setPosition] = useState<PositonState>({
@@ -111,11 +118,10 @@ function Tooltip({ items, children, onMouseEnter, onClick }: Props) {
         }
     }, [visible])
 
-    console.log(position)
-
     return (
         <>
             <div
+                className={anchorClassName}
                 ref={anchorRef}
                 onMouseEnter={handleMouseMove}
                 onMouseLeave={handleMouseMove}

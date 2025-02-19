@@ -3,6 +3,7 @@
 .header {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   column-gap: $spacing-m;
   width: 100%;
   margin-bottom: $spacing-l;
@@ -11,8 +12,10 @@
     transition: $transition-default;
     padding: $spacing-xs;
     border-bottom: solid 1px transparent;
+    box-sizing: content-box;
 
-    &:hover {
+    &:hover,
+    &.active {
       border-bottom: solid 1px $color_primary;
     }
   }

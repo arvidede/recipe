@@ -35,12 +35,6 @@ body {
   color: $text_regular;
 }
 
-@media print {
-  body {
-    background-color: #fff;
-  }
-}
-
 body::backdrop {
   background-color: #fafafa;
 }

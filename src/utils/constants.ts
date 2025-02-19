@@ -1,6 +1,8 @@
 export enum Routes {
     Search = "/",
-    Login = "/login",
+    LogIn = "/login",
+    LogOut = "/logout",
     Home = "/recipes",
     Recipe = "/recipe",
+    Settings = "/settings",
 }
