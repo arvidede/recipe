@@ -1,0 +1,36 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@mixin fade-in($duration: 400ms, $delay: 0ms, $ease: ease-in-out) {
+  animation: fade-in $duration $ease $delay both;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  99% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+    display: none;
+  }
+}
+
+@mixin fade-out($duration: 400ms, $delay: 0ms, $ease: ease-in-out) {
+  animation: fade-out $duration $ease $delay both;
+}

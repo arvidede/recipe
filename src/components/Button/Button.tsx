@@ -1,32 +1,21 @@
 import clsx from "clsx"
-import { ForwardedRef, forwardRef, MouseEventHandler, ReactNode } from "react"
+import { ButtonHTMLAttributes, ForwardedRef, forwardRef } from "react"
 import styles from "./Button.module.scss"
 
-interface Props {
-    onClick?: MouseEventHandler<HTMLButtonElement>
-    disabled?: boolean
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     className?: string
-    children?: ReactNode
     variant?: "text" | "icon" | "outlined" | "transparent"
 }
 
 function Button(
-    {
-        onClick,
-        className,
-        disabled,
-        children,
-
-        variant = "text",
-    }: Props,
+    { className, children, variant = "text", ...props }: Props,
     ref?: ForwardedRef<HTMLButtonElement>,
 ) {
     return (
         <button
+            {...props}
             ref={ref}
-            onClick={onClick}
             className={clsx(styles.container, styles[variant], className)}
-            disabled={disabled}
         >
             {children}
         </button>

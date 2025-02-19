@@ -5,15 +5,13 @@
   align-items: center;
   justify-content: center;
   margin: 0;
-  height: fit-content;
-  width: fit-content;
   -webkit-tap-highlight-color: transparent;
   background-color: $color_primary;
   border: solid 2px $color_primary;
   transition: $transition-default;
   padding: $spacing-s;
 
-  &:active(:not(:disabled)) {
+  &:active:not(:disabled) {
     transform: scale(0.95);
   }
 
@@ -23,6 +21,7 @@
 
   &:disabled {
     cursor: initial;
+    filter: grayscale(0.75);
   }
 }
 

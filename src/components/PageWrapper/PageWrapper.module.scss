@@ -3,6 +3,8 @@
   animation-duration: 200ms;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
+  flex: 1;
+  display: flex;
 }
 
 @keyframes enter {

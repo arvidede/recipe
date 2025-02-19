@@ -61,11 +61,7 @@ function RecipeCard({ recipe }: Props) {
                     </>
                 ),
                 onClick: () => {
-                    duplicateRecipe(recipe).then((success) => {
-                        if (success) {
-                            router.refresh()
-                        }
-                    })
+                    duplicateRecipe(recipe)
                 },
             },
         ]

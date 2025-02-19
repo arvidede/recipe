@@ -1,18 +1,40 @@
 "use server"
 
 import getServerClient from "@/db/server"
-import { redirect } from "next/navigation"
+import { getLogger } from "@/utils/log"
 
-export default async function signIn(formData: FormData) {
+const logger = getLogger("auth:signin")
+export interface ActionState {
+    error?: string
+    data?: boolean
+    redirect?: string
+}
+
+export default async function signIn(
+    state: ActionState,
+    formData: FormData,
+): Promise<ActionState> {
     const email = String(formData.get("email"))
-    const password = String(formData.get("password"))
 
     const supabase = await getServerClient()
 
-    await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithOtp({
         email,
-        password,
+        options: {
+            shouldCreateUser: false,
+            emailRedirectTo: state.redirect || "https://recipe.edenheim.se",
+        },
     })
 
-    return redirect("/")
+    if (error) {
+        logger.info(error)
+
+        return {
+            error: "Error",
+        }
+    }
+
+    return {
+        data: true,
+    }
 }

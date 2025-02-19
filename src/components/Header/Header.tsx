@@ -31,6 +31,7 @@ function Header({ user }: Props) {
             },
         ]
     }
+
     return (
         <header className={styles.header}>
             <Link

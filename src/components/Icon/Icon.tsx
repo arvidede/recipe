@@ -1,5 +1,5 @@
 import clsx from "clsx"
-import { FunctionComponent } from "react"
+import { FunctionComponent, lazy } from "react"
 import Copy from "./Copy"
 import Cutlery from "./Cutlery"
 import Delete from "./Delete"
@@ -15,6 +15,8 @@ import Plus from "./Plus"
 import Search from "./Search"
 import Share from "./Share"
 import User from "./User"
+
+const Mail = lazy(() => import("./Mail"))
 
 type IconType =
     | "edit"
@@ -32,6 +34,7 @@ type IconType =
     | "more"
     | "delete"
     | "copy"
+    | "mail"
 
 type IconSize = "s" | "m" | "l"
 
@@ -53,6 +56,7 @@ const ICON_MAP: Record<IconType, FunctionComponent> = {
     more: More,
     delete: Delete,
     copy: Copy,
+    mail: Mail,
 }
 
 interface Props {

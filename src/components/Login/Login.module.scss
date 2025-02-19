@@ -1,6 +1,48 @@
+@import "@/styles/main";
+
+$duration: 300ms;
+
 .form {
+  position: relative;
+  background-color: blue;
+  align-self: center;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.group {
+  width: map-get($map: $breakpoints, $key: "phone");
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
   row-gap: 1rem;
+  position: absolute;
+  margin-bottom: 10dvh;
+}
+
+.group:first-of-type {
+  &.fadeOut {
+    @include fade-out($duration, 0ms);
+  }
+}
+
+.group:last-of-type {
+  display: none;
+
+  & > span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: $spacing-m;
+    margin-bottom: $spacing-l;
+  }
+
+  &.fadeIn {
+    display: flex;
+
+    @include fade-in($duration, $duration + 10ms);
+  }
 }
