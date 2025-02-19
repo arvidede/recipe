@@ -3,7 +3,12 @@
 .main {
   display: flex;
   flex-direction: column;
-  row-gap: $spacing-m;
+  row-gap: $spacing-l;
+  align-items: center;
+
+  h1 {
+    text-align: left;
+  }
 
   .recipes {
     display: grid;

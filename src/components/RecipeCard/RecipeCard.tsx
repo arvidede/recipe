@@ -3,20 +3,14 @@
 import deleteRecipe from "@/actions/recipe/deleteRecipe"
 import duplicateRecipe from "@/actions/recipe/duplicateRecipe"
 import { Routes } from "@/utils/constants"
-import clsx from "clsx"
-import NextImage from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 import Button from "../Button"
 import Card from "../Card"
 import Icon from "../Icon"
-import Cutlery from "../Icon/Cutlery"
+import { Image } from "../Image"
 import Tooltip, { TooltipItem } from "../Tooltip"
 import styles from "./RecipeCard.module.scss"
-
-const PLACEHOLDER_IMAGE = ""
-
 interface Props {
     recipe: UserRecipe
 }
@@ -70,7 +64,15 @@ function RecipeCard({ recipe }: Props) {
     return (
         <Card className={styles.container}>
             <Link href={`${Routes.Recipe}/${recipe.id}`}>
-                <Image recipe={recipe} />
+                <Image
+                    src={recipe.img}
+                    alt={recipe.title}
+                    sizes="300px"
+                    fill
+                    loading="lazy"
+                    unoptimized
+                    className={styles.image}
+                />
                 <div className={styles.details}>
                     <h4>{recipe.title}</h4>
                     <Tooltip items={getTooltipItems} onClick>
@@ -84,33 +86,6 @@ function RecipeCard({ recipe }: Props) {
                 </div>
             </Link>
         </Card>
-    )
-}
-
-function Image({ recipe }: { recipe: UserRecipe }) {
-    const [loading, setLoading] = useState(true)
-
-    return (
-        <div className={styles.imageWrapper}>
-            {loading && (
-                <div className={styles.placeholder}>
-                    <Cutlery />
-                </div>
-            )}
-            <NextImage
-                src={recipe.img || PLACEHOLDER_IMAGE}
-                alt={recipe.title}
-                sizes="300px"
-                fill
-                loading="lazy"
-                unoptimized
-                className={clsx({
-                    [styles.image]: true,
-                    [styles.loading]: loading,
-                })}
-                onLoad={() => setLoading(false)}
-            />
-        </div>
     )
 }
 

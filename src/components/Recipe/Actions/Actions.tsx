@@ -16,7 +16,6 @@ const Actions: React.FC<Props> = ({ recipe }) => {
     async function handleShareRecipe() {
         const shareData = {
             url: location.href,
-            text: recipe.title,
             title: recipe.title,
         }
 

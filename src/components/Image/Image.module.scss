@@ -1,0 +1,33 @@
+@import "@/styles/main";
+
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+
+  .placeholder {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    & > svg {
+      height: 100%;
+      stroke: $color_primary;
+
+      & > path {
+        fill: $color_primary;
+      }
+    }
+  }
+
+  .image {
+    object-fit: cover;
+    transition: opacity ease-in 300ms;
+    opacity: 1;
+
+    &.loading {
+      opacity: 0;
+    }
+  }
+}

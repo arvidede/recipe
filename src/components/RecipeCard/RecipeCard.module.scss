@@ -8,42 +8,9 @@
   flex-direction: column;
   position: relative;
 
-  .imageWrapper {
-    position: relative;
+  .image {
     width: 100%;
     height: 300px;
-
-    @include media("<laptop-s") {
-      height: 20vh;
-    }
-
-    .placeholder {
-      display: flex;
-      height: 100%;
-      width: 100%;
-      align-items: center;
-      justify-content: center;
-      padding: 20%;
-
-      & > svg {
-        height: 100%;
-        stroke: $color_primary;
-
-        & > path {
-          fill: $color_primary;
-        }
-      }
-    }
-
-    .image {
-      object-fit: cover;
-      transition: opacity ease-in 400ms;
-      opacity: 1;
-
-      &.loading {
-        opacity: 0;
-      }
-    }
   }
 
   .details {
