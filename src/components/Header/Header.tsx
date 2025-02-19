@@ -12,29 +12,29 @@ interface Props {
     user: User | null
 }
 
+function getTooltipItems() {
+    return [
+        {
+            id: 0,
+            value: <Link href={Routes.Home}>My recipes</Link>,
+        },
+        {
+            id: 1,
+            value: <Link href={Routes.Settings}>My settings</Link>,
+        },
+        {
+            id: 2,
+            value: (
+                <Link href={Routes.LogOut} prefetch={false}>
+                    Sign out
+                </Link>
+            ),
+        },
+    ]
+}
+
 function Header({ user }: Props) {
     const path = usePathname()
-
-    function getTooltipItems() {
-        return [
-            {
-                id: 0,
-                value: <Link href={Routes.Home}>My recipes</Link>,
-            },
-            {
-                id: 1,
-                value: <Link href={Routes.Settings}>My settings</Link>,
-            },
-            {
-                id: 2,
-                value: (
-                    <Link href={Routes.LogOut} prefetch={false}>
-                        Sign out
-                    </Link>
-                ),
-            },
-        ]
-    }
 
     return (
         <header className={styles.header}>

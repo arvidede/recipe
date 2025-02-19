@@ -9,6 +9,9 @@ export default async function getServerClient() {
         process.env.SUPABASE_URL!,
         process.env.SUPABASE_ANON_KEY!,
         {
+            auth: {
+                autoRefreshToken: true,
+            },
             cookies: {
                 getAll() {
                     return cookieStore.getAll()
