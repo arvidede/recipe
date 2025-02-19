@@ -5,6 +5,7 @@
   background-color: $color_white;
   border: $border-light;
   border-radius: $border-radius_xs;
+  color: inherit;
 
   &:focus {
     outline: none;
