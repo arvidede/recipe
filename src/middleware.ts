@@ -1,4 +1,4 @@
-import getServerClient from "@/db/server"
+import { getUser } from "@/db/server"
 import { NextResponse, type NextRequest } from "next/server"
 
 const PROTECTED: Record<string, boolean> = {
@@ -10,10 +10,7 @@ const PROTECTED: Record<string, boolean> = {
 }
 
 async function shouldRedirect(request: NextRequest) {
-    const client = await getServerClient()
-    const {
-        data: { user },
-    } = await client.auth.getUser()
+    const user = await getUser()
 
     return !user && PROTECTED[request.nextUrl.pathname]
 }

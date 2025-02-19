@@ -41,5 +41,8 @@ export async function getSession(client?: ServerClient) {
 
 export async function getUser(client?: ServerClient) {
     const supabase = client || (await getServerClient())
-    return supabase.auth.getUser()
+    const {
+        data: { user },
+    } = await supabase.auth.getUser()
+    return user
 }

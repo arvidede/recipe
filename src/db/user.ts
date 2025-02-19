@@ -9,9 +9,7 @@ export async function getUser() {
         mod = await import("./server")
     }
 
-    const { data } = await mod.getUser()
-
-    return data.user
+    return mod.getUser()
 }
 
 export async function isUserSignedIn() {

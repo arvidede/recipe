@@ -25,5 +25,8 @@ export async function getSession(client?: BrowserClient) {
 
 export async function getUser(client?: BrowserClient) {
     const supabase = client || getBrowserClient()
-    return supabase.auth.getUser()
+    const {
+        data: { user },
+    } = await supabase.auth.getUser()
+    return user
 }
