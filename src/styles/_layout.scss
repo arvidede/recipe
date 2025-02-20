@@ -1,9 +1,0 @@
-@import "./media";
-@import "./theme";
-
-/* Spacing */
-$page-margin: $spacing-xl;
-
-@include media("<=laptop-l") {
-  $page-margin: $spacing-l;
-}

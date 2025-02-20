@@ -1,5 +1,5 @@
-@import "./media";
-@import "./theme";
+@use "./media";
+@use "./theme";
 
 :root {
   --font-size-text-xl: 24px;
@@ -14,7 +14,7 @@
   --font-size-heading-4: 17px;
   --font-size-heading-5: 14px;
 
-  @include media(">=laptop-s") {
+  @include media.media(">=laptop-s") {
     --font-size-text-xl: 32px;
     --font-size-text-l: 22px;
     --font-size-text-m: 18px;
@@ -28,7 +28,7 @@
     --font-size-heading-5: 15px;
   }
 
-  @include media(">=monitor-s") {
+  @include media.media(">=monitor-s") {
     --font-size-text-xl: 38px;
     --font-size-text-l: 24px;
     --font-size-text-m: 20px;

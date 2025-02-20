@@ -1,5 +1,5 @@
-@import "./main";
-@import "./typography-global";
+@use "./main" as *;
+@use "./typography-global" as *;
 
 :root {
   --background-color: $color_secondary;

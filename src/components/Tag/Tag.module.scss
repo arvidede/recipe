@@ -1,4 +1,4 @@
-@import "@/styles/main";
+@use "@/styles/main" as *;
 
 .tag {
   background-color: $color_primary;

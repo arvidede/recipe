@@ -1,5 +1,4 @@
-@import "./colors";
-@import "./media";
+@use "./colors" as c;
 
 /* Colors */
 $color_primary: #457b9d;
@@ -7,12 +6,12 @@ $color_secondary: #f1faee;
 $color_primary_light: #a8dadc;
 $color_primary_dark: #1d3557;
 $body-background-color: #faf9f6;
-$modal-background-color: $color_white;
+$modal-background-color: c.$color_white;
 $modal-overlay: rgba(88, 88, 88, 0.75);
 $error-background-color: rgba(241, 89, 89, 0.06);
 $error: #e63946;
-$warning: $color_yellow_regular;
-$success: $color_green_regular;
+$warning: c.$color_yellow_regular;
+$success: c.$color_green_regular;
 $text_light: #5f6766;
 $text_regular: #384241;
 $text_dark: #384241;
@@ -31,9 +30,9 @@ $border-radius_default: 1rem;
 $border-radius_small: 0.5rem;
 $border-radius_xs: 0.25rem;
 $border-radius_xxs: 0.125rem;
-$border-light: solid 1px $color_warm-gray_light;
-$border-regular: solid 1px $color_warm-gray_regular;
-$border-dark: solid 1px $color_gray_extra_dark;
+$border-light: solid 1px c.$color_warm-gray_light;
+$border-regular: solid 1px c.$color_warm-gray_regular;
+$border-dark: solid 1px c.$color_gray_extra_dark;
 $border-no-border: solid 1px transparent;
 
 /* Spacing */

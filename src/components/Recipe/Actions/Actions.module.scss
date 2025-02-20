@@ -1,4 +1,4 @@
-@import "@/styles/main";
+@use "@/styles/main" as *;
 .actions {
   display: flex;
   column-gap: $spacing-s;

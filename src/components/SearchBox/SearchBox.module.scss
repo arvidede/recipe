@@ -1,8 +1,9 @@
-@import "@/styles/main";
+@use "@/styles/main" as *;
+@use "sass:map";
 
 .container {
   width: 100%;
-  max-width: map-get($map: $breakpoints, $key: "tablet");
+  max-width: map.get($map: $breakpoints, $key: "tablet");
   display: flex;
   align-items: center;
   justify-content: center;

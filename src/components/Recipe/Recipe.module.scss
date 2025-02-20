@@ -1,4 +1,5 @@
-@import "@/styles/main";
+@use "@/styles/main" as *;
+@use "sass:map";
 
 .container {
   display: grid;
@@ -12,7 +13,7 @@
 
   .recipe {
     overflow: hidden;
-    max-width: map-get($map: $breakpoints, $key: "laptop-m");
+    max-width: map.get($map: $breakpoints, $key: "laptop-m");
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: min-content max-content;
