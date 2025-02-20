@@ -18,21 +18,24 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## TODO
 
-### Features
-
--   Edit view
--   Authentication
--   Recipe library
--   Language settings
--   Export/Share
--   Smart searchbox
-    -   Paste url from clipboard
-    -   Query
-        -   Filters
-            -   Type
-            -   Source
-            -   Ingredients
+- [x] Authentication
+- [ ] Recipe library
+    - [x] Save recipe
+    - [x] Duplicate recipe
+    - [x] Delete recipe
+    - [ ] Edit recipe
+- [x] Export/Share
+- [ ] Language settings
+- [ ] Search
+    - [x] Paste url from clipboard
+    - [ ] Query
+        - [ ] Google search
+        - [ ] Direct sources, eg serious eats, justonecookbook
+        - [ ] Filters
+            - [ ] Type
+            - [ ] Source
+            - [ ] Ingredients
 
 ### Bugs
 
--   I don't write bugs
+- Redirect to the previous page after a successful login

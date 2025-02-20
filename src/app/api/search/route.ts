@@ -1,5 +1,5 @@
 import getDB from "@/db"
-import { summariseRecipe } from "@/openai/prompts"
+import { summariseRecipe } from "@/processing/summarise"
 import { ENV } from "@/utils/env"
 import { isValidURL } from "@/utils/isValidUrl"
 import { getLogger } from "@/utils/log"
@@ -8,10 +8,17 @@ import { stripTrailingSlash } from "@/utils/stripTrailingSlash"
 import { NextResponse } from "next/server"
 
 const logger = getLogger("api:search")
-
 const db = getDB()
-
 export const maxDuration = 60
+
+class RequestError extends Error {
+    status: number
+
+    constructor(message: string, status: number) {
+        super(message)
+        this.status = status
+    }
+}
 
 async function fetchRecipe(url: URL) {
     const page = await fetch(url)
@@ -20,23 +27,28 @@ async function fetchRecipe(url: URL) {
     const { img, text } = await parsePage(html, url)
     const summary = await summariseRecipe(text)
 
-    const recipe: Recipe = {
+    if (!summary) {
+        throw new RequestError(
+            "The model was unable to generate a summary for the given input.",
+            422,
+        )
+    }
+
+    return {
         img,
         url: url.href,
         ...summary,
     }
-
-    return recipe
 }
 
-function validateRequest(request: Request) {
+function validateRequest(request: Request): URL {
     const { searchParams } = new URL(request.url)
     const query = searchParams.get("url")
 
     if (!query || !isValidURL(query)) {
-        throw new Response(
-            `Error: Invalid param 'url' in request, received ${query}`,
-            { status: 400 },
+        throw new RequestError(
+            `Invalid param 'url' in request, received ${query}`,
+            400,
         )
     }
 
@@ -48,7 +60,8 @@ export async function GET(request: Request) {
         const url = validateRequest(request)
 
         if (ENV.CACHE && db.has(url.href)) {
-            return new Response(JSON.stringify(await db.get(url.href)))
+            const cachedRecipe = await db.get(url.href)
+            return NextResponse.json(cachedRecipe, { status: 200 })
         }
 
         const recipe = await fetchRecipe(url)
@@ -59,12 +72,14 @@ export async function GET(request: Request) {
 
         return NextResponse.json(recipe, { status: 200 })
     } catch (e: any) {
-        if (e instanceof Response) {
-            logger.error(e.statusText)
-            return e
+        if (e instanceof RequestError) {
+            return NextResponse.json({ error: e.message }, { status: e.status })
         }
 
-        logger.error(e.message)
-        return new Response(`Error: ${e.message}`, { status: 500 })
+        logger.error("Unexpected error:", e.message)
+        return NextResponse.json(
+            { error: `Unexpected error: ${e.message}` },
+            { status: 500 },
+        )
     }
 }
