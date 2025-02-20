@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.1.16",
     "@ai-sdk/openai": "^1.1.13",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.46.1",
