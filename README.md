@@ -19,6 +19,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## TODO
 
 - [x] Authentication
+    - [ ] Tidy up magic link templates
 - [ ] Recipe library
     - [x] Save recipe
     - [x] Duplicate recipe

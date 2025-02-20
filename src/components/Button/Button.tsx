@@ -8,12 +8,13 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button(
-    { className, children, variant = "text", ...props }: Props,
+    { className, children, variant = "text", type = "button", ...props }: Props,
     ref?: ForwardedRef<HTMLButtonElement>,
 ) {
     return (
         <button
             {...props}
+            type={type}
             ref={ref}
             className={clsx(styles.container, styles[variant], className)}
         >

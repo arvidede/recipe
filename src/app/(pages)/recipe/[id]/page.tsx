@@ -1,7 +1,7 @@
 import PageWrapper from "@/components/PageWrapper"
 import Recipe from "@/components/Recipe"
 import getRecipe from "@/db/queries/getRecipe"
-import { redirect } from "next/navigation"
+import { notFound } from "next/navigation"
 import styles from "./page.module.scss"
 
 interface Props {
@@ -15,7 +15,7 @@ export default async function RecipePage({ params }: Props) {
     const recipe = await getRecipe(id)
 
     if (!recipe) {
-        return redirect("/404")
+        notFound()
     }
 
     return (

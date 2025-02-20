@@ -1,17 +1,64 @@
+"use client"
+import saveRecipe from "@/actions/recipe/saveRecipe"
+import { lazy } from "@/utils/lazy"
 import clsx from "clsx"
+import { useRef, useState } from "react"
 import Button from "../Button"
 import Card from "../Card"
 import Icon from "../Icon"
 import { Image } from "../Image"
-import Tag from "../Tag/Tag"
 import { Actions } from "./Actions"
 import styles from "./Recipe.module.scss"
+
+const EditableCell = lazy(() => import("./EditableCell"))
 
 interface Props {
     recipe?: Recipe | null
 }
 
 const Recipe = ({ recipe }: Props) => {
+    const formRef = useRef<HTMLFormElement>(null)
+    const [editable, setEditable] = useState(false)
+
+    async function handleSubmit() {
+        if (formRef.current) {
+            const formData = new FormData(formRef.current)
+
+            const instructions = formData.getAll("instruction") as string[]
+            const ingredientQuantities = formData.getAll("ingredient-quantity")
+            const ingredientUnits = formData.getAll("ingredient-unit")
+            const ingredientNames = formData.getAll("ingredient-name")
+            const title = formData.get("title") as string
+
+            const ingredients = ingredientNames.map((name, index) => {
+                return {
+                    name,
+                    unit: ingredientUnits[index],
+                    quantity: ingredientQuantities[index],
+                } as Ingredient
+            })
+
+            const next: Recipe = {
+                ...recipe!,
+                title: title ?? "",
+                ingredients,
+                instructions,
+            }
+
+            await saveRecipe(next)
+        }
+    }
+
+    async function handleEdit() {
+        if (!editable) {
+            setEditable(true)
+            return
+        }
+
+        await handleSubmit()
+        setEditable(false)
+    }
+
     return (
         <div
             className={clsx({
@@ -20,17 +67,35 @@ const Recipe = ({ recipe }: Props) => {
             })}
         >
             {recipe && (
-                <article className={styles.recipe}>
-                    <Details recipe={recipe} />
-                    <Ingredients ingredients={recipe.ingredients} />
-                    <Instructions instructions={recipe.instructions} />
-                </article>
+                <form ref={formRef} className={styles.recipe}>
+                    <Details
+                        recipe={recipe}
+                        onEdit={handleEdit}
+                        editable={editable}
+                    />
+                    <Ingredients
+                        ingredients={recipe.ingredients}
+                        editable={editable}
+                    />
+                    <Instructions
+                        instructions={recipe.instructions}
+                        editable={editable}
+                    />
+                </form>
             )}
         </div>
     )
 }
 
-function Details({ recipe }: { recipe: Recipe }) {
+function Details({
+    recipe,
+    onEdit,
+    editable,
+}: {
+    recipe: Recipe
+    onEdit: () => void
+    editable: boolean
+}) {
     return (
         <section className={styles.details}>
             {recipe.img && (
@@ -41,8 +106,12 @@ function Details({ recipe }: { recipe: Recipe }) {
                     fill
                 />
             )}
-            <h1>{recipe.title}</h1>
-            <Actions recipe={recipe} />
+            {editable ? (
+                <EditableCell name="title" value={recipe.title} type="input" />
+            ) : (
+                <h1>{recipe.title}</h1>
+            )}
+            <Actions recipe={recipe} onEdit={onEdit} editable={editable} />
         </section>
     )
 }
@@ -64,14 +133,20 @@ function renderUnit(unitName: string) {
 }
 
 function renderIngredient(ingredient: Ingredient) {
-    if ("quantity" in ingredient) {
+    if ("quantity" in ingredient && ingredient.quantity) {
         return `${ingredient.quantity} ${renderUnit(ingredient.unit)} ${ingredient.name.toLocaleLowerCase()}`
     }
 
     return ingredient.name
 }
 
-function Ingredients({ ingredients }: { ingredients: Ingredient[] }) {
+function Ingredients({
+    ingredients,
+    editable,
+}: {
+    ingredients: Ingredient[]
+    editable: boolean
+}) {
     return (
         <section className={styles.ingredients}>
             <div className={styles.servings}>
@@ -89,7 +164,37 @@ function Ingredients({ ingredients }: { ingredients: Ingredient[] }) {
             <Card padding className={styles.list}>
                 <ul>
                     {ingredients.map((ingredient, index) => (
-                        <li key={index}>{renderIngredient(ingredient)}</li>
+                        <li key={index}>
+                            {editable ? (
+                                <div className={styles.editable}>
+                                    <EditableCell
+                                        value={
+                                            "quantity" in ingredient
+                                                ? String(ingredient.quantity)
+                                                : ""
+                                        }
+                                        name="ingredient-quantity"
+                                        type="input"
+                                    />
+                                    <EditableCell
+                                        value={
+                                            "unit" in ingredient
+                                                ? String(ingredient.unit)
+                                                : ""
+                                        }
+                                        name="ingredient-unit"
+                                        type="input"
+                                    />
+                                    <EditableCell
+                                        value={ingredient.name}
+                                        name="ingredient-name"
+                                        type="input"
+                                    />
+                                </div>
+                            ) : (
+                                renderIngredient(ingredient)
+                            )}
+                        </li>
                     ))}
                 </ul>
             </Card>
@@ -99,8 +204,10 @@ function Ingredients({ ingredients }: { ingredients: Ingredient[] }) {
 
 function Instructions({
     instructions,
+    editable,
 }: {
     instructions: Recipe["instructions"]
+    editable: boolean
 }) {
     return (
         <section className={styles.instructions}>
@@ -108,20 +215,19 @@ function Instructions({
             <Card padding className={styles.list}>
                 <ol>
                     {instructions.map((instruction, index) => (
-                        <li key={index}>{instruction}</li>
+                        <li key={index}>
+                            {editable ? (
+                                <EditableCell
+                                    value={instruction}
+                                    name="instruction"
+                                />
+                            ) : (
+                                instruction
+                            )}
+                        </li>
                     ))}
                 </ol>
             </Card>
-        </section>
-    )
-}
-
-function Tags({ tags }: { tags: Recipe["tags"] }) {
-    return (
-        <section className={styles.tags}>
-            {tags.map((tag) => (
-                <Tag key={tag.key} tag={tag} />
-            ))}
         </section>
     )
 }

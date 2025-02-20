@@ -1,0 +1,27 @@
+@use "@/styles/main" as *;
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: $spacing-xs;
+
+  input {
+    width: 100%;
+  }
+
+  input,
+  textarea {
+    padding: $spacing-s-m;
+    border-radius: $border-radius_small;
+    border: $border-light;
+    flex: 1;
+    background-color: $color_white;
+    color: inherit;
+  }
+
+  textarea {
+    resize: none;
+    height: auto;
+  }
+}

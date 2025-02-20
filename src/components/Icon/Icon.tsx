@@ -1,22 +1,6 @@
 import clsx from "clsx"
-import { FunctionComponent, lazy } from "react"
-import Copy from "./Copy"
-import Cutlery from "./Cutlery"
-import Delete from "./Delete"
-import Edit from "./Edit"
-import Exit from "./Exit"
-import Heart, { HeartFilled } from "./Heart"
+import { ComponentType, lazy, Suspense } from "react"
 import styles from "./Icon.module.scss"
-import Link from "./Link"
-import Minus from "./Minus"
-import More from "./More"
-import Paste from "./Paste"
-import Plus from "./Plus"
-import Search from "./Search"
-import Share from "./Share"
-import User from "./User"
-
-const Mail = lazy(() => import("./Mail"))
 
 type IconType =
     | "edit"
@@ -35,29 +19,33 @@ type IconType =
     | "delete"
     | "copy"
     | "mail"
+    | "close"
+
+const ICON_COMPONENTS: Record<IconType, ComponentType> = {
+    cutlery: lazy(() => import("./Cutlery")),
+    edit: lazy(() => import("./Edit")),
+    paste: lazy(() => import("./Paste")),
+    search: lazy(() => import("./Search")),
+    heart: lazy(() => import("./Heart")),
+    "heart-filled": lazy(() =>
+        import("./Heart").then((it) => ({ default: it.HeartFilled })),
+    ),
+    link: lazy(() => import("./Link")),
+    share: lazy(() => import("./Share")),
+    plus: lazy(() => import("./Plus")),
+    minus: lazy(() => import("./Minus")),
+    user: lazy(() => import("./User")),
+    exit: lazy(() => import("./Exit")),
+    more: lazy(() => import("./More")),
+    delete: lazy(() => import("./Delete")),
+    copy: lazy(() => import("./Copy")),
+    mail: lazy(() => import("./Mail")),
+    close: lazy(() => import("./Close")),
+}
 
 type IconSize = "s" | "m" | "l"
 
 type IconVariant = "solid" | "transparent" | "outlined"
-
-const ICON_MAP: Record<IconType, FunctionComponent> = {
-    cutlery: Cutlery,
-    edit: Edit,
-    paste: Paste,
-    search: Search,
-    heart: Heart,
-    "heart-filled": HeartFilled,
-    link: Link,
-    share: Share,
-    plus: Plus,
-    minus: Minus,
-    user: User,
-    exit: Exit,
-    more: More,
-    delete: Delete,
-    copy: Copy,
-    mail: Mail,
-}
 
 interface Props {
     type: IconType
@@ -72,7 +60,12 @@ export default function Icon({
     variant = "solid",
     size = "m",
 }: Props) {
-    const ICON = ICON_MAP[type]
+    const IconComponent = ICON_COMPONENTS[type]
+
+    if (!IconComponent) {
+        return <span>Icon not found</span>
+    }
+
     return (
         <div
             className={clsx(
@@ -83,7 +76,9 @@ export default function Icon({
                 className,
             )}
         >
-            <ICON />
+            <Suspense fallback={null}>
+                <IconComponent />
+            </Suspense>
         </div>
     )
 }

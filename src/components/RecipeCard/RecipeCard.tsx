@@ -63,7 +63,7 @@ function RecipeCard({ recipe }: Props) {
 
     return (
         <Card className={styles.container}>
-            <Link href={`${Routes.Recipe}/${recipe.id}`}>
+            <Link href={`${Routes.Recipe}/${recipe.id}`} prefetch={false}>
                 <Image
                     src={recipe.img}
                     alt={recipe.title}

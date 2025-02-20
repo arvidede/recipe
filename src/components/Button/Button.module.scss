@@ -10,6 +10,7 @@
   border: solid 2px $color_primary;
   transition: $transition-default;
   padding: $spacing-s;
+  height: fit-content;
 
   &:active:not(:disabled) {
     transform: scale(0.95);
@@ -49,5 +50,9 @@
 
   &:hover {
     background-color: $color_primary;
+
+    svg {
+      stroke: $color_secondary;
+    }
   }
 }

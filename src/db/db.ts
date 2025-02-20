@@ -130,8 +130,9 @@ class DevDB implements DB {
     }
 
     public has(key: string) {
-        logger.info("HAS", key)
-        return this.db.has(key)
+        const has = this.db.has(key)
+        logger.info("HAS", key, has)
+        return has
     }
 
     private persist() {

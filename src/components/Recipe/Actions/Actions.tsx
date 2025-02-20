@@ -6,9 +6,11 @@ import styles from "./Actions.module.scss"
 
 interface Props {
     recipe: Recipe
+    onEdit: () => void
+    editable: boolean
 }
 
-const Actions: React.FC<Props> = ({ recipe }) => {
+function Actions({ recipe, onEdit, editable }: Props) {
     async function handleSaveRecipe() {
         await saveRecipe(recipe)
     }
@@ -39,8 +41,8 @@ const Actions: React.FC<Props> = ({ recipe }) => {
             <Button variant="icon" onClick={handleShareRecipe}>
                 <Icon type="share" />
             </Button>
-            <Button variant="icon">
-                <Icon type="edit" />
+            <Button variant="icon" onClick={onEdit}>
+                <Icon type={editable ? "close" : "edit"} />
             </Button>
         </div>
     )

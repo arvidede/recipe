@@ -6,6 +6,7 @@
   grid-template-rows: 0fr;
   transition: grid-template-rows $transition-default;
   margin: 0 auto;
+  width: 100%;
 
   &.expanded {
     grid-template-rows: 1fr;
@@ -13,6 +14,7 @@
 
   .recipe {
     overflow: hidden;
+    width: 100%;
     max-width: map.get($map: $breakpoints, $key: "laptop-m");
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -23,6 +25,7 @@
     // Prevent box-shadow clipping
     padding: $spacing-m;
     margin: -$spacing-m;
+    box-sizing: content-box;
 
     .details {
       grid-area: 1 / 1 / 2 / 3;
@@ -90,6 +93,12 @@
         li {
           margin: 0;
           padding: $spacing-xs;
+
+          .editable {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            column-gap: $spacing-s;
+          }
         }
       }
     }
