@@ -5,7 +5,6 @@ import { isValidURL } from "@/utils/isValidUrl"
 import { getLogger } from "@/utils/log"
 import { parsePage } from "@/utils/parsePage"
 import { stripTrailingSlash } from "@/utils/stripTrailingSlash"
-import { NextResponse } from "next/server"
 
 const logger = getLogger("api:search")
 const db = getDB()
@@ -61,7 +60,7 @@ export async function GET(request: Request) {
 
         if (ENV.CACHE && db.has(url.href)) {
             const cachedRecipe = await db.get(url.href)
-            return NextResponse.json(cachedRecipe, { status: 200 })
+            return Response.json(cachedRecipe, { status: 200 })
         }
 
         const recipe = await fetchRecipe(url)
@@ -70,14 +69,14 @@ export async function GET(request: Request) {
             db.set(url.href, recipe)
         }
 
-        return NextResponse.json(recipe, { status: 200 })
+        return Response.json(recipe, { status: 200 })
     } catch (e: any) {
         if (e instanceof RequestError) {
-            return NextResponse.json({ error: e.message }, { status: e.status })
+            return Response.json({ error: e.message }, { status: e.status })
         }
 
         logger.error("Unexpected error:", e.message)
-        return NextResponse.json(
+        return Response.json(
             { error: `Unexpected error: ${e.message}` },
             { status: 500 },
         )
