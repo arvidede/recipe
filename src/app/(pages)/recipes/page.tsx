@@ -7,9 +7,7 @@ import { Suspense } from "react"
 import Loading from "./loading"
 import styles from "./page.module.scss"
 
-interface Props {}
-
-export default async function Home({}: Props) {
+export default async function Home() {
     await protect()
     return (
         <PageWrapper className={styles.main}>
