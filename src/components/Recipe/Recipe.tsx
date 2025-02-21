@@ -1,12 +1,14 @@
 "use client"
 import saveRecipe from "@/actions/recipe/saveRecipe"
+import useReactiveState from "@/utils/hooks/useReactiveState"
 import clsx from "clsx"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import Button from "../Button"
 import Icon from "../Icon"
 import { Image } from "../Image"
+import { Input } from "../Input"
+import TextArea from "../TextArea"
 import { Actions } from "./Actions"
-import EditableCell from "./EditableCell"
 import styles from "./Recipe.module.scss"
 
 interface Props {
@@ -14,59 +16,106 @@ interface Props {
     editable?: boolean
 }
 
+function sanitise(entry: FormDataEntryValue) {
+    return entry.toString().trim()
+}
+
 const Recipe = ({ recipe, editable: initiallyEditable = false }: Props) => {
     const formRef = useRef<HTMLFormElement>(null)
     const [editable, setEditable] = useState(initiallyEditable)
+    const [touched, setTouched] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [ingredients, setIngredients] = useReactiveState(
+        recipe?.ingredients || [],
+    )
+    const [instructions, setInstructions] = useReactiveState(
+        recipe?.instructions || [],
+    )
 
-    async function handleSubmit() {
-        if (formRef.current) {
+    const handleChange = useCallback(() => {
+        if (!touched) {
+            setTouched(true)
+        }
+    }, [touched])
+
+    const handleDelete = useCallback(
+        (type: "instruction" | "ingredient", index: number) => {
+            handleChange()
+            if (type === "instruction") {
+                setInstructions((current) =>
+                    current.filter((_, i) => i !== index),
+                )
+            } else {
+                setIngredients((current) =>
+                    current.filter((_, i) => i !== index),
+                )
+            }
+        },
+        [handleChange],
+    )
+
+    const handleAdd = useCallback(
+        (type: "instruction" | "ingredient") => {
+            handleChange()
+            if (type === "instruction") {
+                setInstructions((current) => [...current, ""])
+            } else {
+                setIngredients((current) => [
+                    ...current,
+                    { name: "", quantity: undefined, unit: undefined },
+                ])
+            }
+        },
+        [handleChange],
+    )
+
+    const handleSubmit = useCallback(async () => {
+        if (!recipe || !formRef.current) return
+
+        setLoading(true)
+
+        try {
             const formData = new FormData(formRef.current)
-
             const title = formData.get("title") as string
-
             const ingredientQuantities = formData.getAll("ingredient-quantity")
             const ingredientUnits = formData.getAll("ingredient-unit")
             const ingredientNames = formData.getAll("ingredient-name")
-
-            const ingredients = ingredientNames.map((name, index) => {
-                return {
-                    name: name.toString().trim(),
-                    unit: ingredientUnits[index],
-                    quantity: ingredientQuantities[index].toString().trim(),
-                } as Ingredient
-            })
-
+            const ingredients = ingredientNames
+                .map((name, index) => ({
+                    name: sanitise(name),
+                    unit: sanitise(ingredientUnits[index]),
+                    quantity: Number(sanitise(ingredientQuantities[index])),
+                }))
+                .filter(
+                    (ingredient) =>
+                        ingredient.name ||
+                        ingredient.quantity ||
+                        ingredient.unit,
+                )
             const instructions = formData
                 .getAll("instruction")
-                .map((instruction) => instruction.toString().trim())
+                .map(sanitise)
+                .filter(Boolean)
 
-            const next: Recipe = {
-                ...recipe!,
-                title: title ?? "",
-                ingredients,
-                instructions,
-            }
+            const next: Recipe = { ...recipe, title, ingredients, instructions }
 
             await saveRecipe(next)
-
             setEditable(false)
+        } catch (e: unknown) {
+            console.error("Failed to save recipe")
+            // TODO
+        } finally {
+            setLoading(false)
         }
-    }
+    }, [recipe])
 
-    useEffect(() => {
-        if (formRef.current) {
-            formRef.current.addEventListener("change", console.log)
-        }
-    }, [])
-
-    async function handleEdit() {
+    const handleEdit = useCallback(() => {
         if (!editable) {
             setEditable(true)
-            return
+        } else {
+            handleSubmit()
         }
-
-        handleSubmit()
-    }
+    }, [editable, handleSubmit])
 
     return (
         <div
@@ -76,19 +125,27 @@ const Recipe = ({ recipe, editable: initiallyEditable = false }: Props) => {
             })}
         >
             {recipe && (
-                <form ref={formRef} className={styles.recipe}>
+                <form
+                    ref={formRef}
+                    className={styles.recipe}
+                    onInput={handleChange}
+                >
                     <Details
                         recipe={recipe}
                         onEdit={handleEdit}
                         editable={editable}
                     />
                     <Ingredients
-                        ingredients={recipe.ingredients}
+                        ingredients={ingredients}
                         editable={editable}
+                        onAdd={() => handleAdd("ingredient")}
+                        onDelete={(i) => handleDelete("ingredient", i)}
                     />
                     <Instructions
-                        instructions={recipe.instructions}
+                        instructions={instructions}
                         editable={editable}
+                        onAdd={() => handleAdd("instruction")}
+                        onDelete={(i) => handleDelete("instruction", i)}
                     />
                 </form>
             )}
@@ -116,7 +173,7 @@ function Details({
                 />
             )}
             {editable ? (
-                <EditableCell name="title" value={recipe.title} type="input" />
+                <TextArea name="title" value={recipe.title} />
             ) : (
                 <h1>{recipe.title}</h1>
             )}
@@ -142,8 +199,12 @@ function renderUnit(unitName: string) {
 }
 
 function renderIngredient(ingredient: Ingredient) {
-    if ("quantity" in ingredient && ingredient.quantity) {
+    if (ingredient.quantity && ingredient.unit) {
         return `${ingredient.quantity} ${renderUnit(ingredient.unit)} ${ingredient.name.toLocaleLowerCase()}`
+    }
+
+    if (ingredient.quantity) {
+        return `${ingredient.quantity} ${ingredient.name.toLocaleLowerCase()}`
     }
 
     return ingredient.name
@@ -152,9 +213,13 @@ function renderIngredient(ingredient: Ingredient) {
 function Ingredients({
     ingredients,
     editable,
+    onAdd,
+    onDelete,
 }: {
     ingredients: Ingredient[]
     editable: boolean
+    onAdd: () => void
+    onDelete: (index: number) => void
 }) {
     return (
         <section className={styles.ingredients}>
@@ -175,35 +240,35 @@ function Ingredients({
                     <li key={index}>
                         {editable ? (
                             <div className={styles.editable}>
-                                <EditableCell
-                                    value={
-                                        "quantity" in ingredient
-                                            ? String(ingredient.quantity)
-                                            : ""
-                                    }
+                                <Input
+                                    defaultValue={ingredient.quantity}
                                     name="ingredient-quantity"
-                                    type="input"
                                 />
-                                <EditableCell
-                                    value={
-                                        "unit" in ingredient
-                                            ? String(ingredient.unit)
-                                            : ""
-                                    }
+                                <Input
+                                    defaultValue={ingredient.unit}
                                     name="ingredient-unit"
-                                    type="input"
                                 />
-                                <EditableCell
-                                    value={ingredient.name}
+                                <Input
+                                    defaultValue={ingredient.name}
                                     name="ingredient-name"
-                                    type="input"
                                 />
+                                <Button
+                                    onClick={() => onDelete(index)}
+                                    variant="transparent"
+                                >
+                                    <Icon type="close" variant="transparent" />
+                                </Button>
                             </div>
                         ) : (
                             renderIngredient(ingredient)
                         )}
                     </li>
                 ))}
+                {editable && (
+                    <Button onClick={onAdd}>
+                        <Icon type="plus" /> Add ingredient
+                    </Button>
+                )}
             </ul>
         </section>
     )
@@ -212,9 +277,13 @@ function Ingredients({
 function Instructions({
     instructions,
     editable,
+    onAdd,
+    onDelete,
 }: {
     instructions: Recipe["instructions"]
     editable: boolean
+    onAdd: () => void
+    onDelete: (index: number) => void
 }) {
     return (
         <section className={styles.instructions}>
@@ -223,15 +292,29 @@ function Instructions({
                 {instructions.map((instruction, index) => (
                     <li key={index}>
                         {editable ? (
-                            <EditableCell
-                                value={instruction}
-                                name="instruction"
-                            />
+                            <div className={styles.editable}>
+                                <TextArea
+                                    value={instruction}
+                                    name="instruction"
+                                />
+                                <Button
+                                    onClick={() => onDelete(index)}
+                                    variant="transparent"
+                                >
+                                    <Icon type="close" variant="transparent" />
+                                </Button>
+                            </div>
                         ) : (
                             instruction
                         )}
                     </li>
                 ))}
+
+                {editable && (
+                    <Button onClick={onAdd}>
+                        <Icon type="plus" /> Add instruction
+                    </Button>
+                )}
             </ol>
         </section>
     )

@@ -1,6 +1,8 @@
 @use "@/styles/main" as *;
 
-.input {
+.textArea {
+  resize: none;
+  height: auto;
   width: 100%;
   padding: $spacing-s-m;
   background-color: $color_white;

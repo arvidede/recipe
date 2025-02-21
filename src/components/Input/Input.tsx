@@ -7,8 +7,14 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     className?: string
 }
 
-function Input({ className, ...props }: Props) {
-    return <input {...props} className={clsx(styles.input, className)} />
+function Input({ className, type = "text", ...props }: Props) {
+    return (
+        <input
+            {...props}
+            type={type}
+            className={clsx(styles.input, className)}
+        />
+    )
 }
 
 export default Input
