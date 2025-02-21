@@ -14,9 +14,9 @@ const PADDING = 100
 function getTooltipPosition(anchor: Element) {
     const rect = anchor.getBoundingClientRect()
 
-    let top = window.scrollY + rect.top + rect.height / 2
-    let left = window.scrollX + rect.left + rect.width / 2
-    let orientation: Orientation = {
+    const top = window.scrollY + rect.top + rect.height / 2
+    const left = window.scrollX + rect.left + rect.width / 2
+    const orientation: Orientation = {
         vertical: "bottom",
         horizontal: "left",
     }
@@ -78,7 +78,7 @@ function Tooltip({
         },
     })
 
-    function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
+    function handleMouseMove() {
         if (!onMouseEnter) {
             return
         }

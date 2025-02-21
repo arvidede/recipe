@@ -16,6 +16,9 @@ const eslintConfig = [
                     caughtErrorsIgnorePattern: "^_",
                 },
             ],
+            "@typescript-eslint/no-empty-object-type": {
+                allowInterfaces: "with-single-extends",
+            },
         },
     }),
 ]

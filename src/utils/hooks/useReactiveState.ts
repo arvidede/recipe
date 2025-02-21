@@ -6,9 +6,7 @@ export default function useReactiveState<S>(
     const [state, setState] = useState(initialState)
 
     useEffect(() => {
-        if (state != initialState) {
-            setState(initialState)
-        }
+        setState(initialState)
     }, [initialState])
 
     return [state, setState]

@@ -70,14 +70,22 @@ export async function GET(request: Request) {
         }
 
         return Response.json(recipe, { status: 200 })
-    } catch (e: any) {
+    } catch (e: unknown) {
         if (e instanceof RequestError) {
             return Response.json({ error: e.message }, { status: e.status })
         }
 
-        logger.error("Unexpected error:", e.message)
+        if (e instanceof Error) {
+            logger.error("Unexpected error:", e.message)
+            return Response.json(
+                { error: `Unexpected error: ${e.message}` },
+                { status: 500 },
+            )
+        }
+
+        logger.error("Unexpected error:", String(e))
         return Response.json(
-            { error: `Unexpected error: ${e.message}` },
+            { error: `Unexpected error: ${String(e)}` },
             { status: 500 },
         )
     }

@@ -35,7 +35,7 @@ export async function summariseRecipe(recipe: string) {
         })
 
         return object
-    } catch (error: any) {
+    } catch (error: unknown) {
         if (NoObjectGeneratedError.isInstance(error)) {
             logger.error(
                 `No summary generated when processing recipe.`,
@@ -48,10 +48,7 @@ export async function summariseRecipe(recipe: string) {
 
         logger.error(
             `Encountered unexpected error when processing recipe.`,
-            `Cause: ${error.cause}`,
-            `Text: ${error.text}`,
-            `Response: ${error.response}`,
-            `Usage: ${error.cause}`,
+            JSON.stringify(error),
         )
 
         return null

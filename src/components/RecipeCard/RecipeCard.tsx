@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 "use client"
 import deleteRecipe from "@/actions/recipe/deleteRecipe"
 import duplicateRecipe from "@/actions/recipe/duplicateRecipe"
