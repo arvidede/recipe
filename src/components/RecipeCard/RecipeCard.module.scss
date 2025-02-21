@@ -10,8 +10,11 @@
 
   .image {
     width: 100%;
-    height: 300px;
-    max-height: 20dvh;
+    height: min(300px, 10lvh);
+
+    @include media("<laptop-s") {
+      height: min(300px, 15lvh);
+    }
   }
 
   .details {

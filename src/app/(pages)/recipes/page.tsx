@@ -1,4 +1,5 @@
 import protect from "@/app/auth/protect"
+import InView from "@/components/InView"
 import PageWrapper from "@/components/PageWrapper"
 import { RecipeCard } from "@/components/RecipeCard"
 import SearchBox from "@/components/SearchBox"
@@ -30,7 +31,9 @@ async function Recipes() {
     return (
         <section className={styles.recipes}>
             {recipes.map((recipe) => (
-                <RecipeCard recipe={recipe} key={recipe.id} />
+                <InView key={recipe.id}>
+                    <RecipeCard recipe={recipe} />
+                </InView>
             ))}
         </section>
     )

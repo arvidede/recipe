@@ -5,6 +5,7 @@
   flex-direction: column;
   row-gap: $spacing-l;
   align-items: center;
+  width: 100%;
 
   h1 {
     text-align: left;
@@ -12,12 +13,15 @@
 
   .recipes {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: $spacing-m;
     width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(10vw, 300px));
+    grid-auto-rows: minmax(min(300px, 10lvh), auto);
+    justify-content: center;
 
     @include media("<laptop-s") {
       grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: minmax(min(300px, 15lvh), auto);
     }
   }
 }
