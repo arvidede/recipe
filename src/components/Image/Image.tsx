@@ -2,7 +2,7 @@
 
 import clsx from "clsx"
 import NextImage, { ImageProps } from "next/image"
-import { useState } from "react"
+import { memo, useState } from "react"
 import Cutlery from "../Icon/Cutlery"
 import styles from "./Image.module.scss"
 
@@ -39,4 +39,4 @@ function Image({ className, src, ...props }: Props) {
     )
 }
 
-export default Image
+export default memo(Image)

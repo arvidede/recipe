@@ -1,1 +1,1 @@
-export { default } from "./SnackBar"
+export { TRANSITION_DELAY, default } from "./SnackBar"
