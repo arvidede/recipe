@@ -33,6 +33,7 @@
   "devDependencies": {
     "@types/html-to-text": "^9.0.4",
     "encoding": "^0.1.13",
+    "eslint-config-prettier": "^10.0.1",
     "prettier-plugin-organize-imports": "^3.2.4",
     "sass": "^1.85.0"
   }

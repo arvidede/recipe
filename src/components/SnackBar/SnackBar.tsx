@@ -1,6 +1,6 @@
 "use client"
 import clsx from "clsx"
-import { ReactNode, useEffect, useLayoutEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import styles from "./SnackBar.module.scss"
 
@@ -15,13 +15,7 @@ export const TRANSITION_DELAY = 200
 function SnackBar({ children, open, className }: Props) {
     const [debouncedOpen, setDebouncedOpen] = useState(false)
 
-    // Initial render should always be closed to prevent
-    // diff between CSR and SSR
     useEffect(() => {
-        setDebouncedOpen(open)
-    }, [])
-
-    useLayoutEffect(() => {
         if (open) {
             setDebouncedOpen(open)
         } else {

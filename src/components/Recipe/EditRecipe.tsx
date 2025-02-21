@@ -20,7 +20,7 @@ function sanitise(entry: FormDataEntryValue): string {
 
 function EditRecipe({ recipe, onEdit }: EditRecipeProps) {
     const formRef = useRef<HTMLFormElement>(null)
-    const [loading, setLoading] = useState(false)
+    const [, setLoading] = useState(false)
     const touched = useRef(false)
 
     const [ingredients, setIngredients] = useReactiveState(
@@ -32,6 +32,11 @@ function EditRecipe({ recipe, onEdit }: EditRecipeProps) {
 
     const snack = useSnackbar()
 
+    const handleClose = useCallback(() => {
+        snack.close()
+        onEdit()
+    }, [onEdit, snack])
+
     useEffect(() => {
         snack.open(
             <div className={styles.snackBar}>
@@ -41,12 +46,7 @@ function EditRecipe({ recipe, onEdit }: EditRecipeProps) {
                 <Button disabled>Save</Button>
             </div>,
         )
-    }, [])
-
-    const handleClose = useCallback(() => {
-        snack.close()
-        onEdit()
-    }, [onEdit, snack.close])
+    }, [handleClose, snack])
 
     const handleSave = useCallback(async () => {
         if (!touched.current || !recipe || !formRef.current) {

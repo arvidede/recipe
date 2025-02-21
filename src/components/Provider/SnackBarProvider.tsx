@@ -4,6 +4,7 @@ import {
     ReactNode,
     useCallback,
     useContext,
+    useMemo,
     useState,
 } from "react"
 import SnackBar, { TRANSITION_DELAY } from "../SnackBar"
@@ -49,7 +50,9 @@ export default function SnackBarProvider({ children }: Props) {
     }, [])
 
     return (
-        <SnackBarContext.Provider value={{ open, close }}>
+        <SnackBarContext.Provider
+            value={useMemo(() => ({ open, close }), [open, close])}
+        >
             {children}
             <SnackBar open={state.open}>{state.content}</SnackBar>
         </SnackBarContext.Provider>
