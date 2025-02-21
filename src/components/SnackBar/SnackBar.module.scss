@@ -1,0 +1,25 @@
+@use "@/styles/main" as *;
+
+.snackBar {
+  position: fixed;
+  bottom: 0;
+  background-color: $color_white;
+  border-radius: $border-radius_default;
+  padding: $spacing-s;
+  box-shadow: $shadow_float-low;
+  left: 50vw;
+  transform: translate(-50%, 150%);
+  width: 300px;
+  max-width: 90dvw;
+  opacity: 0;
+  transition: $transition-default;
+
+  &.open {
+    opacity: 1;
+    transform: translate(-50%, -$spacing-l);
+  }
+
+  @include media("<tablet") {
+    width: 80vw;
+  }
+}
