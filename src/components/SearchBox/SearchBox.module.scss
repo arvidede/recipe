@@ -31,49 +31,4 @@
       font-size: 16px;
     }
   }
-
-  .spinner {
-    height: 1.5rem;
-    width: 1.5rem;
-  }
-
-  .mounted {
-    .spinner {
-      animation: leave 0.1s ease-in forwards;
-    }
-
-    .icon {
-      animation: enter 0.1s ease-in forwards;
-    }
-  }
-
-  .loading {
-    .spinner {
-      animation: enter 0.1s ease-in forwards;
-    }
-
-    .icon {
-      animation: leave 0.1s ease-in forwards;
-    }
-  }
-}
-
-@keyframes enter {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes leave {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
 }

@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation"
 import { ChangeEvent, useEffect, useRef } from "react"
 import Button from "../Button"
 import Icon from "../Icon"
-import Spinner from "../Spinner"
 import styles from "./SearchBox.module.scss"
 import useSearchReducer, { ActionType } from "./searchReducer"
 
@@ -62,7 +61,7 @@ function SearchBox({ onLoadRecipe, url }: Props) {
                 if (recipe) {
                     onLoad(recipe)
                 }
-            } catch (e: any) {
+            } catch (e: unknown) {
                 console.error(e)
             } finally {
                 dispatch({ type: ActionType.Loading, payload: false })
@@ -94,33 +93,21 @@ function SearchBox({ onLoadRecipe, url }: Props) {
     }
 
     useEffect(() => {
-        const autoSearch = window.location.pathname === Routes.Search
-
-        if (autoSearch) {
-            handlePaste()
-            handleSearchRecipe()
-        }
-
         const input = inputRef.current
+
         if (input) {
+            const autoSearch = window.location.pathname === Routes.Search
             if (autoSearch && !input.value.length) {
                 input.focus()
             }
-
-            input.addEventListener("paste", handlePaste)
-            return () => {
-                input.removeEventListener("paste", handlePaste)
-            }
         }
-
-        // This should only run on page load
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <div className={styles.container}>
             <input
                 ref={inputRef}
+                onPaste={handlePaste}
                 onFocus={handleFocus}
                 type="text"
                 value={state.input}
@@ -136,12 +123,9 @@ function SearchBox({ onLoadRecipe, url }: Props) {
                 disabled={state.loading}
                 variant="icon"
                 onClick={() => handleSearchRecipe()}
+                loading={state.loading}
             >
-                {state.loading ? (
-                    <Spinner className={styles.spinner} />
-                ) : (
-                    <Icon className={styles.icon} type="search" size="m" />
-                )}
+                <Icon className={styles.icon} type="search" size="m" />
             </Button>
         </div>
     )
