@@ -8,10 +8,14 @@ interface Props {
     params: Promise<{
         id: string
     }>
+    searchParams: Promise<{
+        edit?: boolean
+    }>
 }
 
-export default async function RecipePage({ params }: Props) {
+export default async function RecipePage({ params, searchParams }: Props) {
     const { id } = await params
+    const { edit } = await searchParams
     const recipe = await getRecipe(id)
 
     if (!recipe) {
@@ -20,7 +24,7 @@ export default async function RecipePage({ params }: Props) {
 
     return (
         <PageWrapper className={styles.main}>
-            <Recipe recipe={recipe} />
+            <Recipe recipe={recipe} editable={edit} />
         </PageWrapper>
     )
 }

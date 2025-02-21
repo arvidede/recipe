@@ -1,5 +1,12 @@
 "use client"
-import { MouseEvent, useCallback, useEffect, useRef } from "react"
+import {
+    ChangeEvent,
+    MouseEvent,
+    useCallback,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from "react"
 import styles from "./EditableCell.module.scss"
 
 interface Props {
@@ -11,17 +18,25 @@ interface Props {
 
 function EditableCell({ value, name, placeholder, type = "textarea" }: Props) {
     const ref = useRef<HTMLTextAreaElement>(null)
+    const [input, setInput] = useState(value)
 
     const handleDelete = useCallback((e: MouseEvent<HTMLButtonElement>) => {
         console.log(e.currentTarget.name)
     }, [])
 
-    useEffect(() => {
+    const handleInputChange = useCallback(
+        (e: ChangeEvent<HTMLTextAreaElement>) => {
+            setInput(e.target.value)
+        },
+        [],
+    )
+
+    useLayoutEffect(() => {
         if (type === "textarea" && ref.current) {
             ref.current.style.height = "auto"
             ref.current.style.height = ref.current.scrollHeight + "px"
         }
-    }, [value])
+    }, [input])
 
     if (type === "input") {
         return (
@@ -38,15 +53,13 @@ function EditableCell({ value, name, placeholder, type = "textarea" }: Props) {
     return (
         <div className={styles.container}>
             <textarea
-                placeholder={placeholder}
                 rows={1}
+                placeholder={placeholder}
                 ref={ref}
-                defaultValue={value}
+                value={input}
+                onChange={handleInputChange}
                 name={name}
             />
-            {/* <Button variant="transparent" onClick={handleDelete}>
-                <Icon type="close" variant="transparent" />
-            </Button> */}
         </div>
     )
 }

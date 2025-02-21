@@ -69,20 +69,19 @@ $offset: 20px;
     z-index: 2;
     border-radius: $border-radius_xs;
     background-color: $color_white;
-    width: max-content;
     list-style: none;
     margin: 0;
     padding: 0;
 
     li {
-      padding: $spacing-xs $spacing-s;
+      padding: $spacing-xs $spacing-m;
+      width: 100%;
       max-width: min(200px, 50vw);
       min-width: min(100px, 25vw);
       text-overflow: ellipsis;
       text-wrap: nowrap;
       word-wrap: none;
       overflow: hidden;
-      flex: 1;
       cursor: default;
       display: flex;
       align-items: center;

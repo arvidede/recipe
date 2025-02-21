@@ -23,12 +23,17 @@ function RecipeCard({ recipe }: Props) {
             {
                 id: 0,
                 value: (
-                    <>
+                    <Link
+                        className={styles.tooltipItem}
+                        href={{
+                            pathname: `${Routes.Recipe}/${recipe.id}`,
+                            query: { edit: true },
+                        }}
+                    >
                         <Icon type="edit" variant="transparent" size="s" />
                         Edit
-                    </>
+                    </Link>
                 ),
-                onClick: () => router.push(`${Routes.Recipe}/${recipe.id}`),
             },
             {
                 id: 1,

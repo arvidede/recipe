@@ -1,42 +1,44 @@
 "use client"
 import saveRecipe from "@/actions/recipe/saveRecipe"
-import { lazy } from "@/utils/lazy"
 import clsx from "clsx"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Button from "../Button"
-import Card from "../Card"
 import Icon from "../Icon"
 import { Image } from "../Image"
 import { Actions } from "./Actions"
+import EditableCell from "./EditableCell"
 import styles from "./Recipe.module.scss"
-
-const EditableCell = lazy(() => import("./EditableCell"))
 
 interface Props {
     recipe?: Recipe | null
+    editable?: boolean
 }
 
-const Recipe = ({ recipe }: Props) => {
+const Recipe = ({ recipe, editable: initiallyEditable = false }: Props) => {
     const formRef = useRef<HTMLFormElement>(null)
-    const [editable, setEditable] = useState(false)
+    const [editable, setEditable] = useState(initiallyEditable)
 
     async function handleSubmit() {
         if (formRef.current) {
             const formData = new FormData(formRef.current)
 
-            const instructions = formData.getAll("instruction") as string[]
+            const title = formData.get("title") as string
+
             const ingredientQuantities = formData.getAll("ingredient-quantity")
             const ingredientUnits = formData.getAll("ingredient-unit")
             const ingredientNames = formData.getAll("ingredient-name")
-            const title = formData.get("title") as string
 
             const ingredients = ingredientNames.map((name, index) => {
                 return {
-                    name,
+                    name: name.toString().trim(),
                     unit: ingredientUnits[index],
-                    quantity: ingredientQuantities[index],
+                    quantity: ingredientQuantities[index].toString().trim(),
                 } as Ingredient
             })
+
+            const instructions = formData
+                .getAll("instruction")
+                .map((instruction) => instruction.toString().trim())
 
             const next: Recipe = {
                 ...recipe!,
@@ -46,8 +48,16 @@ const Recipe = ({ recipe }: Props) => {
             }
 
             await saveRecipe(next)
+
+            setEditable(false)
         }
     }
+
+    useEffect(() => {
+        if (formRef.current) {
+            formRef.current.addEventListener("change", console.log)
+        }
+    }, [])
 
     async function handleEdit() {
         if (!editable) {
@@ -55,8 +65,7 @@ const Recipe = ({ recipe }: Props) => {
             return
         }
 
-        await handleSubmit()
-        setEditable(false)
+        handleSubmit()
     }
 
     return (
@@ -161,43 +170,41 @@ function Ingredients({
                     </Button>
                 </div>
             </div>
-            <Card padding className={styles.list}>
-                <ul>
-                    {ingredients.map((ingredient, index) => (
-                        <li key={index}>
-                            {editable ? (
-                                <div className={styles.editable}>
-                                    <EditableCell
-                                        value={
-                                            "quantity" in ingredient
-                                                ? String(ingredient.quantity)
-                                                : ""
-                                        }
-                                        name="ingredient-quantity"
-                                        type="input"
-                                    />
-                                    <EditableCell
-                                        value={
-                                            "unit" in ingredient
-                                                ? String(ingredient.unit)
-                                                : ""
-                                        }
-                                        name="ingredient-unit"
-                                        type="input"
-                                    />
-                                    <EditableCell
-                                        value={ingredient.name}
-                                        name="ingredient-name"
-                                        type="input"
-                                    />
-                                </div>
-                            ) : (
-                                renderIngredient(ingredient)
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </Card>
+            <ul className={styles.list}>
+                {ingredients.map((ingredient, index) => (
+                    <li key={index}>
+                        {editable ? (
+                            <div className={styles.editable}>
+                                <EditableCell
+                                    value={
+                                        "quantity" in ingredient
+                                            ? String(ingredient.quantity)
+                                            : ""
+                                    }
+                                    name="ingredient-quantity"
+                                    type="input"
+                                />
+                                <EditableCell
+                                    value={
+                                        "unit" in ingredient
+                                            ? String(ingredient.unit)
+                                            : ""
+                                    }
+                                    name="ingredient-unit"
+                                    type="input"
+                                />
+                                <EditableCell
+                                    value={ingredient.name}
+                                    name="ingredient-name"
+                                    type="input"
+                                />
+                            </div>
+                        ) : (
+                            renderIngredient(ingredient)
+                        )}
+                    </li>
+                ))}
+            </ul>
         </section>
     )
 }
@@ -212,22 +219,20 @@ function Instructions({
     return (
         <section className={styles.instructions}>
             <h3>Steps</h3>
-            <Card padding className={styles.list}>
-                <ol>
-                    {instructions.map((instruction, index) => (
-                        <li key={index}>
-                            {editable ? (
-                                <EditableCell
-                                    value={instruction}
-                                    name="instruction"
-                                />
-                            ) : (
-                                instruction
-                            )}
-                        </li>
-                    ))}
-                </ol>
-            </Card>
+            <ol className={styles.list}>
+                {instructions.map((instruction, index) => (
+                    <li key={index}>
+                        {editable ? (
+                            <EditableCell
+                                value={instruction}
+                                name="instruction"
+                            />
+                        ) : (
+                            instruction
+                        )}
+                    </li>
+                ))}
+            </ol>
         </section>
     )
 }

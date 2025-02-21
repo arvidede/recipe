@@ -25,6 +25,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     - [x] Duplicate recipe
     - [x] Delete recipe
     - [ ] Edit recipe
+        - [x] Title
+        - [x] Ingredients
+        - [x] Instructions
+        - [ ] Servings
+        - [ ] Image
 - [x] Export/Share
 - [ ] Language settings
 - [ ] Search

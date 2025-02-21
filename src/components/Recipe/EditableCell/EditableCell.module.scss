@@ -5,6 +5,8 @@
   justify-content: space-between;
   align-items: center;
   column-gap: $spacing-xs;
+  border: $border-light;
+  border-radius: $border-radius_small;
 
   input {
     width: 100%;
@@ -13,8 +15,8 @@
   input,
   textarea {
     padding: $spacing-s-m;
+    border: none;
     border-radius: $border-radius_small;
-    border: $border-light;
     flex: 1;
     background-color: $color_white;
     color: inherit;
@@ -23,5 +25,6 @@
   textarea {
     resize: none;
     height: auto;
+    max-width: 80ch;
   }
 }
