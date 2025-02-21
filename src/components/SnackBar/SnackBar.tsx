@@ -10,7 +10,7 @@ interface Props {
     className?: string
 }
 
-const TRANSITION_DELAY = 300
+export const TRANSITION_DELAY = 200
 
 function SnackBar({ children, open, className }: Props) {
     const [debouncedOpen, setDebouncedOpen] = useState(false)

@@ -1,5 +1,6 @@
 import { User } from "@supabase/supabase-js"
 import { ReactNode } from "react"
+import SnackBarProvider from "./SnackBarProvider"
 import UserProvider from "./UserProvider"
 
 interface Props {
@@ -8,5 +9,9 @@ interface Props {
 }
 
 export default function Provider({ user, children }: Props) {
-    return <UserProvider user={user}>{children}</UserProvider>
+    return (
+        <UserProvider user={user}>
+            <SnackBarProvider>{children}</SnackBarProvider>
+        </UserProvider>
+    )
 }

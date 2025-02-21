@@ -4,22 +4,21 @@
   position: fixed;
   bottom: 0;
   background-color: $color_white;
-  border-radius: $border-radius_default;
+  border-radius: $border-radius_small;
   padding: $spacing-s;
-  box-shadow: $shadow_float-low;
+  box-shadow: $shadow_float-default;
   left: 50vw;
   transform: translate(-50%, 150%);
   width: 300px;
-  max-width: 90dvw;
   opacity: 0;
-  transition: $transition-default;
+  transition: ease-in-out 200ms;
 
   &.open {
     opacity: 1;
-    transform: translate(-50%, -$spacing-l);
+    transform: translate(-50%, -$spacing-m);
   }
 
   @include media("<tablet") {
-    width: 80vw;
+    width: calc(100vw - 2 * $spacing-m);
   }
 }
