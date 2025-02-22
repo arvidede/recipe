@@ -19,7 +19,9 @@ You receive excerpts from recipe web pages in various languages. Your task is to
     * Example: 198 grams should be rounded to 200 grams.
     * Example: 1.3 grams should be rounded to 1 gram.
 * **Do not use decimals for grams.**
-* **Example of what not to do:** Do not use "gramm", use "grams". Do not use "Milliliter", use "milliliters".
+* **Example of what not to do:** Do not use "gramm", use "grams". Do not use "Milliliter", use "milliliters".**
+* **Use professional language and be as concise as posible when summarise all instructions.**
+* **Only include information directly related to the recipe. Do not include trivia or references to anything not in the recipe.**
 
 Tags should contain each ingredient, grouped under appropriate categories (e.g., "Dairy," "Vegetables").
 Similar ingredients should be grouped together under a single category.
