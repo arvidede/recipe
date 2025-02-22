@@ -9,7 +9,7 @@ import styles from "./Image.module.scss"
 const PLACEHOLDER_IMAGE = ""
 
 export interface Props extends Omit<ImageProps, "src"> {
-    src: string | null
+    src?: string | null
     className?: string
 }
 

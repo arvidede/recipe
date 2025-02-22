@@ -21,14 +21,13 @@ function Recipe({ recipe, editable: initiallyEditable = false }: Props) {
     return (
         <ExpandableContainer expanded={!!recipe}>
             <div className={styles.recipe}>
-                {recipe?.img && (
-                    <Image
-                        src={recipe.img}
-                        alt={recipe.title}
-                        className={styles.image}
-                        fill
-                    />
-                )}
+                <Image
+                    src={recipe?.img}
+                    alt={recipe?.title || ""}
+                    className={styles.image}
+                    fill
+                />
+
                 {editable ? (
                     <EditRecipe recipe={recipe!} onEdit={handleEdit} />
                 ) : (
