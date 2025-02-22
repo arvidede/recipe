@@ -23,7 +23,7 @@
 
   .image {
     object-fit: cover;
-    transition: opacity ease-in 300ms;
+    transition: opacity ease 300ms;
     opacity: 1;
 
     &.loading {

@@ -21,20 +21,21 @@ function Image({ className, src, ...props }: Props) {
             className={clsx(styles.imageWrapper, className)}
             style={{ height: props.height, width: props.width }}
         >
-            {loading && (
+            {src ? (
+                <NextImage
+                    {...props}
+                    src={src || PLACEHOLDER_IMAGE}
+                    className={clsx({
+                        [styles.image]: true,
+                        [styles.loading]: loading,
+                    })}
+                    onLoad={() => setLoading(false)}
+                />
+            ) : (
                 <div className={styles.placeholder}>
                     <Cutlery />
                 </div>
             )}
-            <NextImage
-                {...props}
-                src={src || PLACEHOLDER_IMAGE}
-                className={clsx({
-                    [styles.image]: true,
-                    [styles.loading]: loading,
-                })}
-                onLoad={() => setLoading(false)}
-            />
         </div>
     )
 }
