@@ -39,9 +39,8 @@ function parseDefaultPage(html: string) {
     return convert(html, {
         selectors: [
             ...DEFAULT_SELECTORS,
-            { selector: "footer", format: "skip" },
-            { selector: "header", format: "skip" },
             { selector: "nav", format: "skip" },
+            { selector: "img", format: "skip" },
             { selector: "iframe", format: "skip" },
             { selector: "video", format: "skip" },
             { selector: "audio", format: "skip" },
@@ -72,7 +71,7 @@ function preprocessText(textContent: string) {
 
     textContent = textContent.toLowerCase()
 
-    // textContent = textContent.replace(/[^\w\s\d]/g, "");
+    textContent = textContent.replace(/[^\p{L}\p{N}\s•◦▪‣⁃−–—\*]/gu, "")
 
     const stopWords = new Set([
         "the",
