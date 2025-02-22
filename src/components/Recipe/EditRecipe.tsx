@@ -144,7 +144,7 @@ function EditRecipe({ recipe, onEdit }: EditRecipeProps) {
                 </div>
                 <ul className={styles.list}>
                     {ingredients.map((ingredient, index) => (
-                        <li key={index}>
+                        <li key={`${index}-${ingredient.name}`}>
                             <div className={styles.editable}>
                                 <Input
                                     defaultValue={ingredient.quantity}
@@ -178,7 +178,7 @@ function EditRecipe({ recipe, onEdit }: EditRecipeProps) {
                 <h3>Steps</h3>
                 <ol className={styles.list}>
                     {instructions.map((instruction, index) => (
-                        <li key={index}>
+                        <li key={`${index}-${instruction}`}>
                             <div className={styles.editable}>
                                 <TextArea
                                     value={instruction}
