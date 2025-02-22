@@ -126,7 +126,7 @@ function EditRecipe({ recipe, onEdit }: EditRecipeProps) {
     return (
         <form ref={formRef} className={styles.edit} onInput={handleChange}>
             <section className={styles.details}>
-                <TextArea name="title" value={recipe.title} />
+                <Input name="title" defaultValue={recipe.title} />
                 <Actions recipe={recipe} onEdit={handleClose} editable />
             </section>
             <section className={styles.ingredients}>
