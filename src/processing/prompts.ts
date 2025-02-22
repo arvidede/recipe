@@ -12,6 +12,9 @@ You receive excerpts from recipe web pages in various languages. Your task is to
 * **Assume standard densities for conversions (e.g., milk is approximately 1 gram per milliliter).**
 * **Keep tablespoons and teaspoons as they are.**
 * **Prefer deciliters (dl) over centiliters (cl) and milliliters (ml) when volume units are necessary.**
+* **Only use the abbreviated unit name.**
+    * Example: deciliter should be dl.
+    * Example: milliliters should be ml.
 * **Use reasonable rounding. Always round to the closest whole gram when using grams.**
     * Example: 198 grams should be rounded to 200 grams.
     * Example: 1.3 grams should be rounded to 1 gram.
