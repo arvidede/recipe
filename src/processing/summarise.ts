@@ -5,22 +5,38 @@ import model from "./model"
 import RECIPE_SUMMARY_PROMPT from "./prompts"
 
 const Tag = z.object({
-    name: z.string(),
-    key: z.string(),
+    name: z
+        .string()
+        .describe("The human-readable name of the tag, e.g., 'Creme Fraiche'."),
+    key: z
+        .string()
+        .describe(
+            "A database-indexable, slugified string without spaces, e.g., 'creme-fraiche'.",
+        ),
 })
 
 const Ingredient = z.object({
-    name: z.string(),
-    quantity: z.number(),
-    unit: z.string(),
+    name: z.string().describe("The name of the ingredient, e.g., 'Milk'."),
+    quantity: z.number().describe("The quantity of the ingredient, e.g., 200."),
+    unit: z
+        .string()
+        .describe(
+            "The unit of measurement, e.g., 'grams', 'tablespoon', or '' for unitless items.",
+        ),
 })
 
 const Recipe = z.object({
-    title: z.string(),
-    originalTitle: z.string(),
-    ingredients: z.array(Ingredient),
-    instructions: z.array(z.string()),
-    tags: z.array(Tag),
+    title: z.string().describe("The English title of the recipe."),
+    originalTitle: z
+        .string()
+        .describe("The original title of the recipe in its original language."),
+    ingredients: z
+        .array(Ingredient)
+        .describe("An array of ingredient objects."),
+    instructions: z
+        .array(z.string())
+        .describe("An array of instruction strings."),
+    tags: z.array(Tag).describe("An array of tag objects."),
 })
 
 const logger = getLogger("processing:summarise")
